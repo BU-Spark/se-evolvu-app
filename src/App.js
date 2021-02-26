@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 
 function App() {
   return (
+    
     <BrowserRouter>
       <div className="App">
         <ul>
