@@ -28,9 +28,9 @@ function App() {
         </ul>
       </div>
       <Switch>
+        <Route path="/" component={Homepage} />
         <Route path="/home" component={Homepage} />
         <Route path="/about" component={Homepage} />
-
       </Switch>
       <Footer/>
     </BrowserRouter>
