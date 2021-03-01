@@ -1,0 +1,16 @@
+.footer{
+    
+    background-color: #f2f2f2;
+    color: black;
+}
+.footer h8{
+    color: #4d4d4d;
+}
+
+.row{
+    height: 220px;
+}
+
+.col-xs-6{
+    margin-top: 25px;
+} 
