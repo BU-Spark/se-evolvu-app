@@ -1,0 +1,30 @@
+
+#navbar {
+    background: #dddddd;
+    list-style: None;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.navbar-linklist {
+    margin: 0;
+    list-style: None;
+    padding-inline-start: 0;
+}
+
+.navbar-link {
+    display: inline;
+    padding: 1rem;
+    text-decoration: None;
+}
+
+.navitem {
+    text-decoration: None;
+    color: #79a3b1;
+    transition: 0.3s;
+}
+
+.navitem:hover {
+    color: #fcf8ec;
+}
