@@ -1,10 +1,12 @@
 
 #navbar {
-    background: #dddddd;
+    background: #707070;
     list-style: None;
     display: flex;
     justify-content: space-between;
     padding: 1rem;
+    -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0); 
+    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
 }
 
 .navbar-linklist {
@@ -23,16 +25,16 @@
 
 .navitem {
     text-decoration: None;
-    color: #79a3b1;
+    color: #99CCFF;
     transition: 0.3s;
 }
 
 .navitem:hover {
-    color: black;
+    color: white;
 }
 
 .nav-brand {
     margin: 0;
     padding: 0 3rem 0;
-    color: #79a3b1;
+    color: #99CCFF;
 }
