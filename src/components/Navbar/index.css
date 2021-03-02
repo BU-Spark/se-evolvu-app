@@ -11,6 +11,8 @@
     margin: 0;
     list-style: None;
     padding-inline-start: 0;
+    flex: 1;
+    margin-top: 0.5rem;
 }
 
 .navbar-link {
@@ -26,5 +28,11 @@
 }
 
 .navitem:hover {
-    color: #fcf8ec;
+    color: black;
+}
+
+.nav-brand {
+    margin: 0;
+    padding: 0 3rem 0;
+    color: #79a3b1;
 }

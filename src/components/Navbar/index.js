@@ -16,7 +16,9 @@ const Navbar = () => {
                         <Link className="navitem" to="/home"> Apply as Coach </Link>
                     </li>
                 </ul>
-                
+                <div className="nav-logo">
+                    <h2 className="nav-brand"> EvolvU </h2>
+                </div>
                 <ul className="navbar-linklist">
                     <li className="navbar-link" >
                         <Link className="navitem" to="/about"> Sign In </Link>
