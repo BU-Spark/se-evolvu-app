@@ -1,40 +1,29 @@
 import './App.css';
 
 import { 
-  Link,
   BrowserRouter,
   Switch,
   Route
 } from 'react-router-dom';
 
 import Homepage from "./components/Homepage/index.js";
-import Footer from './components/Footer';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Navbar from "./components/Navbar/index.js";
+import ErrorPage from "./components/ErrorPage/index.js";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     
     <BrowserRouter>
       <div className="App">
-        <ul>
-          <li>
-            <Link to="/home"> Homepage </Link>
-          </li>
-          <li>
-            <Link to="/about"> About </Link>
-          </li>
-          <li>
-            <Link to="/about"> About </Link>
-          </li>
-        </ul>
+        <Navbar/>
+        <Switch>
+          <Route exact path="/"> <Homepage/> </Route>
+          <Route path="/home" component={ErrorPage} />
+          <Route path="/about" component={ErrorPage} />
+        </Switch>
+        <Footer/>
       </div>
-      <Switch>
-        <Route path="/" component={Homepage} />
-        <Route path="/home" component={Homepage} />
-        <Route path="/about" component={Homepage} />
-      </Switch>
-      <Footer/>
     </BrowserRouter>
   );
 }
