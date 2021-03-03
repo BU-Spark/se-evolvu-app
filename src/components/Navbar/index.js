@@ -13,7 +13,7 @@ const Navbar = () => {
                         <Link className="navitem" to="/"> Find a Coach </Link>
                     </li>
                     <li className="navbar-link" >
-                        <Link className="navitem" to="/home"> Apply as Coach </Link>
+                        <Link className="navitem" to="/apply"> Apply as Coach </Link>
                     </li>
                 </ul>
                 <div className="nav-logo">
@@ -21,10 +21,10 @@ const Navbar = () => {
                 </div>
                 <ul className="navbar-linklist">
                     <li className="navbar-link" >
-                        <Link className="navitem" to="/about"> Sign In </Link>
+                        <Link className="navitem" to="/sign-in"> Sign In </Link>
                     </li>
                     <li className="navbar-link" >
-                        <Link className="navitem" to="/about"> Sign Up </Link>
+                        <Link className="navitem" to="/sign-up"> Sign Up </Link>
                     </li>
                 </ul>
             </div>
