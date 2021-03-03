@@ -1,3 +1,6 @@
+#nav-wrapper {
+    z-index: 2;
+}
 
 #navbar {
     background: #707070;
@@ -31,6 +34,7 @@
 
 .navitem:hover {
     color: white;
+    text-decoration: None;
 }
 
 .nav-brand {
