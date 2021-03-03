@@ -1,0 +1,25 @@
+.homepage-body {
+    z-index: -1;
+}
+
+.homepage-search {
+    padding: 5rem;
+    background: lightblue;
+    height: 100vh;
+}
+
+.homepage-search-text {
+    width: 50%;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.homepage-info {
+    padding: 5rem;
+}
+
+.row-icon {
+    color: #99CCFF;
+    padding: 2rem;
+}

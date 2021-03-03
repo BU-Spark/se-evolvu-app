@@ -1,0 +1,15 @@
+.searchbar-wrapper {
+    width: 75%;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem;
+}
+
+.searchbar-input {
+    display: flex;
+}
+
+.dropdown-toggle {
+    width: 20rem;
+}
