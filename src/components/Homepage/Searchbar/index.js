@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
+import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+
+import { Link } from 'react-router-dom';
 
 import './index.css'
 
 const SearchBar = () => {
 
     const [area, setArea] = useState("Select your area");
+    const [local, setLocal] = useState("")
 
     return (
         <div className="searchbar-wrapper">
@@ -28,16 +31,27 @@ const SearchBar = () => {
                     </Dropdown.Menu>
                 </Dropdown>
                 <InputGroup className="mb-3">
-                    <FormControl
+                    <Form.Control
                         placeholder="Zip/City"
                         aria-label="Zip/City"
                         aria-describedby="basic-addon1"
+                        onChange={e => setLocal(e.target.value)}
                     />
                 </InputGroup>
             </div>
-            <Button variant="secondary" onClick={ () => {}}>
-                Find Your Coach
-            </Button>
+                <Link
+                    to={{
+                        pathname: "/search",
+                        state: {
+                            focus: area,
+                            local: local
+                        }
+                    }}
+                >
+                    <Button variant="secondary">
+                        Find Your Coach
+                    </Button>
+                </Link>
         </div>
     )
 }
