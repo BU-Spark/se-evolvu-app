@@ -1,9 +1,6 @@
 import React from 'react';
-import {   Link,
-    BrowserRouter,
-    Switch,
-    Route } from 'react-router-dom';
-import styles from "./index.css";
+import {   Link } from 'react-router-dom';
+import "./index.css";
 
 const Footer = () => {
 
