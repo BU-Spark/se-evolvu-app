@@ -13,7 +13,6 @@ const Footer = () => {
                     <div className = "row d-flex justify-content-center"> {/*Row such that columns are aligned to the center of page*/}
 
                         {/*This is the column for the "About" category in the footer*/}
-                        <BrowserRouter>
                             <div className= "col-xs-6 px-3">
                                 <h8>About</h8>
                                 <ul className="list-unstyled">
@@ -56,24 +55,6 @@ const Footer = () => {
                                 </li>
                             </ul>
                         </div>
-
-                         {/*Routing for footer links, currently commented out till there is something to route to*/}
-
-                       {/* <Switch>
-                            <Route path="/about" component={Homepage} />
-                            <Route path="/contact" component={Homepage} />
-                            <Route path="/feedback" component={Homepage} />
-                            <Route path="/faq" component={Homepage} />
-                            <Route path="/safety" component={Homepage} />
-                            <Route path="/info" component={Homepage} />
-                            <Route path="/refunds" component={Homepage} />
-                            <Route path="/testimonials" component={Homepage} />
-                            <Route path="/blog" component={Homepage} />
-                            <Route path="/refer" component={Homepage} />
-                       </Switch> */}
-                       </BrowserRouter>
-
-
                     </div>
                 </div>
             </div>
