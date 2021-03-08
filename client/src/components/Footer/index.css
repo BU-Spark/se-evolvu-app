@@ -6,10 +6,13 @@
 .footer h8{
     color: #4d4d4d;
 }
+/* 
+
+NOTE: Removed this because styling using this caused issues on mobie
 
 .row{
     height: 220px;
-}
+} */
 
 .col-xs-6{
     margin-top: 25px;
