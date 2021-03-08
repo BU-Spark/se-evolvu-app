@@ -13,8 +13,8 @@ const Homepage = () => {
         <div className="homepage-body">
             <div className="container-fluid homepage-search">
                 <div className="homepage-search-text">
-                    <h2 style={{color: "white", padding: "1rem"}}>Get Started on Your Journey with Evolv U</h2>
-                    <h3>Evolv U offers a network of authentic Health and Wellness Coaches with extensive accreditation to help you evolve in the area of your choice</h3>
+                    <h2 className="homepage-title" style={{color: "white", padding: "1rem"}}>Get Started on Your Journey with Evolv U</h2>
+                    <h3 className="homepage-desc">Evolv U offers a network of authentic Health and Wellness Coaches with extensive accreditation to help you evolve in the area of your choice</h3>
                 </div>
                 <Searchbar/>
             </div>

@@ -58,18 +58,18 @@ const CustomNavbar = () => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="#features">
+                    <Nav>
                         <Link className="navitem" to="/"> Find a Coach </Link>
-                    </Nav.Link>
-                    <Nav.Link href="#pricing">
+                    </Nav>
+                    <Nav>
                         <Link className="navitem" to="/apply"> Apply as Coach </Link>
-                    </Nav.Link>
-                    <Nav.Link href="#deets">
+                    </Nav>
+                    <Nav>
                         <Link className="navitem" to="/sign-in"> Sign In </Link>
-                    </Nav.Link>
-                    <Nav.Link>
+                    </Nav>
+                    <Nav>
                         <Link className="navitem" to="/sign-up"> Sign Up </Link>                
-                    </Nav.Link>
+                    </Nav>
                 </Nav>
             </Navbar.Collapse>
             </Navbar>

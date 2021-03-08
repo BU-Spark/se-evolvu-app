@@ -13,3 +13,18 @@
 .dropdown-toggle {
     width: 20rem;
 }
+
+/* Mobile Media Queries */
+
+@media only screen and (max-width: 768px) {
+    .searchbar-wrapper {
+        width: 100%;
+        padding: 0;
+    }
+    .searchbar-input {
+        display: flex;
+    }
+    .dropdown-toggle {
+        width: 100%;
+    }
+}
