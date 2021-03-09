@@ -3,7 +3,7 @@
     margin: auto;
     justify-content: center;
     align-items: center;
-    padding: 5rem;
+    padding: 4rem;
 }
 
 .searchbar-input {
@@ -16,7 +16,7 @@
 
 /* Mobile Media Queries */
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
     .searchbar-wrapper {
         width: 100%;
         padding: 0;
