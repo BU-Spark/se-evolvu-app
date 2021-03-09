@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,6 +8,8 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
+
+import ProfileCard from './ProfileCard/index.js';
 
 import './index.css';
 
@@ -18,11 +21,19 @@ const SearchPage = (props) => {
     const [distance, setDistance] = useState(10);
     const [gender, setGender] = useState("nopref");
     const [focus, setFocus] = useState(props.location.state.focus);
+    const [coachList, setCoachList] = useState([])
 
+    useEffect( () => {
+         axios.get('https://jsonplaceholder.typicode.com/users', {
+        }).then( (res) => {
+            setCoachList(res.data)
+            console.log(res.data)
+        })
+    }, [])          // Add this line to prevent infinite loop 
 
     return (
         <div className="search-results-body container-fluid">
-            <p style={{padding: "1rem", zIndex: "-1", background:""}}>
+            <p className="font-weight-bold" style={{padding: "1rem", zIndex: "-1", background:""}}>
                 You are searching for {props.location.state.focusLabel} in {props.location.state.local}
             </p>
             <Row>
@@ -30,11 +41,11 @@ const SearchPage = (props) => {
                     <div className="search-page-filter">
                         <Form>
                             <div>
-                                <p style={{textAlign: "left"}}>Coach Search Filter</p>
+                                <p style={{textAlign: "left", fontWeight: "bold"}}>Coach Search Filter</p>
                                 <hr></hr>
                             </div>
                             <div>
-                                <p style={{textAlign: "left"}}>Location</p>
+                                <p style={{textAlign: "left", fontWeight: "bold"}}>Location</p>
                                 <div>
                                     Zip Code: {props.location.state.local}
                                     <Form.Group controlId="formBasicRange">
@@ -51,7 +62,7 @@ const SearchPage = (props) => {
                             </div>
                             <div>
                                 <hr></hr>
-                                <p style={{textAlign: "left"}}>Coach's Gender</p>
+                                <p style={{textAlign: "left", fontWeight: "bold"}}>Coach's Gender</p>
                                 <div className="mb-3" style={{ textAlign: "left", justifyContent: "center"}}>
                                     {
                                         [ 
@@ -65,7 +76,7 @@ const SearchPage = (props) => {
                                                 type="radio" 
                                                 id="search-filter-gender"
                                                 label={`${type.label}`}
-                                                onChange={() => setGender(type.label)}
+                                                onChange={() => setGender(type.key)}
                                                 checked={ gender === type.key}
                                             />
                                         </div>
@@ -74,7 +85,7 @@ const SearchPage = (props) => {
                             </div>
                             <hr></hr>
                             <div className="search-page-focus">
-                                Focus:
+                                <p style={{textAlign: "left", fontWeight: "bold"}}>Focus</p>
                                 {
                                     [ 
                                         { label: "Life Coaching", key: "life-coaching"},
@@ -88,7 +99,7 @@ const SearchPage = (props) => {
                                             type="checkbox"
                                             id={`search-filter-focus`}
                                             label={`${type.label}`}
-                                            onChange={() => setFocus(type.label)}
+                                            onChange={() => setFocus(type.key)}
                                             checked={ focus === type.key}
                                         />
                                     </div>
@@ -96,8 +107,8 @@ const SearchPage = (props) => {
                             </div>
                             <hr></hr>
                             <div>
+                                <p style={{textAlign: "left", fontWeight: "bold"}}>Price</p>
                                 <Form.Group controlId="formBasicRange">
-                                    <Form.Label>Price</Form.Label>
                                     <Form.Control 
                                         type="range" 
                                         onChange={ (e) => setPrice(e.target.value)}
@@ -117,7 +128,7 @@ const SearchPage = (props) => {
                             <ButtonGroup aria-label="Personal Preferences">
                                 <Button 
                                     variant="outline-secondary" 
-                                    id="search-page-preferences" 
+                                    id="search-page-preferences-one" 
                                     className={ !remote ? "active" : ""}
                                     onClick={ () => setRemote(false)}
                                     >
@@ -125,7 +136,7 @@ const SearchPage = (props) => {
                                 </Button>{' '}
                                 <Button 
                                     variant="outline-secondary" 
-                                    id="search-page-preferences"
+                                    id="search-page-preferences-one"
                                     className={ remote ? "active" : ""}
                                     onClick={ () => setRemote(true)}
                                     >
@@ -135,7 +146,7 @@ const SearchPage = (props) => {
                             <ButtonGroup aria-label="View Preferences">
                                 <Button 
                                     variant="outline-secondary" 
-                                    id="search-page-preferences"
+                                    id="search-page-preferences-two"
                                     className={ !galleryView ? "active" : ""}
                                     onClick={ () => setView(false)}
                                     >
@@ -143,7 +154,7 @@ const SearchPage = (props) => {
                                 </Button>{' '}
                                 <Button 
                                     variant="outline-secondary" 
-                                    id="search-page-preferences"
+                                    id="search-page-preferences-two"
                                     className={ galleryView ? "active" : ""}
                                     onClick={ () => setView(true)}
                                     >
@@ -153,14 +164,15 @@ const SearchPage = (props) => {
                         </ButtonToolbar>
                     </div>
                     <div>
-                        Coach 1
-                    </div>
-                    <div>
-                        Coach 1
+                        {
+                            coachList.map( (coach) => (
+                                <ProfileCard key={coach.id} coach={coach} view={galleryView}/>
+                            ))
+                        }
                     </div>
                 </Col>
                 <Col sm={3}>
-                    <div style={{ margin: "0.5rem"}}>
+                    <div>
                         <Dropdown size="sm">
                             <Dropdown.Toggle variant="outline-secondary" id="dropdown-search-sort">
                                 Sort by
