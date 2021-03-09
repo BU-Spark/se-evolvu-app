@@ -1,0 +1,18 @@
+
+#dropdown-search-sort {
+    width: 50%;
+}
+
+#search-page-preferences {
+    margin: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.search-page-filter {
+    background: #D0D0D0;
+    padding: 1rem;
+}
+
+.search-page-focus {
+    text-align: left;
+}

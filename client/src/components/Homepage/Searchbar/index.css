@@ -10,7 +10,7 @@
     display: flex;
 }
 
-.dropdown-toggle {
+#dropdown-basic {
     width: 20rem;
 }
 
@@ -24,7 +24,7 @@
     .searchbar-input {
         display: flex;
     }
-    .dropdown-toggle {
+    #dropdown-basic {
         width: 100%;
     }
 }
