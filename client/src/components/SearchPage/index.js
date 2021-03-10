@@ -11,6 +11,7 @@ import Form from 'react-bootstrap/Form';
 
 import ListProfileCard from './ListProfileCard/index.js';
 import GalleryProfileCard from './GalleryProfileCard/index.js';
+import LoadingCircle from './LoadingCircle/index.js';
 
 import './index.css';
 
@@ -22,7 +23,8 @@ const SearchPage = (props) => {
     const [distance, setDistance] = useState(10);
     const [gender, setGender] = useState("nopref");
     const [focus, setFocus] = useState(props.location.state.focus);
-    const [coachList, setCoachList] = useState([])
+    const [coachList, setCoachList] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect( () => {
          axios.get('https://jsonplaceholder.typicode.com/users', {
@@ -31,6 +33,12 @@ const SearchPage = (props) => {
             console.log(res.data)
         })
     }, [])          // Add this line to prevent infinite loop 
+
+    const handleChange = () => {
+        setTimeout(() => {
+            setLoading(false);
+          }, 500);
+    }
 
     let card;
     if (!galleryView) {
@@ -163,7 +171,11 @@ const SearchPage = (props) => {
                                     variant="outline-secondary" 
                                     id="search-page-preferences-two"
                                     className={ !galleryView ? "active" : ""}
-                                    onClick={ () => setView(false)}
+                                    onClick={ () => {
+                                            setView(false)
+                                            setLoading(true)
+                                            handleChange()
+                                        }}
                                     >
                                         List
                                 </Button>{' '}
@@ -171,16 +183,22 @@ const SearchPage = (props) => {
                                     variant="outline-secondary" 
                                     id="search-page-preferences-two"
                                     className={ galleryView ? "active" : ""}
-                                    onClick={ () => setView(true)}
+                                    onClick={ () => {
+                                        setView(true)
+                                        setLoading(true)
+                                        handleChange()
+                                    }}
                                     >
                                         Grid
                                 </Button>{' '}
                             </ButtonGroup>
                         </ButtonToolbar>
                     </div>
-                    <div className="search-page-cards">
-                        {card}
-                    </div>
+                    {loading ? <div className="justify-content-center"><LoadingCircle /></div> : 
+                        <div className="search-page-cards">
+                            {card}
+                        </div> 
+                    }
                 </Col>
                 <Col sm={3}>
                     <div>
