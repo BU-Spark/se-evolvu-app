@@ -17,27 +17,39 @@ import './index.css';
 
 const SearchPage = (props) => {
 
+    // Params Coach Search
     const [price, setPrice] = useState(50);
     const [remote, setRemote] = useState(false);
-    const [galleryView, setView] = useState(false);
     const [distance, setDistance] = useState(10);
     const [gender, setGender] = useState("nopref");
     const [focus, setFocus] = useState(props.location.state.focus);
+
+    // Additional States for component
+    const [galleryView, setView] = useState(false);
     const [coachList, setCoachList] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect( () => {
-         axios.get('https://jsonplaceholder.typicode.com/users', {
-        }).then( (res) => {
-            setCoachList(res.data)
-            console.log(res.data)
-        })
+        onSearch()
+    // eslint-disable-next-line
     }, [])          // Add this line to prevent infinite loop 
 
     const handleChange = () => {
         setTimeout(() => {
             setLoading(false);
           }, 500);
+    }
+
+    const onSearch = () => {
+        axios.get('https://jsonplaceholder.typicode.com/users', {
+            gender: gender,
+            distance: distance,
+            focus: focus,
+            remote: remote,
+            price: price,
+        }).then( (res) => {
+            setCoachList(res.data)
+        })
     }
 
     let card;
@@ -139,6 +151,16 @@ const SearchPage = (props) => {
                                     ${price}{ price === "100" ? "+" : "" }
                                 </Form.Group>
                             </div>
+                            <hr></hr>
+                            <Button
+                                onClick={ () => {
+                                    setLoading(true)
+                                    handleChange()
+                                    onSearch()
+                                }}
+                            >
+                                Search
+                            </Button>
                         </Form>
                     </div>
                 </Col>
