@@ -45,12 +45,21 @@ const SearchPage = (props) => {
             gender: gender,
             distance: distance,
             focus: focus,
-            remote: remote,
             price: price,
         }).then( (res) => {
-            setCoachList(res.data)
+            setCoachList(res.data);
+            // filterRemote();
         })
     }
+
+    // NOTE: Function for filtering remote and in person coaches (disabled temporarily)
+    // const [viewList, setViewList] = useState([]);
+    // const filterRemote = () => {
+    //     let res = coachList.filter( (coach) => {
+    //         return coach.remote===remote;
+    //     })
+    //     setViewList(res);
+    // }
 
     let card;
     if (!galleryView) {
@@ -68,7 +77,7 @@ const SearchPage = (props) => {
 
     return (
         <div className="search-results-body container-fluid">
-            <p className="font-weight-bold" style={{padding: "1rem", zIndex: "-1", background:""}}>
+            <p className="font-weight-bold" style={{padding: "2rem", zIndex: "-1", background:""}}>
                 You are searching for {props.location.state.focusLabel} in {props.location.state.local}
             </p>
             <Row>
