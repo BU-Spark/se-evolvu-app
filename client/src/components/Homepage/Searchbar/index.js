@@ -12,22 +12,32 @@ import './index.css'
 const SearchBar = () => {
 
     const [area, setArea] = useState("Select your area");
+    const [areaLabel, setAreaLabel] = useState("Select your area");
     const [local, setLocal] = useState("")
+
+    const updateAreaState = (label, area) => {
+        setAreaLabel(label)
+        setArea(area)
+    }
 
     return (
         <div className="searchbar-wrapper">
             <div className="searchbar-input">
                 <Dropdown id="searchbar-dropdown">
                     <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                        {area}
+                        {areaLabel}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => setArea("Life Coaching")}>Life Coaching</Dropdown.Item>
-                        <Dropdown.Item onClick={() => setArea("Nutrition & Fitness")}>Nutrition & Fitness</Dropdown.Item>
-                        <Dropdown.Item onClick={() => setArea("Health and Wellness Coaching")}>Health and Wellness Coaching</Dropdown.Item>
-                        <Dropdown.Item onClick={() => setArea("Holistic Health & Wellness Coaching")}>Holistic Health & Wellness Coaching</Dropdown.Item>
-                        <Dropdown.Item onClick={() => setArea("Health and Wellness Coaching")}>Health and Wellness Coaching</Dropdown.Item>
-                        <Dropdown.Item onClick={() => setArea("Spiritual Wellness Coaching")}>Spiritual Wellness Coaching</Dropdown.Item>
+                        {
+                            [ 
+                                { label: "Life Coaching", key: "life-coaching"},
+                                { label: "Nutrition & Fitness", key: "nutrition-fitness"},
+                                { label: "Health and Wellness Coaching", key: "health-and-wellness-coaching"},
+                                { label: "Holistic Health & Wellness Coaching", key: "holistic-Health-wellness-coaching"},
+                                { label: "Spiritual Wellness Coaching", key: "spiritual-wellness-coaching"},
+                            ].map((type) => (
+                            <Dropdown.Item key={type.key} onClick={() => updateAreaState(type.label, type.key)}>{type.label}</Dropdown.Item>
+                        ))}
                     </Dropdown.Menu>
                 </Dropdown>
                 <InputGroup className="mb-3">
@@ -44,7 +54,8 @@ const SearchBar = () => {
                         pathname: "/search",
                         state: {
                             focus: area,
-                            local: local
+                            focusLabel: areaLabel,
+                            local: local,
                         }
                     }}
                 >

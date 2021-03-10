@@ -14,10 +14,10 @@ const CustomNavbar = () => {
     const [toggleMenu, setToggleMenu] = useState(false)
 
     useEffect( () => {
-        if (width < 768) {
+        if (width < 800) {
             setToggleMenu(true)
         } 
-        if (width >= 768) {
+        if (width >= 800) {
             setToggleMenu(false)
         }
     }, [width])
@@ -56,7 +56,7 @@ const CustomNavbar = () => {
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Navbar.Brand><Link className="navitem" to="/"> EvolvU </Link></Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
+            <Navbar.Collapse id="responsive-navbar-nav" animation="false">
                 <Nav className="mr-auto">
                     <Nav>
                         <Link className="navitem" to="/"> Find a Coach </Link>
