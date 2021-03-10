@@ -51,6 +51,7 @@ const ListProfileCard = (props) => {
                 <ProfileModal
                     show={show}
                     onHide={ () => setShow(false)}
+                    coach={props.coach}
                 />
             </div>
         </div>

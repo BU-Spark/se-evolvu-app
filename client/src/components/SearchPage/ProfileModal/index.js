@@ -1,7 +1,8 @@
 import React from 'react';
 
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 
 const ProfileModal = (props) => {
     return (
@@ -11,9 +12,9 @@ const ProfileModal = (props) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
+            {props.coach.name}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -31,10 +32,18 @@ const ProfileModal = (props) => {
             >
                 Close
             </Button>
-            <Button 
-            >
-              Book
-            </Button>
+            <Link
+                    to={{
+                        pathname: "/coach/profile/",
+                        state: {
+                            coach: props.coach
+                        }
+                    }}
+                >
+              <Button>
+                Book
+              </Button>
+            </Link>
         </Modal.Footer>
       </Modal>
     );

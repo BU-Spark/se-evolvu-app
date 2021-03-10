@@ -21,6 +21,7 @@ const GalleryProfileCard = (props) => {
                 <ProfileModal
                     show={show}
                     onHide={ () => setShow(false)}
+                    coach={props.coach}
                 />
             </Card.Body>
         </Card>
