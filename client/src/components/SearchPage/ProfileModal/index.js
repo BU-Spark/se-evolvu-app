@@ -4,6 +4,8 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
+import StarRatings from 'react-star-ratings';
+
 const ProfileModal = (props) => {
     return (
       <Modal
@@ -18,6 +20,15 @@ const ProfileModal = (props) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <StarRatings
+                    rating={2.403}
+                    starDimension="20px"
+                    starSpacing="1px"
+                    starRatedColor="orange"
+          />
+          <p>
+              {props.coach.id} ratings
+          </p>
           <h4>Centered Modal</h4>
           <p>
             Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
