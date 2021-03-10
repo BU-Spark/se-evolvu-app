@@ -9,7 +9,8 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 
-import ProfileCard from './ProfileCard/index.js';
+import ListProfileCard from './ListProfileCard/index.js';
+import GalleryProfileCard from './GalleryProfileCard/index.js';
 
 import './index.css';
 
@@ -30,6 +31,20 @@ const SearchPage = (props) => {
             console.log(res.data)
         })
     }, [])          // Add this line to prevent infinite loop 
+
+    let card;
+    if (!galleryView) {
+        card = coachList.map( (coach) => (
+                <ListProfileCard key={coach.id} coach={coach}/>
+            ))
+    } else {
+        card = 
+        <Row className="justify-content-md-center">
+            {coachList.map( (coach) => (
+                <GalleryProfileCard key={coach.id} coach={coach}/>
+            ))}
+        </Row>
+    }
 
     return (
         <div className="search-results-body container-fluid">
@@ -163,12 +178,8 @@ const SearchPage = (props) => {
                             </ButtonGroup>
                         </ButtonToolbar>
                     </div>
-                    <div>
-                        {
-                            coachList.map( (coach) => (
-                                <ProfileCard key={coach.id} coach={coach} view={galleryView}/>
-                            ))
-                        }
+                    <div className="search-page-cards">
+                        {card}
                     </div>
                 </Col>
                 <Col sm={3}>

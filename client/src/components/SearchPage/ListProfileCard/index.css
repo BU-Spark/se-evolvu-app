@@ -14,3 +14,12 @@
 .coach-profile-view-btn {
     background:#9FC0DE
 }
+
+.coach-profile-media {
+    width: 75%;
+}
+
+.search-page-cards {
+    display: flex;
+    flex-wrap: wrap;
+}
