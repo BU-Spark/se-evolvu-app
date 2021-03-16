@@ -52,7 +52,7 @@ const ProfileModal = (props) => {
                     }}
                 >
               <Button>
-                Book
+                Go to Profile
               </Button>
             </Link>
         </Modal.Footer>

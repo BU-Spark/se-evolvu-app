@@ -2,5 +2,38 @@
 
 .coach-profile-body {
     padding: 5rem;
-    height: 100vh;
+}
+
+.coach-profile-return-btn {
+    background: None;
+    color: #979797;
+    border: None;
+}
+
+.coach-profile-return-btn:hover {
+    transition: 0.3s;
+    color: #373737
+}
+
+.coach-profile-book-btn {
+    margin: 0.5rem;
+    background: #9FC0DE;
+    color: white;
+    border: None;
+    border-radius: 10px;
+    width: 50%
+}
+
+.coach-profile-contact-btn {
+    margin: 0.5rem;
+    background: #9FC0DE;
+    color: white;
+    border: None;
+    border-radius: 10px;
+    width: 50%
+}
+
+.coach-profile-experience-desc {
+    padding: 1rem;
+    text-align: left;
 }

@@ -91,7 +91,7 @@ const SearchPage = (props) => {
                             <div>
                                 <p style={{textAlign: "left", fontWeight: "bold"}}>Location</p>
                                 <div>
-                                    Zip Code: {props.location.state.local}
+                                    <p style={{textAlign: "left"}}>Zip Code: {props.location.state.local}</p>
                                     <Form.Group controlId="formBasicRange">
                                         <Form.Label>Distance</Form.Label>
                                         <Form.Control 

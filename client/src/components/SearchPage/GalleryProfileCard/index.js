@@ -16,7 +16,7 @@ const GalleryProfileCard = (props) => {
                         {props.coach.name.split(" ")[0]} {props.coach.name.split(" ")[1][0]}
                     </div>
                 <Button className="coach-profile-view-btn" onClick={() => setShow(true)}>
-                    View Profile
+                    View
                 </Button>
                 <ProfileModal
                     show={show}
