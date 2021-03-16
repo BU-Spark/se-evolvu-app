@@ -46,7 +46,7 @@ const ListProfileCard = (props) => {
                     ${props.coach.id} <br/>/ Session + one time fees
                 </p>
                 <Button className="coach-profile-view-btn" onClick={() => setShow(true)}>
-                    View Profile
+                    View
                 </Button>
                 <ProfileModal
                     show={show}
