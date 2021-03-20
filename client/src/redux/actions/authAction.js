@@ -15,6 +15,19 @@ export const register = (registrationInfo) => (dispatch) => {
         dispatch({
             type: Types.REGISTER_FAILED
         })
+
+        const message =
+            (
+                error.response &&
+                error.response.data &&
+                error.response.data.message
+            ) || error.message || error.toString();
+
+        dispatch({
+            type: Types.SET_MESSAGE,
+            payload: message,
+        });
+        
         return Promise.reject();
     }
     )
@@ -33,6 +46,18 @@ export const login = (email, password) => (dispatch) => {
         dispatch({
             type: Types.LOGIN_FAILED
         })
+
+        const message =
+            (
+                error.response &&
+                error.response.data &&
+                error.response.data.message
+            ) || error.message || error.toString();
+
+        dispatch({
+            type: Types.SET_MESSAGE,
+            payload: message,
+        });
         return Promise.reject();
     }
     )
