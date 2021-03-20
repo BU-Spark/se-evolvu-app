@@ -1,9 +1,12 @@
+// Based off of code from https://bezkoder.com/react-hooks-redux-login-registration-example/
+
 import { Types } from "../actions/actionTypes"
 
-const initialState = {
-    isLoggedin: false,
-    token: ""
-}
+const user = JSON.parse(localStorage.getItem("user"));
+
+const initialState = user
+  ? { isLoggedIn: true, user }
+  : { isLoggedIn: false, user: null };
 
 export const authReducer = (state = initialState, action) => {
     switch(action.type) {
