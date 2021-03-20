@@ -3,7 +3,7 @@
 import axios from "axios";
 import authHeader from './authHeader.js';
 
-const API_URL = "http:localhost:8000";
+const API_URL = "http://localhost:8000";
 
 const getTestItems = () => {
     return axios.get(API_URL + '/test', { headers: authHeader() });
