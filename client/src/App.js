@@ -8,13 +8,19 @@ import {
 
 import Homepage from "./components/Homepage/index.js";
 import Navbar from "./components/Navbar/index.js";
+import LoginPage from "./components/LoginPage/index.js";
 import ErrorPage from "./components/ErrorPage/index.js";
 import SearchPage from "./components/SearchPage/index.js";
 import PlaceHolderPage from "./components/PlaceHolderPage/index.js";
 import Footer from "./components/Footer";
 import CoachProfilePage from './components/CoachProfilePage';
 
+import ProtectedRoute from './components/ProtectedRoute/index.js'
+
 function App() {
+
+  let isAuthenticated = false;
+
   return (
     
     <BrowserRouter>
@@ -30,12 +36,11 @@ function App() {
           </Route>
           <Route path="/coach/profile" component={CoachProfilePage}>
           </Route>
-          <Route path="/sign-in">
-              <PlaceHolderPage page="Sign In Page"/>
-          </Route>
-          <Route path="/sign-up">
+          <Route path="/login" component={LoginPage}/>
+          <Route path="/register">
               <PlaceHolderPage page="Sign Up Page"/>
           </Route>
+          <ProtectedRoute path="/test" component={PlaceHolderPage} auth={isAuthenticated} />
         </Switch>
         <Footer/>
       </div>

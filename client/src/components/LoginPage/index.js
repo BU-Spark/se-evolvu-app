@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 const LoginPage = () => {
 
     return (
-        <div>
+        <div style={{ height: "100vh"}}>
             <Button> Click me plz </Button>
         </div>
     )

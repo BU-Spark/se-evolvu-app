@@ -40,10 +40,10 @@ const CustomNavbar = () => {
                     </div>
                     <ul className="navbar-linklist">
                         <li className="navbar-link" >
-                            <Link className="navitem" to="/sign-in"> Sign In </Link>
+                            <Link className="navitem" to="/login"> Sign In </Link>
                         </li>
                         <li className="navbar-link" >
-                            <Link className="navitem" to="/sign-up"> Sign Up </Link>
+                            <Link className="navitem" to="/register"> Sign Up </Link>
                         </li>
                     </ul>
                 </div>
