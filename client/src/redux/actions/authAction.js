@@ -1,6 +1,6 @@
 // Based off of code from https://bezkoder.com/react-hooks-redux-login-registration-example/
 
-import Types from './actionTypes.js';
+import { Types } from './actionTypes.js';
 import AuthService from '../../services/authServices.js';
 
 export const register = (registrationInfo) => (dispatch) => {
