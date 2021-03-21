@@ -41,7 +41,9 @@ function App() {
           <Route path="/register">
               <PlaceHolderPage page="Sign Up Page"/>
           </Route>
-          <ProtectedRoute path="/profile" component={PlaceHolderPage} auth={isLoggedin} />
+          <ProtectedRoute path="/profile" auth={isLoggedin}>
+              <PlaceHolderPage page="Profile"/>
+          </ProtectedRoute>
         </Switch>
         <Footer/>
       </div>
