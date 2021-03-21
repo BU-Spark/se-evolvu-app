@@ -2,7 +2,7 @@
 
 import { Types } from "../actions/actionTypes.js"
 
-const initialState = {};
+const initialState = { message: ""};
 
 export const messageReducer = (state = initialState, action) => {
   const { type, payload } = action;

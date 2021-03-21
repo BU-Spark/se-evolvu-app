@@ -12,13 +12,12 @@ const login = (email, password) => {
     return axios.post(url + "login", {
         email, 
         password
-    }.then((res) => {
+    }).then((res) => {
         if (res.data.accessToken) {
             localStorage.setItem("user", JSON.stringify(res.data));
           }
         return res.data;
     })
-    )
 };
 
 const logout = () => {

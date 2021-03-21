@@ -20,6 +20,12 @@
     border: none;
 }
 
+#login-form-submit:disabled {
+    background-color: #E1ECF7;
+    transition: 0.3s;
+    border: none;
+}
+
 #login-social-media {
     background-color: #373737;
     color: white;
