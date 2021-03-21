@@ -1,5 +1,6 @@
 import './App.css';
 
+import { useSelector } from 'react-redux';
 import { 
   BrowserRouter,
   Switch,
@@ -8,6 +9,7 @@ import {
 
 import Homepage from "./components/Homepage/index.js";
 import Navbar from "./components/Navbar/index.js";
+import UserNavbar from "./components/Navbar/UserNavbar/index.js"
 import LoginPage from "./components/LoginPage/index.js";
 import ErrorPage from "./components/ErrorPage/index.js";
 import SearchPage from "./components/SearchPage/index.js";
@@ -19,13 +21,13 @@ import ProtectedRoute from './components/ProtectedRoute/index.js'
 
 function App() {
 
-  let isAuthenticated = false;
+  let isLoggedin = useSelector(state => state.authReducer.isLoggedin);
 
   return (
     
     <BrowserRouter>
       <div className="App">
-        <Navbar/>
+        { isLoggedin ? <UserNavbar/> : <Navbar/> }
         <Switch>
           <Route exact path="/"> <Homepage/> </Route>
           <Route path="/home" component={ErrorPage} />
@@ -34,13 +36,12 @@ function App() {
           <Route path="/apply">
               <PlaceHolderPage page="Coach Application"/>
           </Route>
-          <Route path="/coach/profile" component={CoachProfilePage}>
-          </Route>
+          <Route path="/coach/profile" component={CoachProfilePage}/>
           <Route path="/login" component={LoginPage}/>
           <Route path="/register">
               <PlaceHolderPage page="Sign Up Page"/>
           </Route>
-          <ProtectedRoute path="/test" component={PlaceHolderPage} auth={isAuthenticated} />
+          <ProtectedRoute path="/profile" component={PlaceHolderPage} auth={isLoggedin} />
         </Switch>
         <Footer/>
       </div>

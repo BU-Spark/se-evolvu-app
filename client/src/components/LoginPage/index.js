@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -20,16 +21,17 @@ const LoginPage = () => {
     const [passwordError, setPasswordError] = useState(false)
 
     const message = useSelector(state => state.messageReducer.message);
+    const isLoggedin = useSelector(state => state.authReducer.isLoggedin);
 
     const validate = () => {
 
         if (!isEmail(email) || (!email)) {
             setEmailError(true)
-        }
+        } else { setEmailError(false) }
 
         if (!password) {
-            setPasswordError(true)
-        }
+            setPasswordError(true) 
+        } else { setPasswordError(false) }
 
         return (!emailError && !passwordError)
             
@@ -49,14 +51,18 @@ const LoginPage = () => {
         if (validate()) {
             dispatch( login(email, password) )
                     .then( () => {
-                        // Redirect to homepage
-                        setEmailError(false)
-                        setPasswordError(false)
+                        // Redirect to homepage                        
+
                     })
                     .catch( () => {
+                        
                     })
             
         }
+    }
+
+    if (isLoggedin) {
+        return <Redirect to="/profile" />
     }
 
     return (
