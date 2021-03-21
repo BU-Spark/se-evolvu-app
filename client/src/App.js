@@ -11,6 +11,7 @@ import Homepage from "./components/Homepage/index.js";
 import Navbar from "./components/Navbar/index.js";
 import UserNavbar from "./components/Navbar/UserNavbar/index.js"
 import LoginPage from "./components/LoginPage/index.js";
+import RegisterPage from './components/RegisterPage/index.js';
 import ErrorPage from "./components/ErrorPage/index.js";
 import SearchPage from "./components/SearchPage/index.js";
 import PlaceHolderPage from "./components/PlaceHolderPage/index.js";
@@ -38,9 +39,7 @@ function App() {
           </Route>
           <Route path="/coach/profile" component={CoachProfilePage}/>
           <Route path="/login" component={LoginPage}/>
-          <Route path="/register">
-              <PlaceHolderPage page="Sign Up Page"/>
-          </Route>
+          <Route path="/register" component={RegisterPage}/>
           <ProtectedRoute path="/profile" auth={isLoggedin}>
               <PlaceHolderPage page="Profile"/>
           </ProtectedRoute>

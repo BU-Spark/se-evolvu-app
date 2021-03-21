@@ -9,8 +9,16 @@ const getTestItems = () => {
     return axios.get(API_URL + '/test', { headers: authHeader() });
 };
 
+const searchCoaches = (params) => {
+    return axios.get(API_URL + '/search', { 
+        headers: authHeader(),
+        params
+    });
+};
+
 const userServices = {
-    getTestItems
+    getTestItems,
+    searchCoaches
 };
 
 export default userServices
