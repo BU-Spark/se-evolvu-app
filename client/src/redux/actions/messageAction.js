@@ -1,13 +1,13 @@
 // Based off of code from https://bezkoder.com/react-hooks-redux-login-registration-example/
 
-import { SET_MESSAGE, CLEAR_MESSAGE } from "./types";
+import { Types } from "./actionTypes.js";
 
 export const setMessage = (message) => ({
-  type: SET_MESSAGE,
+  type: Types.SET_MESSAGE,
   payload: message,
 });
 
 export const clearMessage = () => ({
-  type: CLEAR_MESSAGE,
+  type: Types.CLEAR_MESSAGE,
 });
 

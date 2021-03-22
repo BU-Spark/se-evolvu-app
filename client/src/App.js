@@ -37,6 +37,9 @@ function App() {
           <Route path="/apply">
               <PlaceHolderPage page="Coach Application"/>
           </Route>
+          <Route path="tos-and-policy">
+            <PlaceHolderPage page="Terms of Service and Policy Placeholder"/>
+          </Route>
           <Route path="/coach/profile" component={CoachProfilePage}/>
           <Route path="/login" component={LoginPage}/>
           <Route path="/register" component={RegisterPage}/>

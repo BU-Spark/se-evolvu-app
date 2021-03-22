@@ -16,9 +16,17 @@ const searchCoaches = (params) => {
     });
 };
 
+const getCoach = (params) => {
+    return axios.get(API_URL + '/search/coach', { 
+        headers: authHeader(),
+        params
+    });
+};
+
 const userServices = {
     getTestItems,
-    searchCoaches
+    searchCoaches,
+    getCoach
 };
 
 export default userServices
