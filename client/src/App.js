@@ -1,11 +1,14 @@
 import './App.css';
 
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { 
-  BrowserRouter,
+  Router,
   Switch,
   Route
 } from 'react-router-dom';
+import { createBrowserHistory } from "history";
 
 import Homepage from "./components/Homepage/index.js";
 import Navbar from "./components/Navbar/index.js";
@@ -18,15 +21,26 @@ import PlaceHolderPage from "./components/PlaceHolderPage/index.js";
 import Footer from "./components/Footer";
 import CoachProfilePage from './components/CoachProfilePage';
 
-import ProtectedRoute from './components/ProtectedRoute/index.js'
+import ProtectedRoute from './components/ProtectedRoute/index.js';
 
-function App() {
+import { clearMessage } from './redux/actions/messageAction.js';
+
+const App = () => {
 
   let isLoggedin = useSelector(state => state.authReducer.isLoggedin);
 
+  const history = createBrowserHistory();
+  const dispatch = useDispatch();
+
+  useEffect( () => {
+    history.listen( (location) => {
+      dispatch(clearMessage());
+    })
+  }, [dispatch, history])
+
   return (
     
-    <BrowserRouter>
+    <Router history={history}>
       <div className="App">
         { isLoggedin ? <UserNavbar/> : <Navbar/> }
         <Switch>
@@ -49,7 +63,7 @@ function App() {
         </Switch>
         <Footer/>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 
