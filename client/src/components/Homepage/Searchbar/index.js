@@ -20,6 +20,15 @@ const SearchBar = () => {
         setArea(area)
     }
 
+    const onClickHandle = () => {
+        if (area === "Select your area") {
+            setArea("life-coaching")
+        }
+        if (local === "" ) {
+            setLocal("02215")
+        }
+    }
+
     return (
         <div className="searchbar-wrapper">
             <div className="searchbar-input">
@@ -58,8 +67,9 @@ const SearchBar = () => {
                             local: local,
                         }
                     }}
+                    onClick={onClickHandle}
                 >
-                    <Button variant="secondary">
+                    <Button variant="secondary" >
                         Find Your Coach
                     </Button>
                 </Link>

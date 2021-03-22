@@ -1,26 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
-import useWindowDimensions from '../../hooks/useWindowDimensions.js'
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import useWindowDimensions from '../../../hooks/useWindowDimensions.js';
+
+import { logout } from '../../../redux/actions/authAction.js';
+
 
 import "./index.css"
 
-const CustomNavbar = () => {
+const UserNavbar = () => {
 
     // eslint-disable-next-line
-    const { width, height } = useWindowDimensions()
-    const [toggleMenu, setToggleMenu] = useState(false)
+    const { width, height } = useWindowDimensions();
+    const [toggleMenu, setToggleMenu] = useState(false);
+
+    const dispatch = useDispatch();
 
     useEffect( () => {
         if (width < 800) {
-            setToggleMenu(true)
+            setToggleMenu(true);
         } 
         if (width >= 800) {
-            setToggleMenu(false)
+            setToggleMenu(false);
         }
-    }, [width])
+    }, [width]);
+
+    const onLogout = () => {
+
+        dispatch( logout() )
+    }
 
 
     if (!toggleMenu) {
@@ -29,10 +40,10 @@ const CustomNavbar = () => {
                 <div id="navbar">
                     <ul className="navbar-linklist">
                         <li className="navbar-link" >
-                            <Link className="navitem" to="/"> Find a Coach </Link>
+                            <Link className="navitem" to="/profile"> Profile </Link>
                         </li>
                         <li className="navbar-link" >
-                            <Link className="navitem" to="/apply"> Apply as Coach </Link>
+                            <Link className="navitem" to="/" onClick={ () => onLogout()}> Logout </Link>
                         </li>
                     </ul>
                     <div className="nav-logo">
@@ -40,10 +51,10 @@ const CustomNavbar = () => {
                     </div>
                     <ul className="navbar-linklist">
                         <li className="navbar-link" >
-                            <Link className="navitem" to="/login"> Sign In </Link>
+                            <Link className="navitem" to="/"> </Link>
                         </li>
                         <li className="navbar-link" >
-                            <Link className="navitem" to="/register"> Sign Up </Link>
+                            <Link className="navitem" to="/"> </Link>
                         </li>
                     </ul>
                 </div>
@@ -78,4 +89,4 @@ const CustomNavbar = () => {
     
 }
 
-export default CustomNavbar;
+export default UserNavbar;

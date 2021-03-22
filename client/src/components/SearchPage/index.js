@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -13,6 +12,7 @@ import ListProfileCard from './ListProfileCard/index.js';
 import GalleryProfileCard from './GalleryProfileCard/index.js';
 import LoadingCircle from './LoadingCircle/index.js';
 
+import userServices from '../../services/userServices.js'
 import './index.css';
 
 const SearchPage = (props) => {
@@ -31,6 +31,9 @@ const SearchPage = (props) => {
 
     useEffect( () => {
         onSearch()
+        if (JSON.stringify(props.location.state) === JSON.stringify({focus: "Select your area", focusLabel: "Select your area", local: ""})) {
+            props.location.state = {focus: "life-coaching", focusLabel: "Life Coaching", local: "02215"}
+        }
     // eslint-disable-next-line
     }, [])          // Add this line to prevent infinite loop 
 
@@ -41,15 +44,20 @@ const SearchPage = (props) => {
     }
 
     const onSearch = () => {
-        axios.get('https://jsonplaceholder.typicode.com/users', {
-            gender: gender,
-            distance: distance,
-            focus: focus,
-            price: price,
-        }).then( (res) => {
-            setCoachList(res.data);
-            // filterRemote();
-        })
+        const params = { 
+            price,
+            remote,
+            distance,
+            gender,
+            focus
+        }
+        
+        userServices.searchCoaches(params)
+            .then( (res) => {
+                setCoachList(res.data)
+            }).catch( () =>{
+                setCoachList([])
+            })
     }
 
     // NOTE: Function for filtering remote and in person coaches (disabled temporarily)

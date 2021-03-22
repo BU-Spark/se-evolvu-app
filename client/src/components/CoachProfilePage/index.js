@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Media from 'react-bootstrap/Media';
@@ -7,17 +7,32 @@ import Row from 'react-bootstrap/Row';
 
 import StarRatings from 'react-star-ratings'
 
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 
 import { IoIosArrowBack } from 'react-icons/io'
 
 import CoachProfileTabs from './CoachProfileTabs'
+import userServices from '../../services/userServices.js'
 
 import './index.css';
 
 const CoachProfilePage = (props) => {
 
     const history = useHistory()
+    const [profile, setProfile] = useState({})
+
+    useEffect( () => {
+        getCoachProfile()
+    // eslint-disable-next-line 
+    }, [profile.id])
+
+    const getCoachProfile = () => {
+        userServices.getCoach(profile.id)
+            .then( (res) =>{
+                setProfile(res.data)
+            })
+            .catch( () => <Redirect to="/error"/>)
+    }
 
     return (
         <div>
@@ -41,7 +56,7 @@ const CoachProfilePage = (props) => {
                                 alt="Generic placeholder"
                             />
                             <Media.Body id="coach-profile-card-desc">
-                            <h5>{props.location.state.coach.name}</h5>
+                            <h5>{profile.name}</h5>
                             <StarRatings
                                 rating={2.403}
                                 starDimension="20px"
@@ -49,7 +64,7 @@ const CoachProfilePage = (props) => {
                                 starRatedColor="orange"
                             />
                             <p>
-                                {props.location.state.coach.id} ratings
+                                {profile.id} ratings
                             </p>
                             <p>
                                 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
@@ -57,7 +72,7 @@ const CoachProfilePage = (props) => {
                                 ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
                                 ante sollicitudin commodo. 
                             </p>
-                            Response Rate: {props.location.state.coach.id}
+                            Response Rate: {profile.id}
                             </Media.Body>
                         </Media>
                         <div style={{ background: '#F2F2F2', marginTop: '1rem'}}>

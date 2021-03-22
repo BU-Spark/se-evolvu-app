@@ -1,0 +1,42 @@
+
+#login-container {
+    text-align: left;
+}
+
+.login-form {
+    margin: 15%;
+    padding: 10%;
+    background: #CACACA;
+}
+
+#login-form-submit {
+    background-color: #9FC0DE;
+    border: none;
+}
+
+#login-form-submit:hover {
+    background-color: #779ECC;
+    transition: 0.3s;
+    border: none;
+}
+
+#login-form-submit:disabled {
+    background-color: #E1ECF7;
+    transition: 0.3s;
+    border: none;
+}
+
+#login-social-media {
+    background-color: #373737;
+    color: white;
+    border: none;
+    margin: 10px;
+}
+
+#login-social-media:hover {
+    background-color: #707070;
+    transition: 0.3s;
+    color: white;
+    border: none;
+}
+
