@@ -60,6 +60,7 @@ const App = () => {
           <ProtectedRoute path="/profile" auth={isLoggedin}>
               <PlaceHolderPage page="Profile"/>
           </ProtectedRoute>
+          <Route path="/error" component={ErrorPage} />
         </Switch>
         <Footer/>
       </div>

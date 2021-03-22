@@ -1,7 +1,7 @@
 // Code made from example from https://bezkoder.com/react-hooks-redux-login-registration-example/
 
 import axios from "axios";
-import authHeader from './authHeader.js';
+import { authHeader } from './authHeader.js';
 
 const API_URL = "http://localhost:8000";
 
@@ -10,15 +10,13 @@ const getTestItems = () => {
 };
 
 const searchCoaches = (params) => {
-    return axios.get(API_URL + '/search', { 
-        headers: authHeader(),
+    return axios.post(API_URL + '/search', { 
         params
     });
 };
 
 const getCoach = (params) => {
-    return axios.get(API_URL + '/search/coach', { 
-        headers: authHeader(),
+    return axios.post(API_URL + '/search/coach', { 
         params
     });
 };
