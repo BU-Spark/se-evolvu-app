@@ -66,6 +66,7 @@ class ApiCoachListView(ListAPIView):
     # filter_backends = (SearchFilter, OrderingFilter)
     # search_fields = ('last_name',)
 
+'''
 class FocusHealthView(ListAPIView):
     serializer_class = CoachSerializer
     pagination_class = PageNumberPagination
@@ -79,6 +80,7 @@ class FocusWellnessView(ListAPIView):
 
     def get_queryset(self):
         return Coach.objects.filter(focus_wellness=True)
+'''
 
 class FocusHWView(ListAPIView):
     serializer_class = CoachSerializer
@@ -101,9 +103,25 @@ class FocusLifeView(ListAPIView):
     def get_queryset(self):
         return Coach.objects.filter(focus_life=True)
 
+class FocusNFView(ListAPIView):
+    serializer_class = CoachSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        return Coach.objects.filter(focus_nutrition_fitness=True)
+
+class FocusSpiritualView(ListAPIView):
+    serializer_class = CoachSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        return Coach.objects.filter(focus_spiritual=True)
+
+'''
 class FocusBehavorialView(ListAPIView):
     serializer_class = CoachSerializer
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
         return Coach.objects.filter(focus_behavioral=True)
+'''
