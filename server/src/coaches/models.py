@@ -6,7 +6,6 @@ from django.conf import settings
 from django.dispatch import receiver
 # from location_field.models.plain import PlainLocationField
 import random
-
 from accounts.models import Account
 
 def upload_location(instance, filename, **kwargs):

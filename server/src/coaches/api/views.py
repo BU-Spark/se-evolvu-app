@@ -4,13 +4,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
-from django_filters.rest_framework import DjangoFilterBackend
+# from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from coaches.models import Coach
-from coaches.api.serializers import CoachSerializer#, CoachSearchSerializer
+from coaches.api.serializers import CoachSerializer, CoachListSerializer#, CoachSearchSerializer
 from rest_framework.filters import SearchFilter, OrderingFilter
 
 # Create your views here
@@ -59,10 +59,51 @@ def api_delete_coach_view(request, slug):
 
 class ApiCoachListView(ListAPIView):
     queryset = Coach.objects.all() 
-    #print("This is the queryset:", queryset)
     serializer_class = CoachSerializer
-    # authentication_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
     pagination_class = PageNumberPagination
-    filter_backends = (SearchFilter, OrderingFilter, DjangoFilterBackend)
-    search_fields = ('focus_wellness',)
+    # filter_backends = (SearchFilter, OrderingFilter)
+    # search_fields = ('last_name',)
+
+class FocusHealthView(ListAPIView):
+    serializer_class = CoachSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        return Coach.objects.filter(focus_health=True)
+
+class FocusWellnessView(ListAPIView):
+    serializer_class = CoachSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        return Coach.objects.filter(focus_wellness=True)
+
+class FocusHWView(ListAPIView):
+    serializer_class = CoachSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        return Coach.objects.filter(focus_health_wellness=True)
+
+class FocusHolisticView(ListAPIView):
+    serializer_class = CoachSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        return Coach.objects.filter(focus_holistic=True)
+
+class FocusLifeView(ListAPIView):
+    serializer_class = CoachSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        return Coach.objects.filter(focus_life=True)
+
+class FocusBehavorialView(ListAPIView):
+    serializer_class = CoachSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        return Coach.objects.filter(focus_behavioral=True)
