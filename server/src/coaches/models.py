@@ -15,7 +15,6 @@ def upload_location(instance, filename, **kwargs):
     )
     return file_path
 
-# Create your models here.
 class Coach(models.Model):
     coach = models.OneToOneField(Account, on_delete=models.CASCADE) #, related_name="coach_profile")
     image = models.ImageField(upload_to=upload_location, blank=True, null=True)

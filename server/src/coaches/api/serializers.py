@@ -15,6 +15,7 @@ class CoachSerializer(serializers.ModelSerializer):
                 'travel',
                 'description',]
 
+'''
 class CoachSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coach
@@ -31,7 +32,6 @@ class CoachSearchSerializer(serializers.ModelSerializer):
                 'travel',
                 'description',]
 
-'''
     def save(self):
         coach_profile = Coach(
             first_name = self.validated_data['first_name'],
