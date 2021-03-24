@@ -82,6 +82,20 @@ class FocusWellnessView(ListAPIView):
         return Coach.objects.filter(focus_wellness=True)
 '''
 
+class FocusLifeView(ListAPIView):
+    serializer_class = CoachSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        return Coach.objects.filter(focus_life=True)
+
+class FocusBehavioralView(ListAPIView):
+    serializer_class = CoachSerializer
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        return Coach.objects.filter(focus_behavioral=True)
+
 class FocusHWView(ListAPIView):
     serializer_class = CoachSerializer
     pagination_class = PageNumberPagination
@@ -96,32 +110,18 @@ class FocusHolisticView(ListAPIView):
     def get_queryset(self):
         return Coach.objects.filter(focus_holistic=True)
 
-class FocusLifeView(ListAPIView):
-    serializer_class = CoachSerializer
-    pagination_class = PageNumberPagination
-
-    def get_queryset(self):
-        return Coach.objects.filter(focus_life=True)
-
+'''
 class FocusNFView(ListAPIView):
     serializer_class = CoachSerializer
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
         return Coach.objects.filter(focus_nutrition_fitness=True)
+'''
 
-class FocusSpiritualView(ListAPIView):
+class FocusBusinessView(ListAPIView):
     serializer_class = CoachSerializer
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
-        return Coach.objects.filter(focus_spiritual=True)
-
-'''
-class FocusBehavorialView(ListAPIView):
-    serializer_class = CoachSerializer
-    pagination_class = PageNumberPagination
-
-    def get_queryset(self):
-        return Coach.objects.filter(focus_behavioral=True)
-'''
+        return Coach.objects.filter(focus_business=True)

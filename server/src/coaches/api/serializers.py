@@ -15,14 +15,11 @@ class CoachSerializer(serializers.ModelSerializer):
                 'username',
                 'email',
                 'slug',
-                # 'focus_health',
-                # 'focus_wellness',
+                'focus_life',
+                'focus_behavioral',
                 'focus_health_wellness',
                 'focus_holistic',
-                'focus_life',
-                'focus_nutrition_fitness',
-                'focus_spiritual',
-                # 'focus_behavioral',
+                'focus_business',
                 'travel',
                 'description',]
 
@@ -52,14 +49,11 @@ class CoachListSerializer(serializers.ModelSerializer):
                 'username',
                 'email',
                 'slug',
-                # 'focus_health',
-                # 'focus_wellness',
+                'focus_life',
+                'focus_behavioral',
                 'focus_health_wellness',
                 'focus_holistic',
-                'focus_life',
-                'focus_nutrition_fitness',
-                'focus_spiritual',
-                # 'focus_behavioral',
+                'focus_business',
                 'travel',]
 
     def get_coach_account_firstname(self, coach):
