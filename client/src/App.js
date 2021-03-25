@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { 
-  Router,
+  BrowserRouter as Router,
   Switch,
   Route
 } from 'react-router-dom';
@@ -25,9 +25,12 @@ import ProtectedRoute from './components/ProtectedRoute/index.js';
 
 import { clearMessage } from './redux/actions/messageAction.js';
 
+import Profile from './components/index.js'
+
 const App = () => {
 
   let isLoggedin = useSelector(state => state.authReducer.isLoggedin);
+  console.log(useSelector(state => state.authReducer))
 
   const history = createBrowserHistory();
   const dispatch = useDispatch();
@@ -35,6 +38,7 @@ const App = () => {
   useEffect( () => {
     history.listen( (location) => {
       dispatch(clearMessage());
+      console.log("clearing message")
     })
   }, [dispatch, history])
 
@@ -57,9 +61,7 @@ const App = () => {
           <Route path="/coach/profile" component={CoachProfilePage}/>
           <Route path="/login" component={LoginPage}/>
           <Route path="/register" component={RegisterPage}/>
-          <ProtectedRoute path="/profile" auth={isLoggedin}>
-              <PlaceHolderPage page="Profile"/>
-          </ProtectedRoute>
+          <ProtectedRoute path="/profile" auth={isLoggedin} component={Profile}/>
           <Route path="/error" component={ErrorPage} />
         </Switch>
         <Footer/>

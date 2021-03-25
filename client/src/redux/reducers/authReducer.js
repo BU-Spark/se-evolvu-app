@@ -2,11 +2,9 @@
 
 import { Types } from "../actions/actionTypes"
 
-const user = JSON.parse(localStorage.getItem("user"));
+// const user = JSON.parse(localStorage.getItem("user"));
 
-const initialState = user
-  ? { isLoggedIn: true, user }
-  : { isLoggedIn: false, user: null };
+const initialState = {}
 
 export const authReducer = (state = initialState, action) => {
     switch(action.type) {

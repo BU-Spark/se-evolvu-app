@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'coaches',
     'users',
     'accounts',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -64,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'evolvu.urls'
@@ -83,6 +85,12 @@ TEMPLATES = [
         },
     },
 ]
+
+CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)
 
 AUTH_USER_MODEL = 'accounts.Account'
 
