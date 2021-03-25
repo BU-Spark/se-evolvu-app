@@ -6,7 +6,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
-# Create your models here.
 class AccountManager(BaseUserManager):
     def create_user(self, email, username, first_name, last_name, password=None):
         if not email:

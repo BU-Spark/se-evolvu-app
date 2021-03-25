@@ -6,7 +6,6 @@ from django.conf import settings
 from django.dispatch import receiver
 # from location_field.models.plain import PlainLocationField
 import random
-
 from accounts.models import Account
 
 def upload_location(instance, filename, **kwargs):
@@ -15,17 +14,16 @@ def upload_location(instance, filename, **kwargs):
     )
     return file_path
 
-# Create your models here.
 class Coach(models.Model):
     coach = models.OneToOneField(Account, on_delete=models.CASCADE) #, related_name="coach_profile")
     image = models.ImageField(upload_to=upload_location, blank=True, null=True)
     gender = models.CharField(max_length=1)
-    focus_health = models.BooleanField(default=False)
-    focus_wellness = models.BooleanField(default=False)
-    focus_health_wellness = models.BooleanField(default=False)
-    focus_holistic = models.BooleanField(default=False)
     focus_life = models.BooleanField(default=False)
     focus_behavioral = models.BooleanField(default=False)
+    focus_health_wellness = models.BooleanField(default=False)
+    focus_holistic = models.BooleanField(default=False)
+    focus_nutrition_fitness = models.BooleanField(default=False)
+    focus_business = models.BooleanField(default=False)
     travel = models.BooleanField(default=False)
     description = models.TextField()
     # city = models.CharField(max_length=255)
