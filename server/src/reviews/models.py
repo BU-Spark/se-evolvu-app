@@ -8,11 +8,12 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 # from location_field.models.plain import PlainLocationField
 import random
 from accounts.models import Account
-from coaches.models import Coach
+#from coaches.models import Coach
+#import coaches.models.Coach
 
 
 class Review(models.Model):
-    coach = models.ForeignKey(Coach, on_delete=models.CASCADE)
+    coach = models.ForeignKey('coaches.Coach', on_delete=models.CASCADE)
     reviewer = models.ForeignKey(Account, on_delete=models.CASCADE)
     rating = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)])
     body = models.TextField(max_length=3000, blank=True)

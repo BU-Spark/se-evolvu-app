@@ -39,6 +39,11 @@ class UserProfile(models.Model):
             self.focus_life = True
             self.focus_behavioral = True
 
+    def __str__(self):
+        return self.user.last_name + ', ' + self.user.first_name
+
+    
+
 def pre_save_user_receiver(sender, instance, *args, **kwargs):
     # TODO: RANDOM.RANDINT IS A PLACEHOLDER, REPLACE WITH COACH'S ID VALUE LATER
     instance.slug = slugify(instance.user.username + '-' + str(random.randint(0, 100000000)))
