@@ -25,12 +25,11 @@ import ProtectedRoute from './components/ProtectedRoute/index.js';
 
 import { clearMessage } from './redux/actions/messageAction.js';
 
-import Profile from './components/index.js'
+import Profile from './components/Profile/index.js'
 
 const App = () => {
 
   let isLoggedin = useSelector(state => state.authReducer.isLoggedin);
-  console.log(useSelector(state => state.authReducer))
 
   const history = createBrowserHistory();
   const dispatch = useDispatch();
@@ -38,9 +37,10 @@ const App = () => {
   useEffect( () => {
     history.listen( (location) => {
       dispatch(clearMessage());
-      console.log("clearing message")
     })
   }, [dispatch, history])
+
+  console.log(isLoggedin)
 
   return (
     
@@ -61,7 +61,7 @@ const App = () => {
           <Route path="/coach/profile" component={CoachProfilePage}/>
           <Route path="/login" component={LoginPage}/>
           <Route path="/register" component={RegisterPage}/>
-          <ProtectedRoute path="/profile" auth={isLoggedin} component={Profile}/>
+          <ProtectedRoute path="/profile" component={Profile} auth={isLoggedin}/>
           <Route path="/error" component={ErrorPage} />
         </Switch>
         <Footer/>
