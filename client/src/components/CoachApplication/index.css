@@ -1,0 +1,195 @@
+:root {
+
+    /* Colors: */
+    --unnamed-color-e1ecf7: #E1ECF7;
+    --unnamed-color-faaf82: #FAAF82;
+    --unnamed-color-f6f6f6: #F6F6F6;
+    --unnamed-color-f2f2f2: #F2F2F2;
+    --unnamed-color-cacaca: #CACACA;
+    --unnamed-color-979797: #979797;
+    --unnamed-color-646464: #646464;
+    --unnamed-color-373737: #373737;
+    --unnamed-color-ffb347: #FFB347;
+    --unnamed-color-f2c894: #F2C894;
+    --unnamed-color-9fc0de: #9FC0DE;
+    --unnamed-color-779ecc: #779ECC;
+    
+    /* Font/text values */
+    --unnamed-font-family-acumin-pro: Acumin Pro;
+    --unnamed-font-style-normal: normal;
+    --unnamed-font-style-italic: italic;
+    --unnamed-font-weight-600: 600px;
+    --unnamed-font-weight-bold: bold;
+    --unnamed-font-weight-normal: normal;
+    --unnamed-font-size-18: 18px;
+    --unnamed-font-size-24: 24px;
+    --unnamed-font-size-30: 30px;
+    --unnamed-font-size-40: 40px;
+    --unnamed-font-size-48: 48px;
+    --unnamed-font-size-60: 60px;
+    --unnamed-font-size-14-399999618530273: 14.399999618530273px;
+    --unnamed-character-spacing-0-48: 0.48px;
+    --unnamed-character-spacing-0-96: 0.96px;
+    --unnamed-character-spacing-0-23: 0.23px;
+    --unnamed-character-spacing-0-29: 0.29px;
+    --unnamed-character-spacing-0-77: 0.77px;
+    --unnamed-character-spacing-0-64: 0.64px;
+    --unnamed-character-spacing-0-38: 0.38px;
+    --unnamed-line-spacing-29: 29px;
+    --unnamed-line-spacing-38: 38px;
+    --unnamed-line-spacing-44: 44px;
+    --unnamed-line-spacing-58: 58px;
+    --unnamed-line-spacing-61: 61px;
+    --unnamed-line-spacing-72: 72px;
+    }
+    
+    /* Character Styles */
+    .unnamed-character-style-1 {
+    font-family: var(--unnamed-font-family-acumin-pro);
+    font-style: var(--unnamed-font-style-normal);
+    font-weight: var(--unnamed-font-weight-bold);
+    font-size: var(--unnamed-font-size-14-399999618530273);
+    line-height: var(--unnamed-line-spacing-29);
+    letter-spacing: var(--unnamed-character-spacing-0-23);
+    color: var(--unnamed-color-646464);
+    }
+    .unnamed-character-style-2 {
+    font-family: var(--unnamed-font-family-acumin-pro);
+    font-style: var(--unnamed-font-style-normal);
+    font-weight: var(--unnamed-font-weight-normal);
+    font-size: var(--unnamed-font-size-18);
+    line-height: var(--unnamed-line-spacing-29);
+    letter-spacing: var(--unnamed-character-spacing-0-29);
+    color: var(--unnamed-color-646464);
+    }
+    .unnamed-character-style-3 {
+    font-family: var(--unnamed-font-family-acumin-pro);
+    font-style: var(--unnamed-font-style-italic);
+    font-weight: var(--unnamed-font-weight-bold);
+    font-size: var(--unnamed-font-size-24);
+    line-height: var(--unnamed-line-spacing-38);
+    letter-spacing: var(--unnamed-character-spacing-0-38);
+    color: var(--unnamed-color-646464);
+    }
+    .unnamed-character-style-4 {
+    font-family: var(--unnamed-font-family-acumin-pro);
+    font-style: var(--unnamed-font-style-normal);
+    font-weight: var(--unnamed-font-weight-bold);
+    font-size: var(--unnamed-font-size-30);
+    line-height: var(--unnamed-line-spacing-44);
+    letter-spacing: var(--unnamed-character-spacing-0-48);
+    color: var(--unnamed-color-646464);
+    }
+    .unnamed-character-style-5 {
+    font-family: var(--unnamed-font-family-acumin-pro);
+    font-style: var(--unnamed-font-style-italic);
+    font-weight: var(--unnamed-font-weight-600);
+    font-size: var(--unnamed-font-size-40);
+    line-height: var(--unnamed-line-spacing-58);
+    letter-spacing: var(--unnamed-character-spacing-0-64);
+    color: var(--unnamed-color-646464);
+    }
+    .unnamed-character-style-6 {
+    font-family: var(--unnamed-font-family-acumin-pro);
+    font-style: var(--unnamed-font-style-normal);
+    font-weight: var(--unnamed-font-weight-600);
+    font-size: var(--unnamed-font-size-48);
+    line-height: var(--unnamed-line-spacing-61);
+    letter-spacing: var(--unnamed-character-spacing-0-77);
+    color: var(--unnamed-color-646464);
+    }
+    .unnamed-character-style-7 {
+    font-family: var(--unnamed-font-family-acumin-pro);
+    font-style: var(--unnamed-font-style-normal);
+    font-weight: var(--unnamed-font-weight-bold);
+    font-size: var(--unnamed-font-size-60);
+    line-height: var(--unnamed-line-spacing-72);
+    letter-spacing: var(--unnamed-character-spacing-0-96);
+    color: var(--unnamed-color-646464);
+    }
+
+#CoachAppPage {
+    background: white;
+}
+
+#headerMessage{
+    color: #FFB347
+}
+
+#ApplicationPage {
+    padding: 5rem;
+    background: white;
+    height: 110vh;
+}
+
+#centerBlockCoach{
+    margin-top: 0px;
+    padding: 50px;
+    padding-right:150px;
+    background-color: #9FC0DE;
+    width: 100%;
+    text-align: left;
+}
+
+#questionsRow{
+    height: 500px;
+}
+
+#benefits{
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-bottom: 8px;
+    margin-top: 2rem;
+    background-color: #779ECC;
+    color: white;
+    text-align: center;
+}
+
+#benefits ul{
+    text-align: left;
+}
+
+#listBenefits{
+    padding: 0rem;
+    list-style: none;
+}
+#listBenefit {
+    margin-left: 10px;
+}
+#listBenefit::before {
+    content: "\2713";
+    color: #FFB347; 
+}
+
+.profile-tabs {
+    margin-top: 3rem;
+    text-align: right;
+}
+
+.profile-tabitem {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) 20px/17px var(--unnamed-font-family-acumin-pro);
+    color: var(--unnamed-color-9fc0de);
+    text-align: center;
+    font: normal normal bold 20px/17px Acumin Pro;
+    letter-spacing: 0.28px;
+    color: #9FC0DE;
+    opacity: 1;
+
+    border: 2px solid #A5BFDB;
+    border-radius: 5px;
+    opacity: 1;
+}
+
+.profile-tabitem:active {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) 20px/17px var(--unnamed-font-family-acumin-pro);
+    text-align: center;
+    font: normal normal bold 20px/17px Acumin Pro;
+    letter-spacing: 0.28px;
+    color: #FFFFFF;
+    opacity: 1;
+
+    background: var(--unnamed-color-9fc0de) 0% 0% no-repeat padding-box;
+    background: #9FC0DE 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
+}

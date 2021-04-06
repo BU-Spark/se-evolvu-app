@@ -20,6 +20,14 @@ import SearchPage from "./components/SearchPage/index.js";
 import PlaceHolderPage from "./components/PlaceHolderPage/index.js";
 import Footer from "./components/Footer";
 import CoachProfilePage from './components/CoachProfilePage';
+import CoachApplyLanding from "./components/CoachApplyLanding";
+import CoachEligibility from "./components/CoachEligibility/index.js";
+import CoachApplication from "./components/CoachApplication/index.js";
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Privacy from "./components/Privacy";
+import Testimonial from "./components/Testimonial";
+import Safety from "./components/Safety";
 
 import ProtectedRoute from './components/ProtectedRoute/index.js';
 
@@ -46,21 +54,21 @@ const App = () => {
         <Switch>
           <Route exact path="/"> <Homepage/> </Route>
           <Route path="/home" component={ErrorPage} />
-          <Route path="/about" component={ErrorPage} />
           <Route path="/search" component={SearchPage} />
-          <Route path="/apply">
-              <PlaceHolderPage page="Coach Application"/>
-          </Route>
-          <Route path="tos-and-policy">
-            <PlaceHolderPage page="Terms of Service and Policy Placeholder"/>
-          </Route>
           <Route path="/coach/profile" component={CoachProfilePage}/>
           <Route path="/login" component={LoginPage}/>
           <Route path="/register" component={RegisterPage}/>
           <ProtectedRoute path="/profile" auth={isLoggedin}>
               <PlaceHolderPage page="Profile"/>
           </ProtectedRoute>
-          <Route path="/error" component={ErrorPage} />
+          <Route path="/about" component={About} />
+          <Route path="/apply" component ={CoachApplyLanding} />
+          <Route path="/eligibility" component ={CoachEligibility} />
+          <Route path="/application" component ={CoachApplication} />
+          <Route path="/contact" component ={Contact} />
+          <Route path="/privacy" component ={Privacy} />
+          <Route path="/testimonial" component ={Testimonial} />
+          <Route path="/safety" component ={Safety} />
         </Switch>
         <Footer/>
       </div>
