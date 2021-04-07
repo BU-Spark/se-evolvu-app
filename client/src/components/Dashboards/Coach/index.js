@@ -10,6 +10,7 @@ import CoachDash from './Dashboard/index.js';
 import CoachCalendar from './Calendar/index.js';
 import CoachProfileForm from './Profile/index.js';
 import SessionHistory from './History/index.js';
+import PaymentHistory from './Payments/index.js';
 
 import { IoNewspaperOutline } from 'react-icons/io5';
 import { RiCalendarCheckFill } from 'react-icons/ri';
@@ -26,14 +27,13 @@ const CoachDashboard = () => {
 
     return (
         <div style={{ margin: '1rem'}}>
-            <Tab.Container id="" defaultActiveKey="profile">
+            <Tab.Container id="" defaultActiveKey="profile" >
                 <Row>
                     <Col sm={2} style={{ background: "#E1ECF7"}}>
                     <h5 style={{ paddingTop: "1rem"}}>My Evolv U</h5>
                     <Nav variant="pills" className="flex-column" style={{ textAlign: "center"}}>
-                        <Nav.Item className="dashboard-nav-item">
+                        <Nav.Item id="dashboard-nav-item">
                             <Nav.Link eventKey="dashboard" id="dashboard-nav-link">
-                            {/* style={{ background: "#779ECC", color: "white", height: "10vh"}} */}
                                 <div >
                                     <IoNewspaperOutline size={40}/>
                                 </div>
@@ -41,8 +41,7 @@ const CoachDashboard = () => {
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item style={{ padding: "1rem"}}>
-                            <Nav.Link eventKey="calendar">
-                            {/* style={{ background: "#779ECC", height: "12vh", width: "12vh"}} */}
+                            <Nav.Link eventKey="calendar" id="dashboard-nav-link">
                                 <div >
                                     <RiCalendarCheckFill size={40}/><br/>
                                     Calendar
@@ -50,7 +49,7 @@ const CoachDashboard = () => {
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item style={{ padding: "1rem"}}>
-                            <Nav.Link eventKey="profile">
+                            <Nav.Link eventKey="profile" id="dashboard-nav-link">
                                 <div >
                                     <BsFillPersonFill size={40}/> <br/>
                                     Profile
@@ -58,7 +57,7 @@ const CoachDashboard = () => {
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item style={{ padding: "1rem"}}>
-                            <Nav.Link eventKey="session-history">
+                            <Nav.Link eventKey="session-history" id="dashboard-nav-link">
                                 <div >
                                     <FaHistory size={40}/> <br/>
                                     Session History
@@ -66,15 +65,15 @@ const CoachDashboard = () => {
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item style={{ padding: "1rem"}}>
-                            <Nav.Link eventKey="payments">
+                            <Nav.Link eventKey="payments" id="dashboard-nav-link">
                                 <div >
                                     <FiCreditCard size={40}/> <br/>
-                                    Payments & Payouts
+                                    Payments
                                 </div>
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item style={{ padding: "1rem"}}>
-                            <Nav.Link eventKey="forms">
+                            <Nav.Link eventKey="forms" id="dashboard-nav-link">
                                 <div >
                                     <BsTextCenter size={40}/> <br/>
                                     Forms
@@ -82,7 +81,7 @@ const CoachDashboard = () => {
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item style={{ padding: "1rem"}}>
-                            <Nav.Link eventKey="settings">
+                            <Nav.Link eventKey="settings" id="dashboard-nav-link">
                                 <div >
                                     <IoSettingsSharp size={40}/> <br/>
                                     Calendar
@@ -90,7 +89,7 @@ const CoachDashboard = () => {
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item style={{ padding: "1rem"}}>
-                            <Nav.Link eventKey="coach-profile">Coach James</Nav.Link>
+                            <Nav.Link eventKey="coach-profile" id="dashboard-nav-link">Coach James</Nav.Link>
                         </Nav.Item>
                         <Button>Logout</Button> 
                     </Nav>
@@ -108,6 +107,9 @@ const CoachDashboard = () => {
                             </Tab.Pane>
                             <Tab.Pane eventKey="session-history">
                                 <SessionHistory/>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="payments">
+                                <PaymentHistory/>
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

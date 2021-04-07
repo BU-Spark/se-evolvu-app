@@ -10,8 +10,8 @@ const CoachProfileForm = () => {
 
     return (
         <div>
-            <h3 style={{textAlign: "left", margin: "3rem", color: "#779ECC"}}>Profile</h3>
-            <Col style={{ margin: "3rem"}}>
+            <h3 style={{textAlign: "left", margin: "1rem", color: "#779ECC"}}>Profile</h3>
+            <Col style={{ margin: "1rem"}}>
                 <Row style={{ background: "#F6F6F6", marginBottom: "1rem"}}>
                     <div style={{ width: "100%"}}>
                         <p style={{ background: "#7E9EC8", textAlign: "left", padding: "1rem", color: "white"}}>About You</p>

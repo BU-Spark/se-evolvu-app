@@ -77,7 +77,6 @@ const DashCarousel = () => {
                     <div style={{ display: 'flex', justifyContent: "space-between", alignContent: "center"}}>
                         {sessionListing.map((client) => (
                             <div style={{ height: '15vh', width: '15vh'}}>  
-                                <Image src="https://via.placeholder.com/150/d32776"/>    
                                 with {client.name} at <br/> {client.time}
                             </div>
                         ))}`

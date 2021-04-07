@@ -9,11 +9,6 @@
     background: green;
 }
 
-#dashboard-nav-link :active {
-    color: green;
-    background: blue;
-}
-
 #dashboard-nav-item {
     padding: 1rem;
 }
