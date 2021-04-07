@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
-import Carousel from 'react-bootstrap/Carousel';
+import DashCarousel from './Carousel/index.js'
 
 const CoachDash = () => {
 
-    let times = ["12:00 PM", "3:00 PM", "5:00 PM", "6:00 PM"]
+    let times = [("12:00 PM", 1), ("3:00 PM", 2), ("5:00 PM",3), ("6:00 PM",4)]
     let name = "John"
 
     useEffect( () => {
@@ -17,15 +17,15 @@ const CoachDash = () => {
 
     return (
         <div>
-            <div style={{ textAlign: "left", paddingBottom: "10%"}}>
+            <div style={{ textAlign: "left", paddingTop: "1rem"}}>
                 <h2>Your Dashboard</h2>
             </div>
             <Row>
                 <Col sm={4}>
                     <ListGroup>
-                        <ListGroup.Item style={{ color: "#373737", text: "white"}}>Today's Timetable</ListGroup.Item>
-                        {times.map( (val) => (
-                            <ListGroup.Item>Session {val}</ListGroup.Item>
+                        <ListGroup.Item style={{ background: "#373737", color: "white", textAlign: "left"}}>Today's Timetable</ListGroup.Item>
+                        {times.map( (val, idx) => (
+                            <ListGroup.Item key={idx} style={{ marginTop: "1rem", border: "none", background: "#F2F2F2", color: "#779ECC"}}>Session {val}</ListGroup.Item>
                         ))}
                     </ListGroup>
                     <hr/>
@@ -37,27 +37,60 @@ const CoachDash = () => {
                 </Col>
                 <Col>
                     <Row>
-                        <Col sm={3} style={{ background: "#F2F2F2", marginRight: "2rem"}}>
-                            Time
+                        <Col sm={3} >
+                            <div style={{ background: "#F2F2F2"}}>
+                                <div style={{ padding: "1rem"}}>
+                                    <p>Time</p>
+                                    <p>Day</p>
+                                    <p>Year</p>
+
+                                </div>
+                            </div>
                         </Col>
-                        <Col style={{ background:"#E1ECF7"}}>
-                            <div style={{ textAlign: "left"}}>
-                                <p>Hello, Coach {name}!</p>
-                                <p>Don't forget to check your inbox!</p>
-                                <p>Make sure you have reviewed the <a href="blank">CDC safety guidelines</a> for COVID-19</p>
+                        <Col>
+                            <div style={{ textAlign: "left", background:"#E1ECF7" }}>
+                                <div style={{ padding: '1rem'}}>
+                                    <h5>Hello, Coach {name}!</h5>
+                                    <p>Don't forget to check your inbox!</p>
+                                    <p>Make sure you have reviewed the <a href="blank">CDC safety guidelines</a> for COVID-19</p>
+                                </div>
                             </div>
                         </Col>
                     </Row>
-                    <Row>
-                        <div>
-                            
-                        </div>
+                    <Row style={{ marginTop: "2rem"}}>
+                        <Col>
+                            <p style={{ background: "#E1ECF7", textAlign: "left", padding: "0.5rem", margin: "0"}}>Today's Session</p>
+                            <DashCarousel/>
+                        </Col>
                     </Row>
                 </Col>
             </Row>
-            <Row>
-                
-                
+            <Row style={{ marginTop: "4rem"}}>
+                <Col sm={4}>
+                    <div>
+                        <div style={{ background: "#E1ECF7", height: "15vh", padding: "1rem"}}>
+                        <h5>Wellness Reminder:</h5>
+                            Give yourself some silence
+                        </div>
+                    </div>
+                </Col>
+                <Col>
+                    <div style={{ background: "#E1ECF7"}}>
+                        <h5 style={{ padding: "1rem"}}>Tips on Securing Clients</h5>
+                        <div style={{ display: "flex", justifyContent: "space-between", padding: "1rem"}}>
+                            <div style={{ height: "15vh"}}>
+                                Respond Quickly
+                            </div>
+                            <div style={{  height: "15vh"}}>
+                                Respond Often
+                            </div>
+                            <div style={{ height: "15vh"}}>
+                                Be Authentic
+                            </div>
+                        </div>
+                    </div>
+                    
+                </Col>
             </Row>
         </div>
 
