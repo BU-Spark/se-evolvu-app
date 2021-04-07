@@ -6,9 +6,10 @@ import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 
-import CoachDash from './Dashboard/index.js'
-import CoachCalendar from './Calendar/index.js'
-import CoachProfileForm from './Profile/index.js'
+import CoachDash from './Dashboard/index.js';
+import CoachCalendar from './Calendar/index.js';
+import CoachProfileForm from './Profile/index.js';
+import SessionHistory from './History/index.js';
 
 import { IoNewspaperOutline } from 'react-icons/io5';
 import { RiCalendarCheckFill } from 'react-icons/ri';
@@ -30,7 +31,7 @@ const CoachDashboard = () => {
                     <Col sm={2} style={{ background: "#E1ECF7"}}>
                     <h5 style={{ paddingTop: "1rem"}}>My Evolv U</h5>
                     <Nav variant="pills" className="flex-column" style={{ textAlign: "center"}}>
-                        <Nav.Item style={{ padding: "1rem"}}>
+                        <Nav.Item className="dashboard-nav-item">
                             <Nav.Link eventKey="dashboard" id="dashboard-nav-link">
                             {/* style={{ background: "#779ECC", color: "white", height: "10vh"}} */}
                                 <div >
@@ -104,6 +105,9 @@ const CoachDashboard = () => {
                             </Tab.Pane>
                             <Tab.Pane eventKey="profile">
                                 <CoachProfileForm/>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="session-history">
+                                <SessionHistory/>
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

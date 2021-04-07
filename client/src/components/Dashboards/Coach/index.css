@@ -1,4 +1,19 @@
 
-.dashboard-nav-link {
-    color: white
+#dashboard-nav-link {
+    color: white;
+    background: #9FC0DE;
+}
+
+#dashboard-nav-item nav-link:active {
+    color: white;
+    background: green;
+}
+
+#dashboard-nav-link :active {
+    color: green;
+    background: blue;
+}
+
+#dashboard-nav-item {
+    padding: 1rem;
 }
