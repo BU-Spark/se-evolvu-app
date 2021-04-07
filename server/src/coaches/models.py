@@ -34,11 +34,24 @@ class Coach(models.Model):
     # location = PlainLocationField(based_fields=['city'], zoom=7)
     slug = models.SlugField(blank=True, unique=True)
 
-    """
+    
     def no_of_reviews(self):
         reviews = Review.objects.filter(coach=self)
         return len(reviews)
-    """
+
+    def avg_rating(self):
+        sum = 0
+        reviews = Review.objects.filter(coach=self)
+        for review in reviews:
+            #print('HERE IS RATING')
+            #print(rating)
+            sum+= review.rating
+
+        if len(reviews) > 0:
+            return sum / len(reviews)
+        else:
+            return 0
+    
     
     def __str__(self):
         return self.coach.last_name + ', ' + self.coach.first_name

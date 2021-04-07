@@ -19,7 +19,14 @@ class Review(models.Model):
     body = models.TextField(max_length=3000, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     
+    """
+    def __str__(self):
+        return str(self.rating)
+    """
+
     #prevents user from rating the same coach multiple times
     class Meta:
         unique_together = (('reviewer', 'coach'),)
         index_together = (('reviewer', 'coach'),)
+
+    
