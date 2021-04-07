@@ -21,6 +21,8 @@ import PlaceHolderPage from "./components/PlaceHolderPage/index.js";
 import Footer from "./components/Footer";
 import CoachProfilePage from './components/CoachProfilePage';
 
+import CoachDashboard from './components/Dashboards/Coach/index.js';
+
 import ProtectedRoute from './components/ProtectedRoute/index.js';
 
 import { clearMessage } from './redux/actions/messageAction.js';
@@ -62,6 +64,7 @@ const App = () => {
           <Route path="/login" component={LoginPage}/>
           <Route path="/register" component={RegisterPage}/>
           <ProtectedRoute path="/profile" component={Profile} auth={isLoggedin}/>
+          <ProtectedRoute path="/coach/dashboard" component={CoachDashboard} auth={true}/>
           <Route path="/error" component={ErrorPage} />
         </Switch>
         <Footer/>
