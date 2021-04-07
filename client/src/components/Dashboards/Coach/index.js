@@ -7,6 +7,8 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 
 import CoachDash from './Dashboard/index.js'
+import CoachCalendar from './Calendar/index.js'
+import CoachProfileForm from './Profile/index.js'
 
 import { IoNewspaperOutline } from 'react-icons/io5';
 import { RiCalendarCheckFill } from 'react-icons/ri';
@@ -23,7 +25,7 @@ const CoachDashboard = () => {
 
     return (
         <div style={{ margin: '1rem'}}>
-            <Tab.Container id="" defaultActiveKey="dashboard">
+            <Tab.Container id="" defaultActiveKey="profile">
                 <Row>
                     <Col sm={2} style={{ background: "#E1ECF7"}}>
                     <h5 style={{ paddingTop: "1rem"}}>My Evolv U</h5>
@@ -98,10 +100,10 @@ const CoachDashboard = () => {
                                 <CoachDash/>
                             </Tab.Pane>
                             <Tab.Pane eventKey="calendar">
-                                What's in the brain, that ink may character, Which hath not figur'd to thee my true spirit? What's new to speak, what now to register, That may express my love, or thy dear merit? Nothing, sweet boy; but yet, like prayers divine, I must each day say o'er the very same; Counting no old thing old, thou mine, I thine, Even as when first I hallow'd thy fair name. So that eternal love in love's fresh case, Weighs not the dust and injury of age,                        
+                                <CoachCalendar/>
                             </Tab.Pane>
                             <Tab.Pane eventKey="profile">
-                                What's in the brain, that ink may character, Which hath not figur'd to thee my true spirit? What's new to speak, what now to register, That may express my love, or thy dear merit? Nothing, sweet boy; but yet, like prayers divine, I must each day say o'er the very same; Counting no old thing old, thou mine, I thine, Even as when first I hallow'd thy fair name. So that eternal love in love's fresh case, Weighs not the dust and injury of age,                        
+                                <CoachProfileForm/>
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>
