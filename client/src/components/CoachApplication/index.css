@@ -119,26 +119,27 @@
 #ApplicationPage {
     padding: 5rem;
     background: white;
-    height: 110vh;
+    height: 130vh;
 }
 
 #centerBlockCoach{
     margin-top: 0px;
-    padding: 50px;
-    padding-right:150px;
+    padding: 3.125rem;
+    padding-right:9.37rem;
+    padding-bottom:6rem;
     background-color: #9FC0DE;
     width: 100%;
     text-align: left;
 }
 
 #questionsRow{
-    height: 500px;
+    height: 31.25rem;
 }
 
 #benefits{
     padding-top: 0px;
     padding-left: 0px;
-    padding-bottom: 8px;
+    padding-bottom:0.5rem;
     margin-top: 2rem;
     background-color: #779ECC;
     color: white;
@@ -154,7 +155,7 @@
     list-style: none;
 }
 #listBenefit {
-    margin-left: 10px;
+    margin-left: 0.625rem;
 }
 #listBenefit::before {
     content: "\2713";
@@ -175,8 +176,8 @@
     color: #9FC0DE;
     opacity: 1;
 
-    border: 2px solid #A5BFDB;
-    border-radius: 5px;
+    border: .125rem solid #A5BFDB;
+    border-radius: 0.31rem;
     opacity: 1;
 }
 
@@ -190,6 +191,41 @@
 
     background: var(--unnamed-color-9fc0de) 0% 0% no-repeat padding-box;
     background: #9FC0DE 0% 0% no-repeat padding-box;
-    border-radius: 5px;
+    border-radius: 0.31rem;
     opacity: 1;
+}
+
+#applicationHeaders{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) 20px/22px var(--unnamed-font-family-acumin-pro);
+    color: var(--unnamed-color-373737);
+    text-align: left;
+    font: normal normal bold 20px/22px Acumin Pro;
+    letter-spacing: 0.28px;
+    color: #373737;
+    opacity: 1;
+}
+
+#dropDown{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) 20px/22px var(--unnamed-font-family-acumin-pro);
+    color: var(--unnamed-color-373737);
+    text-align: left;
+    font: normal normal bold 20px/22px Acumin Pro;
+    letter-spacing: 0.28px;
+    color: #373737;
+    opacity: 1;
+}
+
+#information{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) 20px/22px var(--unnamed-font-family-acumin-pro);
+    color: var(--unnamed-color-373737);
+    text-align: left;
+    font: normal normal bold 20px/22px Acumin Pro;
+    letter-spacing: 0.28px;
+    color: #373737;
+    opacity: 1;
+}
+
+
+#input{
+    margin-bottom: 0px;
 }

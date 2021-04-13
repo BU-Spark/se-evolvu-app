@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import "./index.css";
 import InputGroup from 'react-bootstrap/InputGroup';
-import FirstPage from "./FirstPage/";
 import { Tabs, Tab } from 'react-bootstrap';
 import "./index.css";
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -20,6 +19,19 @@ const CoachApplication = () => {
     const [area, setArea] = useState(1);
     const [tab, setTab] = useState("basicInfo");
 
+    const [firstNameError, setFirstNameError] = useState(false)
+    const [firstName, setFirstName] = useState("");
+    const onChangeFirstName = (e) => {
+        setFirstName(e.target.value);
+    }
+
+    const [lastNameError, setLastNameError] = useState(false)
+    const [lastName, setLastName] = useState("");
+    const onChangeLastName = (e) => {
+        setLastName(e.target.value);
+    }
+
+
     const [emailError, setEmailError] = useState(false)
     const [email, setEmail] = useState("");
     const onChangeEmail = (e) => {
@@ -32,6 +44,11 @@ const CoachApplication = () => {
         setPassword(e.target.value);
     }
 
+    const [DateOfBirth, setDateOfBirth] = useState("");
+    const onChangeDateOfBirth = (e) => {
+        setDateOfBirth(e.target.value);
+    }
+
     const validate = () => {
 
         if (!isEmail(email) || (!email)) {
@@ -42,14 +59,41 @@ const CoachApplication = () => {
             setPasswordError(true) 
         } else { setPasswordError(false) }
 
-        return (!emailError && !passwordError)
+        if (!firstName) {
+            setFirstNameError(true) 
+        } else { setFirstNameError(false) }
+
+        if (!lastName) {
+            setLastNameError(true) 
+        } else { setLastNameError(false) }
+
+
+        if (email === " " || email === "" || !isEmail(email)) {
+            return false;
+        }
+
+        if (firstName === " " || firstName === "") {
+            return false;
+        }
+
+        if (lastName === " " || lastName === "") {
+            return false;
+        }
+
+        if (password === " " || password === "" || !isEmail(email)) {
+            return false;
+        }
+
+        return true;
             
     }
+
+    const [concentration, setConcentration] = useState(" ");
 
     return( 
 
         <div id= "CoachAppPage">
-            <div  id = "headerMessage" style = {{paddingTop:"50px", height: "80px"}}className = "col-sm-5 mx-auto">
+            <div  id = "headerMessage" style = {{paddingTop:"3.125rem", height: "5rem"}}className = "col-sm-5 mx-auto">
                 <h1>Apply and Start Your Health
                     <br/>and Wellness Coaching Journey with EvolvU!</h1>
             </div>
@@ -63,8 +107,8 @@ const CoachApplication = () => {
                             <Tabs activeKey = {tab}>
 
 
-                                {/*first page */}
-                                <Tab  eventKey= "basicInfo" title="basic information" tabClassName="profile-tabitem">
+                                {/*xxxxxxxxxxxxxFIRST PAGExxxxxxxxxxx */}
+                                <Tab  eventKey= "basicInfo" title="Basic Information" tabClassName="profile-tabitem">
                                     <div id = "centerBlockCoach" className = "col-sm mx-auto">
 
                                         <div id = "questionsRow" className = "d-flex row">
@@ -72,26 +116,30 @@ const CoachApplication = () => {
                                             <div id="questionCol" className = "col-sm-5 mx-1">
 
                                                 <ul className="list-unstyled">
-                                                    <li style= {{color: "#373737"}}>First Name</li>
+                                                    <li id = "information">First Name <span style={{ color: 'red'}}>*</span></li>
 
                                                     <li>
-                                                        <InputGroup>
-                                                            <Form.Control placeholder= "John"/>
-                                                        </InputGroup>
+                                                        <Form.Group id = "input" onChange={(e) => { onChangeFirstName(e) }}>
+                                                            <Form.Control type = "name" placeholder= "John"/>
+                                                        </Form.Group>
+                                                        {
+                                                        firstNameError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                                                        }
+
                                                     </li>
                                                 </ul>
 
                                                 <br/>
 
                                                 <ul className="list-unstyled">
-                                                    <li style= {{color: "#373737"}}>Email</li>
+                                                    <li id = "information">Email <span style={{ color: 'red'}}>*</span></li>
 
                                                     <li>
-                                                    <Form.Group controlId="formBasicEmail" onChange={(e) => { onChangeEmail(e)}}>
+                                                    <Form.Group id="input" onChange={(e) => { onChangeEmail(e)}}>
                                                         <Form.Control type = "email" placeholder= "JohnDoe@xmail.com"/>
                                                     </Form.Group>
                                                     {
-                                                         emailError ? <Alert variant="danger"> {!isEmail(email) ? "Not a valid email" : "This is a required field."} </Alert> : null
+                                                         emailError ? <Alert style = {{padding: "0px"}} variant="danger"> {!isEmail(email) ? "Not a valid email" : "This is a required field."} </Alert> : null
                                                     }
 
                                                     </li>
@@ -100,14 +148,14 @@ const CoachApplication = () => {
                                                 <br/>
 
                                                 <ul className="list-unstyled">
-                                                    <li style= {{color: "#373737"}}>Password</li>
+                                                    <li id = "information">Password <span style={{ color: 'red'}}>*</span></li>
 
                                                     <li>
-                                                        <Form.Group controlId="formBasicPassword" onChange={(e) => { onChangePassword(e) }}>
+                                                        <Form.Group id="input" onChange={(e) => { onChangePassword(e) }}>
                                                                 <Form.Control type="password" placeholder= ""/>
                                                         </Form.Group>
                                                         {
-                                                        passwordError ? <Alert variant="danger"> This is a required field. </Alert> : null
+                                                        passwordError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
                                                         }
                                                     </li>
                                                 </ul>
@@ -116,7 +164,7 @@ const CoachApplication = () => {
 
                                                 <div class="form-check" style ={{paddingRight: "0px", marginRight: "0px"}}>
                                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                                                            <label class="form-check-label" for="flexCheckDefault" style={{paddingRight: "2rem", color:"#373737"}}>
+                                                            <label class="form-check-label" for="flexCheckDefault" id = "information">
                                                                 Outside US or Canada?
                                                             </label>
                                                 </div>
@@ -142,35 +190,40 @@ const CoachApplication = () => {
                                             <div id="questionCol" className = "col-sm-5 mx-1">
 
                                                 <ul className="list-unstyled">
-                                                    <li style= {{color: "#373737"}}>Last Name</li>
+                                                    <li id = "information">Last Name <span style={{ color: 'red'}}>*</span></li>
 
                                                     <li>
-                                                        <InputGroup>
+
+                                                        <Form.Group id = "input"onChange={(e) => { onChangeLastName(e) }}>
                                                             <Form.Control placeholder= "Doe"/>
-                                                        </InputGroup>
+                                                        </Form.Group>
+                                                        {
+                                                        lastNameError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                                                        }
+
                                                     </li>
                                                 </ul>
 
                                                 <br/>
 
                                                 <ul className="list-unstyled">
-                                                    <li style= {{color: "#373737"}}>How did you hear about us?</li>
+                                                    <li id = "information">How did you hear about us?</li>
 
                                                     <li>
-                                                        <InputGroup className="mb-3">
-                                                            <DropdownButton as={InputGroup.Append} variant="light" style = {{width: "15%"}}
-                                                            >
-                                                                <Dropdown.Item onClick={() => setSource("Google")}>Google</Dropdown.Item>
-                                                                <Dropdown.Item onClick={() => setSource("Instagram")}>Instagram</Dropdown.Item>
-                                                                <Dropdown.Item onClick={() => setSource("Facebook")}>Facebook</Dropdown.Item>
-                                                                <Dropdown.Item onClick={() => setSource("Other")}>Other</Dropdown.Item>
-                                                            </DropdownButton>
-                                                            <FormControl placeholder = {source} aria-describedby="basic-addon1" />
-                                                        </InputGroup>
+                                                    <Form.Group id="information" className="register-form-input" onChange={ (e) => setConcentration(e.target.value)}>
+                                                            <Form.Control as="select">
+                                                                <option onClick={() => setSource("Google")}>Google</option>
+                                                                <option onClick={() => setSource("Instagram")}>Instagram</option>
+                                                                <option onClick={() => setSource("Facebook")}>Facebook</option>
+                                                                <option onClick={() => setSource("Other")}>Other</option>
+                                                                </Form.Control>
+                                                        </Form.Group>
                                                     </li>
                                                 </ul>
 
-                                               
+                                               <br/>
+                                               <br/>
+                                               <br/>
                                                 <Button variant = "dark" disableElevation onClick={() => 
 
                                                     {if(validate())
@@ -191,10 +244,71 @@ const CoachApplication = () => {
                                     </div>
                                 </Tab>
 
-                                {/*second page*/}
-                                <Tab eventKey= "background" title="background" tabClassName="profile-tabitem">
-                                        
+                                {/*xxxxxxxxxxSECOND PAGExxxxxxxxxxxxxxxxxxxxx*/}
+                                <Tab eventKey= "background" title="Background" tabClassName="profile-tabitem">
+                                    <div id = "centerBlockCoach" className = "col-sm mx-auto">
+
+                                        <div id = "applicationHeaders">EvolvU needs some more background about you first. All information is required to continue.</div>
+
+                                        <br/>
+
+                                        <div id = "questionsRow" className = "d-flex row">
+
+                                            <div id="questionCol" className = "col-sm-5 mx-1">
+                                                <ul className="list-unstyled">
+                                                    
+                                                    <li>
+
+                                                        <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => setConcentration(e.target.value)}>
+                                                            <Form.Label>My coaching focus is <span style={{ color: 'red'}}>*</span></Form.Label>
+                                                            <Form.Control as="select">
+                                                                <option>Life Coaching</option>
+                                                                <option>Nutrition & Fitness</option>
+                                                                <option>Health and Wellness Coaching</option>
+                                                                <option>Holistic Health & Wellness Coaching</option>
+                                                                <option>Spiritual Wellness Coaching</option>
+                                                            </Form.Control>
+                                                        </Form.Group>
+
+                                                    </li>
+
+                                                    <br/>
+                                                    <br/>
+
+                                                    <li>
+                                                        <Form.Group id= "input" onChange={ (e) => setDateOfBirth(e.target.value)}>
+                                                                <Form.Label id = "information"> Date of birth <span style={{ color: 'red'}}>*</span></Form.Label>
+                                                                <Form.Control placeholder = "Year/Month/Day"/>
+                                                        </Form.Group>
+                                                    </li>
+                                                    
+                                                    <br/>
+
+                                                    <li>
+                                                        <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => setConcentration(e.target.value)}>
+                                                            <Form.Label>Gender <span style={{ color: 'red'}}>*</span></Form.Label>
+                                                            <Form.Control as="select">
+                                                                <option>Male</option>
+                                                                <option>Female</option>
+                                                                <option>Non-Binary</option>
+                                                                <option>Other</option>
+                                                            </Form.Control>
+                                                        </Form.Group>
+                                                    </li>
+                                                    
+                                                    <br/>
+
+                                                    <li id = "information">
+                                                        <Form.Check  inline label="LGBTQIA+ Inclusive"/>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+    
+                                        </div>
+                                    </div>
                                 </Tab>
+
                             </Tabs>
                         </div>
 
