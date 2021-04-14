@@ -175,7 +175,7 @@ const CoachProfileForm = () => {
                                 </Form.Row>
                                 
                                 <Button variant="primary" type="submit">
-                                    Submit
+                                    Update
                                 </Button>
                             </Form>
 
