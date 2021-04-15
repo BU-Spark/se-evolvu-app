@@ -1,15 +1,25 @@
 
+import UserDashboard from '../components/Dashboards/User/index.js';
 import Homepage from '../components/Homepage/index.js';
 
-const routes = [
+const unprotectedRoutes = [
     {
-        path: "/",
+        path: "/testing",
         component: Homepage
     }
 ];
 
 const protectedRoutes = [
+    {
+        path: "/user/dashboard",
+        component: UserDashboard
+    }
 
 ]
 
-export default (routes, protectedRoutes);
+let routes = {
+    unprotected: unprotectedRoutes,
+    protected: protectedRoutes
+}
+
+export default routes;

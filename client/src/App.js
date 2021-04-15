@@ -21,6 +21,8 @@ import PlaceHolderPage from "./components/PlaceHolderPage/index.js";
 import Footer from "./components/Footer";
 import CoachProfilePage from './components/CoachProfilePage';
 
+import routes from "./routes/index.js"
+
 import CoachDashboard from './components/Dashboards/Coach/index.js';
 
 import ProtectedRoute from './components/ProtectedRoute/index.js';
@@ -42,14 +44,25 @@ const App = () => {
     })
   }, [dispatch, history])
 
-  console.log(isLoggedin)
-
   return (
     
     <Router history={history}>
       <div className="App">
         { isLoggedin ? <UserNavbar/> : <Navbar/> }
         <Switch>
+          {/* Mapping unprotected components and routes */}
+          {
+            routes.unprotected.map( (page) => (
+              <Route exact path={page.path} component={page.component}/>
+            ))
+          }
+          {/* Mapping protected components and routes */}
+          {
+            routes.protected.map( (page) => (
+              <ProtectedRoute exact path={page.path} component={page.component}/>
+            ))
+          }
+
           <Route exact path="/"> <Homepage/> </Route>
           <Route path="/home" component={ErrorPage} />
           <Route path="/about" component={ErrorPage} />

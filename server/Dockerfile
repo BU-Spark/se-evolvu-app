@@ -1,12 +1,16 @@
-FROM python:3.7.4-alpine3.10
+FROM python
 
-WORKDIR /backend/
-
-RUN pip install --upgrade pip
+WORKDIR /backend
 COPY requirements.txt /backend/
-RUN pip install -r requirements.txt
+
 EXPOSE 8000
 
-COPY ./src /backend/
+RUN pip install -r requirements.txt
+COPY . /backend/
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+ENV DJANGO_KEY="Enter key here"
+
+RUN python ./src/manage.py makemigrations
+RUN python ./src/manage.py migrate
+
+CMD ["python", "./src/manage.py", "runserver", "0.0.0.0:8000"]
