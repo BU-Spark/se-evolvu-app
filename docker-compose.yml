@@ -2,6 +2,10 @@ version: "3"
 
 services: 
 
+  server:
+
   client:
+
+  nginx:
     
 
