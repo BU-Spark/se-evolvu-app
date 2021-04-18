@@ -4,7 +4,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
-import DashCarousel from './Carousel/index.js'
+import DashCarousel from './Carousel/index.js';
+
+import SidebarWrapper from '../../Sidebar/SidebarWrapper/index.js';
 
 const CoachDash = () => {
 
@@ -16,7 +18,7 @@ const CoachDash = () => {
     })
 
     return (
-        <div>
+        <SidebarWrapper>
             <div style={{ textAlign: "left", paddingTop: "1rem"}}>
                 <h2>Your Dashboard</h2>
             </div>
@@ -92,7 +94,7 @@ const CoachDash = () => {
                     
                 </Col>
             </Row>
-        </div>
+        </SidebarWrapper>
 
     )
 }

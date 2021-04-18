@@ -23,8 +23,6 @@ import CoachProfilePage from './components/CoachProfilePage';
 
 import routes from "./routes/index.js"
 
-import CoachDashboard from './components/Dashboards/Coach/index.js';
-
 import ProtectedRoute from './components/ProtectedRoute/index.js';
 
 import { clearMessage } from './redux/actions/messageAction.js';
@@ -59,7 +57,7 @@ const App = () => {
           {/* Mapping protected components and routes */}
           {
             routes.protected.map( (page) => (
-              <ProtectedRoute exact path={page.path} component={page.component}/>
+              <Route exact path={page.path} component={page.component}/>
             ))
           }
 
@@ -77,7 +75,6 @@ const App = () => {
           <Route path="/login" component={LoginPage}/>
           <Route path="/register" component={RegisterPage}/>
           <ProtectedRoute path="/profile" component={Profile} auth={isLoggedin}/>
-          <ProtectedRoute path="/coach/dashboard" component={CoachDashboard} auth={true}/>
           <Route path="/error" component={ErrorPage} />
         </Switch>
         <Footer/>

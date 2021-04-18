@@ -1,11 +1,13 @@
 import React from 'react';
 
+import SidebarWrapper from '../../Sidebar/SidebarWrapper/index.js'
+
 const CoachCalendar = () => {
 
     return (
-        <div>
+        <SidebarWrapper>
             Calendar
-        </div>
+        </SidebarWrapper>
     )
 }
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import Carousel from 'react-bootstrap/Carousel';
-import Image from 'react-bootstrap/Image';
+// import Image from 'react-bootstrap/Image';
 
 const DashCarousel = () => {
 

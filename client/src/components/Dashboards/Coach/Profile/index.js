@@ -1,15 +1,17 @@
 import React from 'react';
 
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
+import SidebarWrapper from '../../Sidebar/SidebarWrapper/index.js';
 
 
 const CoachProfileForm = () => {
 
     return (
-        <div>
+        <SidebarWrapper>
             <h3 style={{textAlign: "left", margin: "1rem", color: "#779ECC"}}>Profile</h3>
             <Col style={{ margin: "1rem"}}>
                 <Row style={{ background: "#F6F6F6", marginBottom: "1rem"}}>
@@ -183,7 +185,7 @@ const CoachProfileForm = () => {
                     </div>
                 </Row>
             </Col>
-        </div>
+        </SidebarWrapper>
     )
 }
 
