@@ -5,7 +5,7 @@
 
 - [Installation] (#installation)
 
-## Installation
+## Installation 
 
 The best way to get EvolvU running on your machine is to use Docker Compose. 
 
@@ -16,9 +16,9 @@ If you don't have `docker-compose` installed, visit https://docs.docker.com/comp
 Before running the containers, you will need to generate a DJANGO_KEY and place it into the Dockerfile in the server folder. Follow the below steps to do so:
 
 1. Visit https://djecrety.ir/ to generate a key and copy it. 
-2. Go to the `Dockerfile` in the server folder and paste the key where it says "Enter DJANGO_KEY here" (i.e. line 11)
+2. Go to the `Dockerfile` in the server folder and paste the key where it says `"Enter DJANGO_KEY here"` (i.e. line 11)
 
-After obtaining a key and placing it in the server Dockerfile, return to this directory and run the following command directory:
+After obtaining a key and placing it in the `Dockerfile` in the server directory, return to this directory and run the following command:
 
 `docker-compose up --build`
 
