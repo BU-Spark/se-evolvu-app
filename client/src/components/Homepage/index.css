@@ -4,8 +4,9 @@
 
 .homepage-search {
     padding: 5rem;
-    background: lightblue;
+    background-image: url("../../images/homepage-background.png");
     height: 100vh;
+    background-size: cover;
 }
 
 .homepage-search-text {
