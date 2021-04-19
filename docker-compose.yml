@@ -5,7 +5,7 @@ services:
   django_server:
     build: ./server
     volumes: 
-      - ./backend:/usr/src/app
+      - ./server:/usr/src/app
     expose:
       - 8000
 
