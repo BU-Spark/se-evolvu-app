@@ -22,8 +22,9 @@ const SearchBar = () => {
     let history = useHistory();
 
     const updateAreaState = (label, area) => {
-        setAreaLabel(label)
-        setArea(area)
+        setAreaLabel(label);
+        setArea(area);
+        setAreaError(false);
     }
 
     const handleZipChange = (e) => {
@@ -42,7 +43,6 @@ const SearchBar = () => {
         }  
 
         setLocal(e.target.value)
-        
     }
 
     const onClickHandle = () => {
@@ -50,6 +50,11 @@ const SearchBar = () => {
             setAreaError(true)
         } else {
             setAreaError(false)
+        }
+        if (local === "") {
+            setInvalidZipCode(true)
+        } else {
+            setInvalidZipCode(false)
         }
         if (invalidZipCodeError || digitOnlyError || areaError) {
             return false
@@ -76,11 +81,13 @@ const SearchBar = () => {
     return (
         <div className="searchbar-wrapper">
             <div className="searchbar-input">
-                <Dropdown id="searchbar-dropdown">
+                <Dropdown id="searchbar-dropdown"
+                >
                     <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                         {areaLabel}
                     </Dropdown.Toggle>
                     <Dropdown.Menu
+                        
                     >
                         {
                             [ 
