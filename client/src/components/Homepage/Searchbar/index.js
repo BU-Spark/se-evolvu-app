@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import './index.css'
 
@@ -19,18 +19,27 @@ const SearchBar = () => {
     const [digitOnlyError, setDigitOnly] = useState(false);
     const [areaError, setAreaError] = useState(false);
 
+    let history = useHistory();
+
     const updateAreaState = (label, area) => {
         setAreaLabel(label)
         setArea(area)
     }
 
-    const handleOnZipChange = (e) => {
+    const handleZipChange = (e) => {
 
         if (isNaN(e.target.value)) {
             setDigitOnly(true);
         } else if (digitOnlyError) {
             setDigitOnly(false);
         }
+
+        if (e.target.value === "" || e.target.value.length !== 5) {
+            setInvalidZipCode(true);
+        } 
+        if (e.target.value.length === 5 && invalidZipCodeError) {
+            setInvalidZipCode(false);
+        }  
 
         setLocal(e.target.value)
         
@@ -42,14 +51,26 @@ const SearchBar = () => {
         } else {
             setAreaError(false)
         }
-        if (local === "" || local.length !== 6) {
-            setInvalidZipCode(true);
-        } 
-        if (local.length === 6 && invalidZipCodeError) {
-            setInvalidZipCode(false);
+        if (invalidZipCodeError || digitOnlyError || areaError) {
+            return false
+        } else {
+            return true
         }
-
-        
+    }
+    
+    const onSubmit = (e) => {
+        e.preventDefault()
+        let validated = onClickHandle()
+        if (validated && area !== "Select your focus area" && local !== "" && local.length === 5) {
+            history.push({
+                pathname: "/search",
+                state: {
+                    focus: area,
+                    focusLabel: areaLabel,
+                    local: local,
+                }
+            })
+        }
     }
 
     return (
@@ -59,7 +80,8 @@ const SearchBar = () => {
                     <Dropdown.Toggle variant="secondary" id="dropdown-basic">
                         {areaLabel}
                     </Dropdown.Toggle>
-                    <Dropdown.Menu>
+                    <Dropdown.Menu
+                    >
                         {
                             [ 
                                 { label: "Life Coaching", key: "life-coaching"},
@@ -77,31 +99,22 @@ const SearchBar = () => {
                         placeholder="Enter Zip Code"
                         aria-label="Zipcode"
                         aria-describedby="basic-addon1"
-                        onChange={e => handleOnZipChange(e)}
+                        onChange={e => handleZipChange(e)}
                     />
                 </InputGroup>
             </div>
             <div id="zip-code-error-alert">
-                { invalidZipCodeError ? <Alert  variant="danger">Please enter a valid 6 digit zipcode.</Alert> : null }
+                { invalidZipCodeError ? <Alert  variant="danger">Please enter a valid 5 digit zipcode.</Alert> : null }
                 { digitOnlyError ? <Alert variant="danger">Please only enter digits. No characters or letters are allowed.</Alert> : null }
                 { areaError ? <Alert variant="danger">Please choose a focus area before proceeding.</Alert> : null }
             </div>
-            <Link
-                to={{
-                    pathname: "/search",
-                    state: {
-                        focus: area,
-                        focusLabel: areaLabel,
-                        local: local,
-                    }
+            <Button 
+                variant="secondary" 
+                onClick={e => {
+                    onClickHandle()
+                    onSubmit(e)
                 }}
-                onClick={onClickHandle}
             >
-                <Button variant="secondary">
-                    Find Your Coach
-                </Button>
-            </Link>
-            <Button variant="secondary" onClick={onClickHandle}>
                 Find Your Coach
             </Button>
         </div>
