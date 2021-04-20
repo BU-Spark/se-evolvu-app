@@ -1,5 +1,6 @@
-:root {
 
+:root {
+    
     /* Colors: */
     --unnamed-color-e1ecf7: #E1ECF7;
     --unnamed-color-faaf82: #FAAF82;
@@ -113,27 +114,34 @@
 }
 
 #headerMessage{
-    color: #FFB347
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-72) var(--unnamed-font-family-acumin-pro);
+    letter-spacing: var(--unnamed-character-spacing-0-96);
+    color: var(--unnamed-color-ffb347);
+    text-align: center;
+    font: normal normal bold 60px/72px Acumin Pro;
+    letter-spacing: 0.96px;
+    color: #FFB347;
+    opacity: 1;
 }
 
 #ApplicationPage {
-    padding: 5rem;
+    padding: 4.75%;
     background: white;
-    height: 130vh;
+    height: 100%;
 }
 
 #centerBlockCoach{
     margin-top: 0px;
-    padding: 3.125rem;
-    padding-right:9.37rem;
-    padding-bottom:6rem;
+    padding: 5%;
+    padding-right:16%;
+    padding-bottom:10%;
     background-color: #9FC0DE;
     width: 100%;
     text-align: left;
 }
 
 #questionsRow{
-    height: 31.25rem;
+    height: 100%;
 }
 
 #benefits{
@@ -228,4 +236,44 @@
 
 #input{
     margin-bottom: 0px;
+}
+
+#blueText1{
+    font: var(--unnamed-font-style-normal) normal 900 14px/16px var(--unnamed-font-family-acumin-pro);
+    color: var(--unnamed-color-779ecc);
+    text-align: left;
+    font: normal normal 900 14px/16px Acumin Pro;
+    letter-spacing: 0.2px;
+    color: #779ECC;
+    opacity: 1;
+}
+
+#blueText2{
+    font: var(--unnamed-font-style-normal) normal 900 20px/22px var(--unnamed-font-family-acumin-pro);
+    color: var(--unnamed-color-779ecc);
+    text-align: left;
+    font: normal normal 900 20px/22px Acumin Pro;
+    letter-spacing: 0.28px;
+    color: #779ECC;
+    opacity: 1;
+}
+
+#blackHeader{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) var(--unnamed-font-size-24)/22px var(--unnamed-font-family-acumin-pro);
+    color: var(--unnamed-color-373737);
+    text-align: left;
+    font: normal normal bold 24px/22px Acumin Pro;
+    letter-spacing: 0.34px;
+    color: #373737;
+    opacity: 1;
+}
+
+#prompts{
+    font: var(--unnamed-font-style-italic) normal medium 20px/33px var(--unnamed-font-family-acumin-pro);
+    color: var(--unnamed-color-373737);
+    text-align: left;
+    font: italic normal medium 20px/33px Acumin Pro;
+    letter-spacing: 0.32px;
+    color: #373737;
+    opacity: 1;
 }
