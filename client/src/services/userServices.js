@@ -14,31 +14,6 @@ const API_URL = "http://localhost:8000";
 //     return axios.post('http://localhost:8000/coaches/search', { 
 //         params
 //     });
-
-//     // let focusType = ""
-//     // switch(params.focus) {
-//     //     case "life-coaching":
-//     //         focusType = "life"
-//     //         break
-//     //     case "nutrition-fitness":
-//     //         focusType = "nutritionfitness"
-//     //         break
-//     //     case "health-and-wellness-coaching":
-//     //         focusType = "hw"
-//     //         break
-//     //     case "holistic-Health-wellness-coaching":
-//     //         focusType = "holistic"
-//     //         break
-//     //     case "spiritual-wellness-coaching":
-//     //         focusType = "spiritual"
-//     //         break
-//     //     default:
-//     //         focusType="hw"
-//     // }
-
-//     // return axios.get(API_URL + 'api/coaches/search/' + focusType, { 
-//     //     params
-//     // });
 // };
 
 // const getCoach = (params) => {
