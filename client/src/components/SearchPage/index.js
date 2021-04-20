@@ -7,35 +7,38 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
 
 import ListProfileCard from './ListProfileCard/index.js';
 import GalleryProfileCard from './GalleryProfileCard/index.js';
 import LoadingCircle from './LoadingCircle/index.js';
 
-import userServices from '../../services/userServices.js'
+import userServices from '../../services/userServices.js';
 import './index.css';
 
 const SearchPage = (props) => {
 
     // Params Coach Search
+    const [zipCode, setZipCode] = useState(props.location.state.local);
     const [price, setPrice] = useState(50);
     const [remote, setRemote] = useState(false);
     const [distance, setDistance] = useState(10);
     const [gender, setGender] = useState("nopref");
-    const [focus, setFocus] = useState(props.location.state.focus);
+    const [lifeFocus, setLifeFocus] = useState(false);
+    const [nutritionFitnessFocus, setNutritionFitness] = useState(false);
+    const [healthWellnessFocus, setHealthWellnessFocus] = useState(false);
+    const [holisticHealthFocus, setHolsticHealthFocus] = useState(false);
+    const [spiritualFocus, setSpiritualFocus] = useState(false);
+
 
     // Additional States for component
     const [galleryView, setView] = useState(false);
     const [coachList, setCoachList] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    useEffect( () => {
-        onSearch()
-        if (JSON.stringify(props.location.state) === JSON.stringify({focus: "Select your area", focusLabel: "Select your area", local: ""})) {
-            props.location.state = {focus: "life-coaching", focusLabel: "Life Coaching", local: "02215"}
-        }
-    // eslint-disable-next-line
-    }, [])          // Add this line to prevent infinite loop 
+    const [invalidZipCodeError, setInvalidZipCode] = useState(false);
+    const [digitOnlyError, setDigitOnly] = useState(false);
+
 
     const handleChange = () => {
         setTimeout(() => {
@@ -45,11 +48,15 @@ const SearchPage = (props) => {
 
     const onSearch = () => {
         const params = { 
-            price,
-            remote,
-            distance,
-            gender,
-            focus
+            price: price,
+            remote: remote,
+            distance: distance,
+            gender: gender,
+            lifeFocus: lifeFocus,
+            nutritionFitnessFocus: nutritionFitnessFocus,
+            healthWellnessFocus: healthWellnessFocus,
+            holisticHealthFocus: holisticHealthFocus,
+            spiritualFocus: spiritualFocus,
         }
         
         userServices.searchCoaches(params)
@@ -58,7 +65,58 @@ const SearchPage = (props) => {
             }).catch( () =>{
                 setCoachList([])
             })
+    };
+
+    const handleZipChange = (e) => {
+
+        if (isNaN(e.target.value)) {
+            setDigitOnly(true);
+        } else if (digitOnlyError) {
+            setDigitOnly(false);
+        }
+
+        if (e.target.value === "" || e.target.value.length !== 5) {
+            setInvalidZipCode(true);
+        } 
+        if (e.target.value.length === 5 && invalidZipCodeError) {
+            setInvalidZipCode(false);
+        }  
+
+        setZipCode(e.target.value)
     }
+
+    const setInitialFocus = () => {
+        let focus = props.location.state.focus;
+        switch (focus) {
+            case "life-coaching":
+                setLifeFocus(true);
+                break;
+            case "nutrition-fitness":
+                setNutritionFitness(true);
+                break;
+            case "health-and-wellness-coaching":
+                setHealthWellnessFocus(true);
+                break;
+            case "holistic-health-wellness-coaching":
+                setHolsticHealthFocus(true);
+                break;
+            case "spiritual-wellness-coaching":
+                setSpiritualFocus(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+    useEffect( () => {
+        setInitialFocus();
+        onSearch();
+        if (JSON.stringify(props.location.state) === JSON.stringify({focus: "Select your area", focusLabel: "Select your area", local: ""})) {
+                props.location.state = {focus: "life-coaching", focusLabel: "Life Coaching", local: "02215"
+            }
+        }
+    // eslint-disable-next-line
+    }, [])          // Add this line to prevent infinite loop 
 
     // NOTE: Function for filtering remote and in person coaches (disabled temporarily)
     // const [viewList, setViewList] = useState([]);
@@ -99,7 +157,17 @@ const SearchPage = (props) => {
                             <div>
                                 <p style={{textAlign: "left", fontWeight: "bold"}}>Location</p>
                                 <div>
-                                    <p style={{textAlign: "left"}}>Zip Code: {props.location.state.local}</p>
+                                    <Form.Group controlId="formBasicEmail">
+                                        <Form.Label>Zip Code</Form.Label>
+                                        <Form.Control 
+                                            type="text" 
+                                            value={zipCode}
+                                            placeholder="Enter Zip Code Here" 
+                                            onChange={e => handleZipChange(e)}
+                                        />
+                                    </Form.Group>
+                                    { invalidZipCodeError ? <Alert  variant="danger">Please enter a valid 5 digit zipcode.</Alert> : null }
+                                    { digitOnlyError ? <Alert variant="danger">Please only enter digits. No characters or letters are allowed.</Alert> : null }
                                     <Form.Group controlId="formBasicRange">
                                         <Form.Label>Distance</Form.Label>
                                         <Form.Control 
@@ -138,24 +206,52 @@ const SearchPage = (props) => {
                             <hr></hr>
                             <div className="search-page-focus">
                                 <p style={{textAlign: "left", fontWeight: "bold"}}>Focus</p>
-                                {
-                                    [ 
-                                        { label: "Life Coaching", key: "life-coaching"},
-                                        { label: "Nutrition & Fitness", key: "nutrition-fitness"},
-                                        { label: "Health and Wellness Coaching", key: "health-and-wellness-coaching"},
-                                        { label: "Holistic Health & Wellness Coaching", key: "holistic-Health-wellness-coaching"},
-                                        { label: "Spiritual Wellness Coaching", key: "spiritual-wellness-coaching"},
-                                    ].map((type) => (
-                                    <div key={`search-focus-${type.key}`} className="mb-3">
+                                    
+                                    <div key={`search-focus-life-coaching`} className="mb-3">
                                         <Form.Check 
                                             type="checkbox"
                                             id={`search-filter-focus`}
-                                            label={`${type.label}`}
-                                            onChange={() => setFocus(type.key)}
-                                            checked={ focus === type.key}
+                                            label={`Life Coaching`}
+                                            onChange={() => setLifeFocus(!lifeFocus)}
+                                            checked={lifeFocus}
                                         />
                                     </div>
-                                ))}
+                                    <div key={`search-focus-nutrition-fitness`} className="mb-3">
+                                        <Form.Check 
+                                            type="checkbox"
+                                            id={`search-filter-focus`}
+                                            label={`Nutrition & Fitness`}
+                                            onChange={() => setNutritionFitness(!nutritionFitnessFocus)}
+                                            checked={nutritionFitnessFocus}
+                                        />
+                                    </div>
+                                    <div key={`search-focus-health-and-wellness-coaching`} className="mb-3">
+                                        <Form.Check 
+                                            type="checkbox"
+                                            id={`search-filter-focus`}
+                                            label={`Health and Wellness Coaching`}
+                                            onChange={() => setHealthWellnessFocus(!healthWellnessFocus)}
+                                            checked={healthWellnessFocus}
+                                        />
+                                    </div>
+                                    <div key={`search-focus-holistic-wellness`} className="mb-3">
+                                        <Form.Check 
+                                            type="checkbox"
+                                            id={`search-filter-focus`}
+                                            label={`Holistic Health & Wellness Coaching`}
+                                            onChange={() => setHolsticHealthFocus(!holisticHealthFocus)}
+                                            checked={holisticHealthFocus}
+                                        />
+                                    </div>
+                                    <div key={`search-focus-spiritual-wellness`} className="mb-3">
+                                        <Form.Check 
+                                            type="checkbox"
+                                            id={`search-filter-focus`}
+                                            label={`Spiritual Wellness Coaching`}
+                                            onChange={() => setSpiritualFocus(!spiritualFocus)}
+                                            checked={spiritualFocus}
+                                        />
+                                    </div>
                             </div>
                             <hr></hr>
                             <div>

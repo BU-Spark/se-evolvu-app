@@ -51,13 +51,13 @@ const App = () => {
           {/* Mapping unprotected components and routes */}
           {
             routes.unprotected.map( (page) => (
-              <Route exact path={page.path} component={page.component}/>
+              <Route exact key={page.path} path={page.path} component={page.component}/>
             ))
           }
           {/* Mapping protected components and routes */}
           {
             routes.protected.map( (page) => (
-              <Route exact path={page.path} component={page.component}/>
+              <Route exact key={page.path} path={page.path} component={page.component}/>
             ))
           }
 
