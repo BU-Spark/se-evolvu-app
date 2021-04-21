@@ -66,6 +66,23 @@ class Account(AbstractBaseUser):
         #self.email
         #self.last_name, self.first_name
 
+    def get_info(self):
+        user = {
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+            "username": self.username,
+            "is_customer": self.is_customer,
+            "is_coach": self.is_coach,
+            "date_joined": self.date_joined,
+            "last_login": self.last_login,
+            "is_admin": self.is_admin,
+            "is_active": self.is_admin,
+            "is_staff": self.is_staff,
+            "is_superuser": self.is_superuser,
+        }
+        return user
+
     def has_perm(self, perm, obj=None):
         return self.is_admin
 
