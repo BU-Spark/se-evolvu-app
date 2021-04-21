@@ -16,7 +16,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 @api_view(['GET', ])
 def api_detail_userprof_view(request, slug):
     try:
-        user_profile = UserProfile.objects.get(slug=slug)
+        user_profile = UserProfile.objects.get(user__slug=slug)
     except UserProfile.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -26,7 +26,7 @@ def api_detail_userprof_view(request, slug):
 
 # Might not need this
 class ApiUsersListView(ListAPIView):
-    queryset = UserProfile.objects.all() 
+    queryset = UserProfile.objects.all()
     #print("This is the queryset:", queryset)
     serializer_class = UserProfileSerializer
     # authentication_classes = (TokenAuthentication,)

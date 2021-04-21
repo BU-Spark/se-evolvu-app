@@ -32,7 +32,7 @@ class Coach(models.Model):
     description = models.TextField()
     # city = models.CharField(max_length=255)
     # location = PlainLocationField(based_fields=['city'], zoom=7)
-    slug = models.SlugField(blank=True, unique=True)
+    # slug = models.SlugField(blank=True, unique=True)
 
     
     def no_of_reviews(self):
@@ -58,11 +58,11 @@ class Coach(models.Model):
     
 
 # @receiver(pre_save, sender=Coach)
-def pre_save_coach_receiver(sender, instance, *args, **kwargs):
-    # TODO: RANDOM.RANDINT IS A PLACEHOLDER, REPLACE WITH COACH'S ID VALUE LATER
-    instance.slug = slugify(instance.coach.username + '-' + str(random.randint(0, 100000000)))
+# def pre_save_coach_receiver(sender, instance, *args, **kwargs):
+#     # TODO: RANDOM.RANDINT IS A PLACEHOLDER, REPLACE WITH COACH'S ID VALUE LATER
+#     instance.slug = slugify(instance.coach.username + '-' + str(random.randint(0, 100000000)))
 
-pre_save.connect(pre_save_coach_receiver, sender=Coach)
+# pre_save.connect(pre_save_coach_receiver, sender=Coach)
 
 """
 class Review(models.Model):
