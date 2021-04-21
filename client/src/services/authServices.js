@@ -17,7 +17,7 @@ const url = 'http://localhost:8000';
 //     }).then((res) => {
 //         console.log(res.data)
 //         if (res.data.token) {
-//             localStorage.setItem("user", JSON.stringify(res.data));
+//             sessionStorage.setItem("user", JSON.stringify(res.data));
 //           }
 //         return res.data;
 //     })
@@ -50,14 +50,14 @@ const login = (email, password) => {
     }).then((res) => {
         console.log(res.data)
         if (res.data.token) {
-            localStorage.setItem("user", JSON.stringify(res.data));
+            sessionStorage.setItem("user", JSON.stringify(res.data));
           }
         return res.data;
     })
 };
 
 const logout = () => {
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
 };
 
 const authServices = {

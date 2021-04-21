@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Navbar from 'react-bootstrap/Navbar';
@@ -16,6 +16,8 @@ const UserNavbar = () => {
     // eslint-disable-next-line
     const { width, height } = useWindowDimensions();
     const [toggleMenu, setToggleMenu] = useState(false);
+
+    const isCoach = useSelector(state => state.userReducer.user)
 
     const dispatch = useDispatch();
 
@@ -35,6 +37,7 @@ const UserNavbar = () => {
 
 
     if (!toggleMenu) {
+        // console.log(isCoach)
         return (
             <div id="nav-wrapper">
                 <div id="navbar">
