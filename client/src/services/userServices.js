@@ -42,7 +42,19 @@ const searchCoaches = (params) => {
         headers: {
             "credentials": "same-origin",
         }
-    })
+    });
+};
+
+const getUser = (params) => {
+    return axios({
+        url: "/api/users/me",
+        method: 'post',
+        data: params,
+        headers: {
+            "credentials": "same-origin",
+            "content-type": "application/json"
+        }
+    });
 };
 
 const getCoach = (params) => {
@@ -53,13 +65,14 @@ const getCoach = (params) => {
         headers: {
             "credentials": "same-origin",
         }
-    })
+    });
 };
 
 const userServices = {
     getTestItems,
     searchCoaches,
+    getUser,
     getCoach
 };
 
-export default userServices
+export default userServices;
