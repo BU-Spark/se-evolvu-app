@@ -50,7 +50,7 @@ class Account(AbstractBaseUser):
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     slug = models.SlugField(blank=True, unique=True)
-    is_customer = models.BooleanField(default=True)
+    is_customer = models.BooleanField(default=False)
     is_coach = models.BooleanField(default=False)
     date_joined = models.DateTimeField(verbose_name='Date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='Last login', auto_now=True)

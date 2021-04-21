@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { 
-  Router,
+  BrowserRouter as Router,
   Switch,
   Route
 } from 'react-router-dom';
@@ -21,9 +21,13 @@ import PlaceHolderPage from "./components/PlaceHolderPage/index.js";
 import Footer from "./components/Footer";
 import CoachProfilePage from './components/CoachProfilePage';
 
+import routes from "./routes/index.js"
+
 import ProtectedRoute from './components/ProtectedRoute/index.js';
 
 import { clearMessage } from './redux/actions/messageAction.js';
+
+import Profile from './components/Profile/index.js'
 
 const App = () => {
 
@@ -44,6 +48,19 @@ const App = () => {
       <div className="App">
         { isLoggedin ? <UserNavbar/> : <Navbar/> }
         <Switch>
+          {/* Mapping unprotected components and routes */}
+          {
+            routes.unprotected.map( (page) => (
+              <Route exact key={page.path} path={page.path} component={page.component}/>
+            ))
+          }
+          {/* Mapping protected components and routes */}
+          {
+            routes.protected.map( (page) => (
+              <Route exact key={page.path} path={page.path} component={page.component}/>
+            ))
+          }
+
           <Route exact path="/"> <Homepage/> </Route>
           <Route path="/home" component={ErrorPage} />
           <Route path="/about" component={ErrorPage} />
@@ -57,9 +74,7 @@ const App = () => {
           <Route path="/coach/profile" component={CoachProfilePage}/>
           <Route path="/login" component={LoginPage}/>
           <Route path="/register" component={RegisterPage}/>
-          <ProtectedRoute path="/profile" auth={isLoggedin}>
-              <PlaceHolderPage page="Profile"/>
-          </ProtectedRoute>
+          <ProtectedRoute path="/profile" component={Profile} auth={isLoggedin}/>
           <Route path="/error" component={ErrorPage} />
         </Switch>
         <Footer/>

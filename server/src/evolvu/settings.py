@@ -88,6 +88,12 @@ TEMPLATES = [
     },
 ]
 
+CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:81',
+)
+
 AUTH_USER_MODEL = 'accounts.Account'
 
 WSGI_APPLICATION = 'evolvu.wsgi.application'
@@ -136,7 +142,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Static files (CSS, JavaScript, Images)
