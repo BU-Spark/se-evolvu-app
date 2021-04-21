@@ -48,7 +48,6 @@ const login = (email, password) => {
             "credentials": "same-origin"
         }
     }).then((res) => {
-        console.log(res.data)
         if (res.data.token) {
             sessionStorage.setItem("user", JSON.stringify(res.data));
           }

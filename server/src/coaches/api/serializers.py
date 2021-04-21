@@ -7,6 +7,7 @@ class CoachSerializer(serializers.ModelSerializer):
     last_name = serializers.SerializerMethodField('get_coach_account_lastname')
     username = serializers.SerializerMethodField('get_coach_account_username')
     email = serializers.SerializerMethodField('get_coach_account_email')
+    slug = serializers.SerializerMethodField('get_coach_account_slug')
 
     class Meta:
         model = Coach
@@ -14,9 +15,9 @@ class CoachSerializer(serializers.ModelSerializer):
                 'last_name',
                 'username',
                 'email',
+                'slug',
                 'no_of_reviews',
                 'avg_rating',
-                'slug',
                 'focus_life',
                 'focus_behavioral',
                 'focus_health_wellness',
@@ -37,12 +38,16 @@ class CoachSerializer(serializers.ModelSerializer):
     def get_coach_account_email(self, coach):
         return coach.coach.email
 
+    def get_coach_account_slug(self, coach):
+        return coach.coach.slug
+
 # Modified version of CoachSerializer class; does not include description field in response data
 class CoachListSerializer(serializers.ModelSerializer):
     first_name = serializers.SerializerMethodField('get_coach_account_firstname')
     last_name = serializers.SerializerMethodField('get_coach_account_lastname')
     username = serializers.SerializerMethodField('get_coach_account_username')
     email = serializers.SerializerMethodField('get_coach_account_email')
+    slug = serializers.SerializerMethodField('get_coach_account_slug')
 
     class Meta:
         model = Coach
@@ -50,9 +55,9 @@ class CoachListSerializer(serializers.ModelSerializer):
                 'last_name',
                 'username',
                 'email',
+                'slug',
                 'no_of_reviews',
                 'avg_rating',
-                'slug',
                 'focus_life',
                 'focus_behavioral',
                 'focus_health_wellness',
@@ -71,6 +76,9 @@ class CoachListSerializer(serializers.ModelSerializer):
 
     def get_coach_account_email(self, coach):
         return coach.coach.email
+
+    def get_coach_account_slug(self, slug):
+        return coach.coach.slug
 
 '''
 class CoachSearchSerializer(serializers.ModelSerializer):
