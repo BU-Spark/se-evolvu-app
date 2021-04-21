@@ -27,7 +27,7 @@ def registration_view(request):
         data['last_name'] = account.last_name
         token = Token.objects.get(user=account).key
         data['token'] = token
-        # data['slug'] = account.slug
+        data['slug'] = account.slug
     else:
         data = serializer.errors
     return Response(data)

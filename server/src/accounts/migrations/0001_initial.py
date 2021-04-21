@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('last_name', models.CharField(max_length=50)),
                 ('email', models.EmailField(max_length=60, unique=True, verbose_name='email')),
                 ('username', models.CharField(max_length=30, unique=True)),
-                # ('slug', models.CharField(max_length=30)),
+                ('slug', models.SlugField(blank=True, unique=True)),
                 ('is_customer', models.BooleanField(default=True)),
                 ('is_coach', models.BooleanField(default=False)),
                 ('date_joined', models.DateTimeField(auto_now_add=True, verbose_name='Date joined')),

@@ -3,10 +3,10 @@ from rest_framework import serializers
 from users.models import UserProfile
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    # slug = serializers.SerializerMethodField('get_user_account_slug')
+    slug = serializers.SerializerMethodField('get_user_account_slug')
     class Meta:
         model = UserProfile
-        fields = [
+        fields = ['slug',
                 'focus_health',
                 'focus_wellness',
                 'focus_health_wellness',
