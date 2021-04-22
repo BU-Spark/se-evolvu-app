@@ -9,6 +9,7 @@ import Homepage from '../components/Homepage/index.js';
 // import CoachDashboard from '../components/Dashboards/Coach/Calendar/index.js'
 
 import CoachDash from '../components/Dashboards/Coach/Dashboard/index.js';
+import Dashboard from '../components/Dashboards/index.js';
 import CoachCalendar from '../components/Dashboards/Coach/Calendar/index.js';
 import CoachProfileForm from '../components/Dashboards/Coach/Profile/index.js';
 import SessionHistory from '../components/Dashboards/Coach/History/index.js';
@@ -22,6 +23,10 @@ const unprotectedRoutes = [
 ];
 
 const protectedRoutes = [
+    {
+        path: "/dashboard",
+        component: Dashboard
+    },
     {
         path: "/user/dashboard",
         component: UserDashboard
