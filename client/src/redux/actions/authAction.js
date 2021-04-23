@@ -7,7 +7,8 @@ export const register = (registrationInfo) => (dispatch) => {
     return AuthService.register(registrationInfo).then( (data) => {
 
         dispatch({
-            type: Types.REGISTER_SUCCESS
+            type: Types.REGISTER_SUCCESS,
+            payload: data
         });
         return Promise.resolve();
     },

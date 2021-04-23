@@ -8,5 +8,6 @@ export const Types = {
     SET_MESSAGE: "SET_MESSAGE",
     CLEAR_MESSAGE: "CLEAR_MESSAGE",
     SET_USER: "SET_USER",
+    UNSET_USER: "UNSET_USER",
     SET_USER_FAIL: "SET_USER_FAIL"
 }

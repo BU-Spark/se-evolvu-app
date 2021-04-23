@@ -3,10 +3,9 @@ import UserService from '../../services/userServices.js';
 
 export const setUser = (token) => (dispatch) => {
     return UserService.getUser({"token": token}).then( (data) => {
-        
         dispatch({
             type: Types.SET_USER,
-            payload: { user: data }
+            payload: data
         });
 
         return Promise.resolve();
@@ -31,3 +30,9 @@ export const setUser = (token) => (dispatch) => {
     }
     )
 }
+
+export const removeUser = () => (dispatch) => {
+    dispatch({
+        type: Types.UNSET_USER
+    });
+};
