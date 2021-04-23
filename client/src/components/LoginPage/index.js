@@ -8,7 +8,7 @@ import Alert from 'react-bootstrap/Alert';
 
 import  { isEmail } from 'validator';
 
-import { login } from '../../redux/actions/authAction.js'
+import { login } from '../../redux/actions/authAction.js';
 import "./index.css";
 
 const LoginPage = () => {
@@ -52,7 +52,6 @@ const LoginPage = () => {
             dispatch( login(email, password) )
                     .then( () => {
                         // Redirect to homepage                        
-
                     })
                     .catch( () => {
                         
@@ -62,7 +61,7 @@ const LoginPage = () => {
     }
 
     if (isLoggedin) {
-        return <Redirect to="/profile" />
+        return <Redirect to="/dashboard" />
     }
 
     return (
