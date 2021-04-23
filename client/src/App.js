@@ -27,8 +27,6 @@ import ProtectedRoute from './components/ProtectedRoute/index.js';
 
 import { clearMessage } from './redux/actions/messageAction.js';
 
-import Profile from './components/Profile/index.js'
-
 const App = () => {
 
   let isLoggedin = useSelector(state => state.authReducer.isLoggedin);
@@ -57,7 +55,7 @@ const App = () => {
           {/* Mapping protected components and routes */}
           {
             routes.protected.map( (page) => (
-              <Route exact key={page.path} path={page.path} component={page.component}/>
+              <ProtectedRoute auth={isLoggedin} exact key={page.path} path={page.path} component={page.component}/>
             ))
           }
 
@@ -74,7 +72,6 @@ const App = () => {
           <Route path="/coach/profile" component={CoachProfilePage}/>
           <Route path="/login" component={LoginPage}/>
           <Route path="/register" component={RegisterPage}/>
-          <ProtectedRoute path="/profile" component={Profile} auth={isLoggedin}/>
           <Route path="/error" component={ErrorPage} />
         </Switch>
         <Footer/>
