@@ -80,6 +80,8 @@ class Account(AbstractBaseUser):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+        #instance.slug = slugify(instance.username + '-' + str(random.randint(0, 100000000)))
+
 
 def pre_save_account_receiver(sender, instance, *args, **kwargs):
     # TODO: RANDOM.RANDINT IS A PLACEHOLDER, REPLACE WITH UNIQUE ID VALUE LATER

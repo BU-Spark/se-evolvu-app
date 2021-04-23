@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from rest_framework import status
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.authtoken.views import ObtainAuthToken
+from django.contrib.auth import authenticate, login
 
 from accounts.api.serializers import RegistrationSerializer
 
@@ -9,11 +12,14 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 
+import json
+
 
 # Create your views here
 @api_view(['POST', ])
 def registration_view(request):
 
+    #print(request.data)
     if request.method == 'POST':
         serializer = RegistrationSerializer(data=request.data)
         data = {}
@@ -31,6 +37,64 @@ def registration_view(request):
     else:
         data = serializer.errors
     return Response(data)
+
+"""
+@csrf_exempt
+@api_view(["POST"])
+@permission_classes((AllowAny,))
+def login(request):
+    username = request.data.get("username")
+    password = request.data.get("password")
+    if username is None or password is None:
+        return Response({'error': 'Please provide both username and password'},
+                        status=HTTP_400_BAD_REQUEST)
+    user = authenticate(username=username, password=password)
+    if not user:
+        return Response({'error': 'Invalid Credentials'},
+                        status=HTTP_404_NOT_FOUND)
+    token, _ = Token.objects.get_or_create(user=user)
+    return Response({'token': token.key},
+                    status=HTTP_200_OK)
+"""
+
+
+"""
+@api_view(["POST", ])
+def login_view(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    username = body['username'] #request.POST.get("username", '')
+    #print(request.POST)
+    #username = request.POST["username"]
+    #password = request.POST["password"]
+    #print(username)
+    #print(password)
+    password = body['password'] #request.POST.get("password", '')
+    user = authenticate(request, username=username, password=password)
+
+    print(username)
+    print(password)
+
+    #return Response("hello")
+    print(user)
+    
+    if user is not None:
+        login(request, user)
+        return Response({'Message': 'Successfully logged in',
+                        'slug': user.slug})
+    
+    return Response("Error logging in")
+  """  
+
+
+class CustomObtainAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'message': 'Successfully logged in', 'token': token.key, 'slug': user.slug})
+
 
 # @api_view(['GET', ])
 # def api_detail_coach_view(request, slug):
