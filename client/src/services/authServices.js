@@ -32,6 +32,11 @@ const register = (registrationInfo) => {
         headers: {
             "credentials": "same-origin"
         }
+    }).then((res) => {
+        if (res.data.token) {
+            sessionStorage.setItem("token", JSON.stringify(res.data.token));
+        }
+        return res.data;
     })
 };
 

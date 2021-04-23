@@ -22,6 +22,12 @@ const API_URL = "http://localhost:8000";
 //     });
 // };
 
+// const getUser = (params) => {
+//     return axios.post(API_URL + "/api/users/me",
+//         params,
+//     );
+// };
+
 
 const getTestItems = () => {
     return axios({
