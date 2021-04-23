@@ -1,27 +1,25 @@
-import React,{ useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Redirect } from 'react-router-dom';
 
 import { setUser } from '../../redux/actions/userAction.js'
 
-
 const Dashboard = () => {
 
-    const dispatch = useDispatch();
-
+    const dispatch = useDispatch()
     const token = JSON.parse(sessionStorage.getItem("user")).token;
     
+    const isCoach = useSelector(state => state.userReducer.coach);
 
     useEffect( () => {
         if (token) {
             dispatch(setUser(token))
         }
-    }, [dispatch])
+    }, [dispatch, token])
 
-    const user = useSelector(state => state.userReducer.user);
-
-    if (user.is_coach) {
+    
+    if (isCoach) {
         return (
             <Redirect to="/coach/dashboard"/>
         )

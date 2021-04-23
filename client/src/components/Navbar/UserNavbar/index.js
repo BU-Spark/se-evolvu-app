@@ -7,6 +7,7 @@ import Nav from 'react-bootstrap/Nav';
 import useWindowDimensions from '../../../hooks/useWindowDimensions.js';
 
 import { logout } from '../../../redux/actions/authAction.js';
+import { removeUser } from '../../../redux/actions/userAction.js';
 
 
 import "./index.css"
@@ -17,7 +18,8 @@ const UserNavbar = () => {
     const { width, height } = useWindowDimensions();
     const [toggleMenu, setToggleMenu] = useState(false);
 
-    const isCoach = useSelector(state => state.userReducer.user)
+    const coach = useSelector(state => state.userReducer.coach);
+    const firstName = useSelector(state => state.userReducer.first_name);
 
     const dispatch = useDispatch();
 
@@ -31,19 +33,45 @@ const UserNavbar = () => {
     }, [width]);
 
     const onLogout = () => {
-
-        dispatch( logout() )
+        dispatch(logout());
+        dispatch (removeUser());
     }
 
 
     if (!toggleMenu) {
-        // console.log(isCoach)
+        if (coach) {
+            return (
+                <div id="nav-wrapper">
+                    <div id="navbar">
+                        <ul className="navbar-linklist">
+                            <li className="navbar-link" >
+                                <Link className="navitem" to="/profile"> Hi, Coach {firstName} </Link>
+                            </li>
+                            <li className="navbar-link" >
+                                <Link className="navitem" to="/" onClick={ () => onLogout()}> Logout </Link>
+                            </li>
+                        </ul>
+                        <div className="nav-logo">
+                            <h2 className="nav-brand"> EvolvU </h2>
+                        </div>
+                        <ul className="navbar-linklist">
+                            <li className="navbar-link" >
+                                <Link className="navitem" to="/"> </Link>
+                            </li>
+                            <li className="navbar-link" >
+                                <Link className="navitem" to="/"> </Link>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            )
+        }
         return (
             <div id="nav-wrapper">
                 <div id="navbar">
                     <ul className="navbar-linklist">
                         <li className="navbar-link" >
-                            <Link className="navitem" to="/profile"> Profile </Link>
+                            <Link className="navitem" to="/profile"> Hello, {firstName} </Link>
                         </li>
                         <li className="navbar-link" >
                             <Link className="navitem" to="/" onClick={ () => onLogout()}> Logout </Link>
