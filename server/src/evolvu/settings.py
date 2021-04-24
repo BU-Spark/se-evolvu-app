@@ -92,6 +92,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:81',
+    'http://localhost:3000'
 )
 
 AUTH_USER_MODEL = 'accounts.Account'
