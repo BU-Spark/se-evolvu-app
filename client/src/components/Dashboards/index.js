@@ -8,7 +8,7 @@ import { setUser } from '../../redux/actions/userAction.js'
 const Dashboard = () => {
 
     const dispatch = useDispatch()
-    const token = JSON.parse(sessionStorage.getItem("user")).token;
+    const token = useSelector(state => state.authReducer.token);
     
     const isCoach = useSelector(state => state.userReducer.coach);
 
