@@ -38,7 +38,7 @@ export const login = (email, password) => (dispatch) => {
     return AuthService.login(email, password).then( (data) => {
         dispatch({
             type: Types.LOGIN_SUCCESS,
-            payload: { user: data }
+            payload: data
         });
 
         return Promise.resolve();

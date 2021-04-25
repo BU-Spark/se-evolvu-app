@@ -11,19 +11,22 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedin: true,
-                token: action.payload,
+                token: action.payload.token,
+                slug: action.payload.slug
             }
         case Types.LOGIN_FAILED:
             return {
                 ...state,
                 isLoggedin: false,
-                token: ""
+                token: "",
+                slugh: ""
             }
         case Types.LOGOUT:
             return {
                 ...state,
                 isLoggedin: false,
-                token: ""
+                token: "",
+                slug: "",
             }
         default:
             return {
