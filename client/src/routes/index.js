@@ -14,12 +14,27 @@ import CoachCalendar from '../components/Dashboards/Coach/Calendar/index.js';
 import CoachProfileForm from '../components/Dashboards/Coach/Profile/index.js';
 import SessionHistory from '../components/Dashboards/Coach/History/index.js';
 import PaymentHistory from '../components/Dashboards/Coach/Payments/index.js';
+import SearchPage from '../components/SearchPage/index.js';
+import LoginPage from '../components/LoginPage/index.js';
+import RegisterPage from '../components/RegisterPage/index.js';
 
 const unprotectedRoutes = [
     {
-        path: "/testing",
+        path: "/",
         component: Homepage
-    }
+    },
+    {
+        path: "/login",
+        component: LoginPage
+    },
+    {
+        path: "/register",
+        component: RegisterPage
+    },
+    {
+        path: "/search",
+        component: SearchPage
+    },
 ];
 
 const protectedRoutes = [
