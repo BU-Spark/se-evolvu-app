@@ -5,7 +5,7 @@ import './index.css';
 
 const UserDashboard = () => {
 
-    const name = useSelector(state => state.userReducer.firstName)
+    const name = useSelector(state => state.userReducer.first_name);
 
     return (
         <div style={{ margin: '1rem'}}>
