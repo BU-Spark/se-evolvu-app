@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const url = 'http://localhost:8000';
+// const url = 'http://localhost:8000';
 
 // Development Testing Services
 // const register = (registrationInfo) => {
@@ -61,7 +61,7 @@ const login = (email, password) => {
 };
 
 const logout = () => {
-    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
 };
 
 const authServices = {
