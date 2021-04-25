@@ -19,7 +19,8 @@ import './index.css';
 const SearchPage = (props) => {
 
     // Params Coach Search
-    const [zipCode, setZipCode] = useState(props.location.state.local);
+    const [zipCode, setZipCode] = useState("02215");
+    const [label, setLabel] = useState("Life Coaching");
     const [price, setPrice] = useState(50);
     const [remote, setRemote] = useState(false);
     const [distance, setDistance] = useState(10);
@@ -86,7 +87,7 @@ const SearchPage = (props) => {
     }
 
     const setInitialFocus = () => {
-        let focus = props.location.state.focus;
+        let focus = props.location.state.focus || "life-coaching";
         switch (focus) {
             case "life-coaching":
                 setLifeFocus(true);
@@ -109,12 +110,16 @@ const SearchPage = (props) => {
     }
 
     useEffect( () => {
-        setInitialFocus();
-        onSearch();
-        if (JSON.stringify(props.location.state) === JSON.stringify({focus: "Select your area", focusLabel: "Select your area", local: ""})) {
+        
+        if (props.location.state === undefined || JSON.stringify(props.location.state) === JSON.stringify({focus: "Select your area", focusLabel: "Select your area", local: ""})) {
                 props.location.state = {focus: "life-coaching", focusLabel: "Life Coaching", local: "02215"
             }
+        } else {
+            setLabel(props.location.state.focusLabel);
+            setZipCode(props.location.state.local);
         }
+        setInitialFocus();
+        onSearch();
     // eslint-disable-next-line
     }, [])          // Add this line to prevent infinite loop 
 
@@ -144,7 +149,7 @@ const SearchPage = (props) => {
     return (
         <div className="search-results-body container-fluid">
             <p className="font-weight-bold" style={{padding: "2rem", zIndex: "-1", background:""}}>
-                You are searching for {props.location.state.focusLabel} in {props.location.state.local}
+                You are searching for {label} in {zipCode}
             </p>
             <Row>
                 <Col sm={3}>
