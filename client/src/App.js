@@ -1,7 +1,6 @@
 import './App.css';
 
 import { useEffect } from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { 
   BrowserRouter as Router,
@@ -16,9 +15,8 @@ import ErrorPage from "./components/ErrorPage/index.js";
 import PlaceHolderPage from "./components/PlaceHolderPage/index.js";
 import Footer from "./components/Footer";
 
-import routes from "./routes/index.js"
-
 import ProtectedRoute from './components/ProtectedRoute/index.js';
+import routes from "./routes/index.js";
 
 import { clearMessage } from './redux/actions/messageAction.js';
 
