@@ -9,6 +9,7 @@ import Alert from 'react-bootstrap/Alert';
 import Col from 'react-bootstrap/Col';
 
 import { register } from '../../redux/actions/authAction.js';
+import { clearMessage } from '../../redux/actions/messageAction.js';
 import { Types } from '../../redux/actions/actionTypes.js';
 
 import './index.css';
@@ -35,17 +36,44 @@ const RegisterPage = () => {
 
     const validate = () => {
 
+        let valid = true;
+
         if (firstName === " " || firstName === "" || !isAlpha(firstName)) {
             setNameError(true);
-        } else { setNameError(false);}
+            valid = false;
+        } else { 
+            setNameError(false);
+        }
 
         if (lastName === " " || lastName === "" || !isAlpha(firstName)) {
             setNameError(true);
-        } else { setNameError(false);}
+            valid = false;
+        } else { 
+            setNameError(false);
+        }
 
         if (email === " " || email === "" || !isEmail(email)) {
-            setEmailError(true)
-        } else { setEmailError(false); }
+            setEmailError(true);
+            valid = false;
+        } else { 
+            setEmailError(false); 
+        }
+
+
+        if (zipCode === " " || zipCode === "" || !isNumeric(zipCode)) {
+            setZipCodeError(true);
+            valid = false;
+        } else {
+            setZipCodeError(false);
+        }
+
+        // Check if passwords match
+        if (!equals(password, confirmPassword) ) {
+            setConfirmPasswordError(true);
+            valid = false;
+        } else {
+            setConfirmPasswordError(false);
+        }
 
         if (password === " " || password === "" || 
             !isStrongPassword(password, 
@@ -58,30 +86,18 @@ const RegisterPage = () => {
                 }
             )) {
             setStrongPasswordError(true);
-        } else { setStrongPasswordError(false);}
-
-        if (zipCode === " " || zipCode === "" || !isNumeric(zipCode)) {
-            setZipCodeError(true)
-        } else {setZipCodeError(false);}
-
-        // Check if passwords match
-        if (!equals(password, confirmPassword) ) {
-            setConfirmPasswordError(true)
-        } else {
-            setConfirmPasswordError(false)
+            valid = false;
+        } else { 
+            setStrongPasswordError(false);
         }
 
-        if (confirmPasswordError || nameError || emailError || zipCodeError || strongPasswordError) {
-            return false
-        }
-
-        return true;
+        return valid;
     }
 
     const onRegister = (e) => {
-        e.preventDefault()
-
-        if (validate()) {
+        e.preventDefault();
+        let valid = validate();
+        if (valid) {
             const params = {
                 "first_name": firstName,
                 "last_name": lastName,
@@ -100,7 +116,7 @@ const RegisterPage = () => {
                 })
                 .catch( () => {
                     setSuccessfullyRegistered(false);
-                })
+                });
         } else {
             dispatch({
                 type: Types.SET_MESSAGE,
@@ -110,6 +126,7 @@ const RegisterPage = () => {
     }
 
     if (successfullyRegistered) {
+        dispatch(clearMessage());
         return <Redirect to="/login"/>
     }
 
