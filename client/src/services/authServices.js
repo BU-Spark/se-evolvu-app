@@ -2,39 +2,20 @@
 
 import axios from 'axios';
 
-// const url = 'http://localhost:8000';
-
-// Development Testing Services
-// const register = (registrationInfo) => {
-//     return axios.post(url + "/api/accounts/register", registrationInfo)
-// };
-
-// const login = (email, password) => {
-//     return axios.post(url + "/api/accounts/login", {
-//         email,
-//         "username": email,
-//         password
-//     }).then((res) => {
-//         console.log(res.data)
-//         if (res.data.token) {
-//             sessionStorage.setItem("user", JSON.stringify(res.data));
-//           }
-//         return res.data;
-//     })
-// };
-
+const API_URL = "";
 
 const register = (registrationInfo) => {
     return axios({
-        url: "/api/accounts/register", 
+        url: API_URL + "/api/accounts/register", 
         method: "post",
         data: registrationInfo,
         headers: {
             "credentials": "same-origin"
         }
     }).then((res) => {
-        if (res.data.token) {
-            sessionStorage.setItem("token", JSON.stringify(res.data.token));
+        // Check for validation (i.e. account has already been created)
+        if (res.data.email[0] === "account with this email already exists.") {
+            throw new Error("An account with this email already exists.")
         }
         return res.data;
     })
@@ -53,12 +34,22 @@ const login = (email, password) => {
             "credentials": "same-origin"
         }
     }).then((res) => {
-        if (res.data.token) {
-            sessionStorage.setItem("user", JSON.stringify(res.data));
-          }
+        // TODO: Catch exception
         return res.data;
     })
 };
+
+const csrfToken = () => {
+    return axios({
+        url: API_URL + "/api/accounts/csrf",
+        method: 'post',
+        headers: {
+            "credentials": "same-origin"
+        }
+    }).then((res) => {
+        return res.data;
+    })
+}
 
 const logout = () => {
     sessionStorage.removeItem("token");
@@ -67,7 +58,8 @@ const logout = () => {
 const authServices = {
     register,
     login,
-    logout
+    logout,
+    csrfToken
 };
 
 export default authServices;

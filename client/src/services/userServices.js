@@ -3,35 +3,11 @@
 import axios from "axios";
 import { AuthHeader } from './authHeader.js';
 
-// const API_URL = "http://localhost:8000";
-
-// Development Testing Services
-// const getTestItems = () => {
-//     return axios.get(API_URL + '/test', { headers: authHeader() });
-// };
-
-// const searchCoaches = (params) => {
-//     return axios.post('http://localhost:8000/coaches/search', { 
-//         params
-//     });
-// };
-
-// const getCoach = (params) => {
-//     return axios.post(API_URL + '/search/coach', { 
-//         params
-//     });
-// };
-
-// const getUser = (params) => {
-//     return axios.post(API_URL + "/api/users/me",
-//         params,
-//     );
-// };
-
+const API_URL = "";
 
 const getTestItems = () => {
     return axios({
-        url: "/test",
+        url: API_URL + "/test",
         method: 'get',
         headers: {
             "credentials": "same-origin",
@@ -42,7 +18,7 @@ const getTestItems = () => {
 
 const searchCoaches = (params) => {
     return axios({
-        url: "/api/coaches/search",
+        url: API_URL + "/api/coaches/search",
         method: 'post',
         data: params,
         headers: {
@@ -53,7 +29,7 @@ const searchCoaches = (params) => {
 
 const getUser = (params) => {
     return axios({
-        url: "/api/users/me",
+        url: API_URL + "/api/users/me",
         method: 'post',
         data: params,
         headers: {
@@ -65,7 +41,7 @@ const getUser = (params) => {
 
 const getCoach = (params) => {
     return axios({
-        url: "/api/coaches/get",
+        url: API_URL + "/api/coaches/get",
         method: 'post',
         data: params,
         headers: {

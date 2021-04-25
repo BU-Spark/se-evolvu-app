@@ -19,7 +19,8 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 isLoggedin: false,
                 token: "",
-                slugh: ""
+                slug: "",
+                csrf: ""
             }
         case Types.LOGOUT:
             return {
@@ -27,6 +28,12 @@ export const authReducer = (state = initialState, action) => {
                 isLoggedin: false,
                 token: "",
                 slug: "",
+                csrf: "",
+            }
+        case Types.SET_CSRF:
+            return {
+                ...state,
+                csrf: action.payload.csrfToken,
             }
         default:
             return {
