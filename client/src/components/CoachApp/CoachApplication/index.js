@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
 import "./index.css";
-import InputGroup from 'react-bootstrap/InputGroup';
 import { Tabs, Tab } from 'react-bootstrap';
 import "./index.css";
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import FormControl from 'react-bootstrap/FormControl';
 import Form from 'react-bootstrap/Form';
-import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import  { isEmail } from 'validator';
 import Alert from 'react-bootstrap/Alert';
-import Image from 'react-bootstrap/Image'
 import { HiUserCircle } from "react-icons/hi";
 import Col from 'react-bootstrap/Form';
 
 const CoachApplication = () => {
     
-    const [source, setSource] = useState("");
-    const [local, setLocal] = useState("");
-    const [area, setArea] = useState(1);
+    // const [source, setSource] = useState("");
+    // const [local, setLocal] = useState("");
+    // const [area, setArea] = useState(1);
     const [tab, setTab] = useState("basicInfo");
 
     
@@ -270,7 +265,8 @@ const CoachApplication = () => {
         return true;
     }
 
-    const [concentration, setConcentration] = useState(" ");
+    // const [concentration, setConcentration] = useState(" ");
+    
 
     return( 
 
@@ -392,7 +388,8 @@ const CoachApplication = () => {
                                                     <li id = "information">How did you hear about us?</li>
 
                                                     <li>
-                                                    <Form.Group id="information" className="register-form-input" onChange={ (e) => setConcentration(e.target.value)}>
+                                                        {/*onChange={ (e) => setConcentration(e.target.value)}*/}
+                                                     <Form.Group id="information" className="register-form-input" > 
                                                             <Form.Control as="select">
                                                                 <option></option>
                                                                 <option>Google</option>
