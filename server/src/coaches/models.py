@@ -29,7 +29,7 @@ class Coach(models.Model):
     focus_nutrition_fitness = models.BooleanField(default=False)
     focus_business = models.BooleanField(default=False)
     travel = models.BooleanField(default=False)
-    description = models.TextField()
+    description = models.TextField(default="")
     # city = models.CharField(max_length=255)
     # location = PlainLocationField(based_fields=['city'], zoom=7)
     # slug = models.SlugField(blank=True, unique=True)

@@ -62,6 +62,7 @@ class CoachListSerializer(serializers.ModelSerializer):
                 'focus_health_wellness',
                 'focus_holistic',
                 'focus_business',
+                'description',
                 'travel',]
 
     def get_coach_account_firstname(self, coach):

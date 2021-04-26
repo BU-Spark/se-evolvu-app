@@ -29,7 +29,7 @@ def api_detail_coach_view(request, slug):
 @api_view(['PUT', ])
 def api_update_coach_view(request, slug):
     try:
-        coach_profile = Coach.objects.get(slug=slug)
+        coach_profile = Coach.objects.get(coach__slug=slug)
     except Coach.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
@@ -45,7 +45,7 @@ def api_update_coach_view(request, slug):
 @api_view(['DELETE', ])
 def api_delete_coach_view(request, slug):
     try:
-        coach_profile = Coach.objects.get(slug=slug)
+        coach_profile = Coach.objects.get(coach__slug=slug)
     except Coach.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
