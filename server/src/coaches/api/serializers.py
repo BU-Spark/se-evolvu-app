@@ -8,7 +8,6 @@ class CoachSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_coach_account_username')
     email = serializers.SerializerMethodField('get_coach_account_email')
     slug = serializers.SerializerMethodField('get_coach_account_slug')
-
     class Meta:
         model = Coach
         fields = ['first_name',
@@ -77,7 +76,7 @@ class CoachListSerializer(serializers.ModelSerializer):
     def get_coach_account_email(self, coach):
         return coach.coach.email
 
-    def get_coach_account_slug(self, slug):
+    def get_coach_account_slug(self, coach):
         return coach.coach.slug
 
 '''

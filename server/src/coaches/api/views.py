@@ -18,7 +18,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 @api_view(['GET', ])
 def api_detail_coach_view(request, slug):
     try:
-        coach_profile = Coach.objects.get(slug=slug)
+        coach_profile = Coach.objects.get(coach__slug=slug)
     except Coach.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 

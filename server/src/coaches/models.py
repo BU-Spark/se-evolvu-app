@@ -18,7 +18,7 @@ def upload_location(instance, filename, **kwargs):
     return file_path
 
 class Coach(models.Model):
-    coach = models.ForeignKey(Account, on_delete=models.CASCADE) #, related_name="coach_profile")
+    coach = models.OneToOneField(Account, on_delete=models.CASCADE, related_name="coach_profile") #, related_name="coach_profile")
     #name = models.ForeignKey('accounts.Account.first_name', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=upload_location, blank=True, null=True)
     gender = models.CharField(max_length=1)
