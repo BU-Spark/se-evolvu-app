@@ -17,6 +17,14 @@ import PaymentHistory from '../components/Dashboards/Coach/Payments/index.js';
 import SearchPage from '../components/SearchPage/index.js';
 import LoginPage from '../components/LoginPage/index.js';
 import RegisterPage from '../components/RegisterPage/index.js';
+import CoachApplyLanding from "../components/CoachApp/CoachApplyLanding";
+import CoachEligibility from "../components/CoachEligibility/index.js";
+import CoachApplication from "../components/CoachApp/CoachApplication/index.js";
+import About from "../components/About";
+import Contact from "../components/Contact";
+import Privacy from "../components/Privacy";
+import Testimonial from "../components/Testimonial";
+import Safety from "../components/Safety";
 
 const unprotectedRoutes = [
     {
@@ -34,6 +42,38 @@ const unprotectedRoutes = [
     {
         path: "/search",
         component: SearchPage
+    },
+    {
+        path: "/about",
+        component: About
+    },
+    {
+        path: "/contact",
+        component: Contact
+    },
+    {
+        path: "/privacy",
+        component: Privacy
+    },
+    {
+        path: "/testimonial",
+        component: Testimonial
+    },
+    {
+        path: "/safety",
+        component: Safety
+    },
+    {
+        path: "/apply",
+        component: CoachApplyLanding
+    },
+    {
+        path: "/eligibility",
+        component: CoachEligibility
+    },
+    {
+        path: "/application",
+        component: CoachApplication
     },
 ];
 

@@ -18,7 +18,7 @@ def upload_location(instance, filename, **kwargs):
     return file_path
 
 class Coach(models.Model):
-    coach = models.ForeignKey(Account, on_delete=models.CASCADE) #, related_name="coach_profile")
+    coach = models.OneToOneField(Account, on_delete=models.CASCADE, related_name="coach_profile") #, related_name="coach_profile")
     #name = models.ForeignKey('accounts.Account.first_name', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=upload_location, blank=True, null=True)
     gender = models.CharField(max_length=1)
@@ -29,7 +29,7 @@ class Coach(models.Model):
     focus_nutrition_fitness = models.BooleanField(default=False)
     focus_business = models.BooleanField(default=False)
     travel = models.BooleanField(default=False)
-    description = models.TextField()
+    description = models.TextField(default="")
     # city = models.CharField(max_length=255)
     # location = PlainLocationField(based_fields=['city'], zoom=7)
     # slug = models.SlugField(blank=True, unique=True)
