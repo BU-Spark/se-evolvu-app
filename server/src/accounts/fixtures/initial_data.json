@@ -85,8 +85,8 @@
         "fields": {
             "first_name": "Julianne",
             "last_name": "OConner",
-            "email": "Julianne.OConner@kory.org",
-            "username": "Julianne.OConner@kory.org",
+            "email": "JulianneOConner@kory.org",
+            "username": "JulianneOConner@kory.org",
             "slug": "julianneOConnernet-42325223",
             "is_customer": true,
             "is_coach": false,
@@ -105,8 +105,8 @@
         "fields": {
             "first_name": "Chelsey",
             "last_name": "Dietrich",
-            "email": "Chelsey.Dietrich@kory.org",
-            "username": "Chelsey.Dietrich@kory.org",
+            "email": "ChelseyDietrich@kory.org",
+            "username": "ChelseyDietrich@kory.org",
             "slug": "ChelseyDietrichnet-42325223",
             "is_customer": true,
             "is_coach": false,
