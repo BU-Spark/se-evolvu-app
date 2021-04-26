@@ -23,6 +23,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
             username = self.validated_data['username'],
             first_name = self.validated_data['first_name'],
             last_name = self.validated_data['last_name'],
+            is_customer = self.validated_data['is_customer'],
+            is_coach = self.validated_data['is_coach'],
         )
         password = self.validated_data['password']
         password2 = self.validated_data['password2']

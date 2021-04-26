@@ -65,13 +65,16 @@ const RegisterPage = () => {
         e.preventDefault()
 
         if (validate()) {
-            const params = { 
-                firstName,
-                lastName,
-                email,
-                password,
-                areaCode,
-                concentration
+            const params = {
+                "first_name": firstName,
+                "last_name": lastName,
+                "username": firstName + lastName + Math.ceil(Math.random() * 10),
+                "email": email,
+                "password": password,
+                "password2": confirmPassword,
+                "is_coach": false,
+                "is_customer": true,
+                "concentration": concentration,
             };
             dispatch(register(params))
                 .then( () => {

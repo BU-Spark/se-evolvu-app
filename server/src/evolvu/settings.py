@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'coaches',
     'users',
     'accounts',
+    'reviews',
     'corsheaders',
 ]
 
@@ -50,9 +51,9 @@ REST_FRAMEWORK = {
      'DEFAULT_AUTHENTICATION_CLASSES': [
          'rest_framework.authentication.TokenAuthentication',
      ],
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated'
-    # ],
+     'DEFAULT_PERMISSION_CLASSES': [
+         'rest_framework.permissions.AllowAny',
+     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
@@ -86,6 +87,12 @@ TEMPLATES = [
         },
     },
 ]
+
+CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:81',
+)
 
 AUTH_USER_MODEL = 'accounts.Account'
 
@@ -135,7 +142,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Static files (CSS, JavaScript, Images)
