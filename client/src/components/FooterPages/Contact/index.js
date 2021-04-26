@@ -4,7 +4,6 @@ import Form from 'react-bootstrap/Form';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import FormControl from 'react-bootstrap/FormControl';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Button from 'react-bootstrap/Button';
 import React, { useState } from 'react';
 
 const Contact = () => {
@@ -29,7 +28,7 @@ const Contact = () => {
 
             </div>
 
-            <div style = {{marginTop: "rem"}} id = "Body" className = "container"  style = {{marginTop : "60px"}}>
+            <div style = {{marginTop: "60px"}} id = "Body" className = "container" >
 
                 <div id= "subHeader">Send Evolv U a message</div>
                 <hr  style={{marginTop: "2px", color: "#CACACA", backgroundColor: '#CACACA', height: "2px", borderColor : '#CACACA'}}/>

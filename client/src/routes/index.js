@@ -18,13 +18,13 @@ import SearchPage from '../components/SearchPage/index.js';
 import LoginPage from '../components/LoginPage/index.js';
 import RegisterPage from '../components/RegisterPage/index.js';
 import CoachApplyLanding from "../components/CoachApp/CoachApplyLanding";
-import CoachEligibility from "../components/CoachEligibility/index.js";
+import CoachEligibility from "../components/CoachApp/CoachEligibility/index.js";
 import CoachApplication from "../components/CoachApp/CoachApplication/index.js";
-import About from "../components/About";
-import Contact from "../components/Contact";
-import Privacy from "../components/Privacy";
-import Testimonial from "../components/Testimonial";
-import Safety from "../components/Safety";
+import About from "../components/FooterPages/About";
+import Contact from "../components/FooterPages/Contact";
+import Privacy from "../components/FooterPages/Privacy";
+import Testimonial from "../components/FooterPages/Testimonial";
+import Safety from "../components/FooterPages/Safety";
 
 const unprotectedRoutes = [
     {
