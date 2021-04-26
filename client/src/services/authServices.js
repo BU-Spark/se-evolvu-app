@@ -2,16 +2,11 @@
 
 import axios from 'axios';
 
-const API_URL = "";
-
 const register = (registrationInfo) => {
     return axios({
-        url: API_URL + "/api/accounts/register", 
+        url: "/api/accounts/register", 
         method: "post",
         data: registrationInfo,
-        headers: {
-            "credentials": "same-origin"
-        }
     }).then((res) => {
         // Check for validation (i.e. account has already been created)
         if (res.data.email[0] === "account with this email already exists.") {
@@ -30,9 +25,6 @@ const login = (email, password) => {
             "username": email,
             "password": password
         },
-        headers: {
-            "credentials": "same-origin"
-        }
     }).then((res) => {
         // TODO: Catch exception
         return res.data;
@@ -41,11 +33,8 @@ const login = (email, password) => {
 
 const csrfToken = () => {
     return axios({
-        url: API_URL + "/api/accounts/csrf",
+        url: "/api/accounts/csrf",
         method: 'post',
-        headers: {
-            "credentials": "same-origin"
-        }
     }).then((res) => {
         return res.data;
     })
