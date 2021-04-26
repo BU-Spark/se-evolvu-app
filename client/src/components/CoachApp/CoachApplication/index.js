@@ -99,17 +99,32 @@ const CoachApplication = () => {
     const [zipError, setZipError] = useState(false)
     const [zip, setZip] = useState("");
     const onChangeZip = (e) => {
-        setState(e.target.value);
+        setZip(e.target.value);
     }
-    const [CountryError, setCountryError] = useState(false)
+
+    const [countryError, setCountryError] = useState(false)
     const [country, setCountry] = useState("");
     const onChangeCountry = (e) => {
-        setState(e.target.value);
+        setCountry(e.target.value);
     }
 
+    const [experienceError, setExperienceError] = useState(false)
+    const [experience, setExperience] = useState("");
+    const onChangeExperience = (e) => {
+        setExperience(e.target.value);
+    }
 
+    const [sessionError, setSessionError] = useState(false)
+    const [session, setSession] = useState("");
+    const onChangeSession = (e) => {
+        setSession(e.target.value);
+    }
 
-  
+    const [credentialError, setCredentialError] = useState(false)
+    const [credential, setCredential] = useState("");
+    const onChangeCredential = (e) => {
+        setCredential(e.target.value);
+    }
 
     const validate = () => {
 
@@ -128,8 +143,6 @@ const CoachApplication = () => {
         if (!lastName) {
             setLastNameError(true) 
         } else { setLastNameError(false) }
-        
-
 
         if (email === " " || email === "" || !isEmail(email)) {
             return false;
@@ -170,6 +183,42 @@ const CoachApplication = () => {
             setPhoneError(true) 
         } else { setPhoneError(false) }
 
+        if (!street) {
+            setStreetError(true) 
+        } else { setStreetError(false) }
+
+        if (!apt) {
+            setAptError(true) 
+        } else { setAptError(false) }
+
+        if (!state) {
+            setStateError(true) 
+        } else { setStateError(false) }
+
+        if (!city) {
+            setCityError(true) 
+        } else { setCityError(false) }
+
+        if (!zip) {
+            setZipError(true) 
+        } else { setZipError(false) }
+
+        if (!country) {
+            setCountryError(true) 
+        } else { setCountryError(false) }
+
+        if (!experience) {
+            setExperienceError(true) 
+        } else { setExperienceError(false) }
+
+        if (!session) {
+            setSessionError(true) 
+        } else { setSessionError(false) }
+
+        if (!credential) {
+            setCredentialError(true) 
+        } else { setCredentialError(false) }
+
         if (focus === "") {
             return false;
         }
@@ -181,6 +230,44 @@ const CoachApplication = () => {
         if (gender === "") {
             return false;
         }
+
+        if (phone === "") {
+            return false;
+        }
+
+        if (street === "") {
+            return false;
+        }
+
+        if (apt === "") {
+            return false;
+        }
+
+        if (city === "") {
+            return false;
+        }
+
+        if (zip === "") {
+            return false;
+        }
+
+        if (country === "") {
+            return false;
+        }
+
+        if (experience === "") {
+            return false;
+        }
+
+        if (session === "") {
+            return false;
+        }
+
+        if (credential === "") {
+            return false;
+        }
+
+        return true;
     }
 
     const [concentration, setConcentration] = useState(" ");
@@ -214,7 +301,7 @@ const CoachApplication = () => {
                                                     <li id = "information">First Name <span style={{ color: 'red'}}>*</span></li>
 
                                                     <li>
-                                                        <Form.Group id = "input" onChange={(e) => { onChangeFirstName(e) }}>
+                                                        <Form.Group id = "input" onChange={(e) => {onChangeFirstName(e)}}>
                                                             <Form.Control type = "name" placeholder= "John"/>
                                                         </Form.Group>
                                                         {
@@ -312,7 +399,7 @@ const CoachApplication = () => {
                                                                 <option>Instagram</option>
                                                                 <option>Facebook</option>
                                                                 <option>Other</option>
-                                                                </Form.Control>
+                                                            </Form.Control>
                                                         </Form.Group>
                                                     </li>
                                                 </ul>
@@ -355,15 +442,15 @@ const CoachApplication = () => {
                                                     
                                                     <li>
 
-                                                        <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => onChangeFocus(e.target.value)}>
+                                                        <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => onChangeFocus(e)}>
                                                             <Form.Label>My coaching focus is <span style={{ color: 'red'}}>*</span></Form.Label>
                                                             <Form.Control as="select">
-                                                                <option onClick={() => setFocus("")}>Select</option>
-                                                                <option onClick={() => setFocus("lifeCoaching")}>Life Coaching</option>
-                                                                <option onClick={() => setFocus("nutritionAndFitness")}>Nutrition & Fitness</option>
-                                                                <option onClick={() => setFocus("healthAndWellnessCoaching")}>Health and Wellness Coaching</option>
-                                                                <option onClick={() => setFocus("holisticCoaching")}>Holistic Health & Wellness Coaching</option>
-                                                                <option onClick={() => setFocus("spiritualCoaching")}>Spiritual Wellness Coaching</option>
+                                                                <option></option>
+                                                                <option>Life Coaching</option>
+                                                                <option>Nutrition & Fitness</option>
+                                                                <option>Health and Wellness Coaching</option>
+                                                                <option>Holistic Health & Wellness Coaching</option>
+                                                                <option>Spiritual Wellness Coaching</option>
                                                             </Form.Control>
                                                         </Form.Group>
                                                         {
@@ -376,7 +463,7 @@ const CoachApplication = () => {
                                                     <br/>
 
                                                     <li>
-                                                        <Form.Group id= "input" onChange={ (e) => onChangeDateOfBirth(e.target.value)}>
+                                                        <Form.Group id= "input" onChange={ (e) => onChangeDateOfBirth(e)}>
                                                                 <Form.Label id = "information"> Date of birth <span style={{ color: 'red'}}>*</span></Form.Label>
                                                                 <Form.Control placeholder = "Year/Month/Day"/>
                                                         </Form.Group>
@@ -388,10 +475,10 @@ const CoachApplication = () => {
                                                     <br/>
 
                                                     <li>
-                                                        <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => setGender(e.target.value)}>
+                                                        <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => onChangeGender(e)}>
                                                             <Form.Label>Gender <span style={{ color: 'red'}}>*</span></Form.Label>
                                                             <Form.Control as="select">
-                                                                <option onClick={() => setGender("")}></option>
+                                                                <option></option>
                                                                 <option>Male</option>
                                                                 <option>Female</option>
                                                                 <option>Non-Binary</option>
@@ -446,7 +533,7 @@ const CoachApplication = () => {
                                                     <br/>
 
                                                     <li>
-                                                        <Form.Group id="input" style = {{width: "80%"}}>
+                                                        <Form.Group id="input" style = {{width: "80%"}} onChange={ (e) => onChangePhone(e)}>
                                                             <Form.Label id = "information"> Phone Number <span style={{ color: 'red'}}>*</span></Form.Label>
                                                             <Form.Control  placeholder= ""/>
                                                         </Form.Group>
@@ -484,30 +571,39 @@ const CoachApplication = () => {
                                                 <ul className="list-unstyled">
 
                                                     <li>
-                                                        <Form.Group id="input" style = {{width: "100%"}}>
+                                                        <Form.Group id="input" style = {{width: "100%"}} onChange={ (e) => onChangeStreet(e)}>
                                                             <Form.Label id = "information"> Street <span style={{ color: 'red'}}>*</span></Form.Label>
                                                             <Form.Control  placeholder= ""/>
                                                         </Form.Group>
+                                                        {
+                                                        streetError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                                                        }
                                                     </li>
                                                     
                                                     <br/>
                                                     <br/>
 
                                                     <li>
-                                                        <Form.Group id="input" style = {{width: "100%"}}>
+                                                        <Form.Group id="input" style = {{width: "100%"}} onChange={ (e) => onChangeCity(e)}>
                                                             <Form.Label id = "information"> City <span style={{ color: 'red'}}>*</span></Form.Label>
                                                             <Form.Control  placeholder= ""/>
                                                         </Form.Group>
+                                                        {
+                                                        cityError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                                                        }
                                                     </li>
 
                                                     <br/>
                                                     <br/>
 
                                                     <li>
-                                                        <Form.Group id="input" style = {{width: "100%"}}>
+                                                        <Form.Group id="input" style = {{width: "100%"}} onChange={ (e) => onChangeCountry(e)}>
                                                             <Form.Label id = "information"> Country <span style={{ color: 'red'}}>*</span></Form.Label>
                                                             <Form.Control  placeholder= ""/>
                                                         </Form.Group>
+                                                        {
+                                                        countryError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                                                        }
                                                     </li>
                                                     
                                                 </ul>
@@ -520,10 +616,13 @@ const CoachApplication = () => {
 
                                                 <ul className="list-unstyled">
                                                     <li>
-                                                        <Form.Group id="input" style = {{width: "80%"}}>
+                                                        <Form.Group id="input" style = {{width: "80%"}} onChange={ (e) => onChangeApt(e)}>
                                                             <Form.Label id = "information"> Apt or Unit # <span style={{ color: 'red'}}>*</span></Form.Label>
                                                             <Form.Control  placeholder= ""/>
                                                         </Form.Group>
+                                                        {
+                                                        aptError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                                                        }
                                                     </li>
 
                                                     <br/>
@@ -533,10 +632,10 @@ const CoachApplication = () => {
                                                         <Form.Row>
 
                                                             <Col style = {{width: "60%", marginRight: "10%"}}>
-                                                                <Form.Group id="dropDown" className="register-form-input">
+                                                                <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => onChangeState(e)}>
                                                                     <Form.Label>State or Province<span style={{ color: 'red'}}>*</span></Form.Label>
                                                                     <Form.Control as="select">
-                                                                        <option>Select</option>
+                                                                        <option></option>
                                                                         <option>New York</option>
                                                                         <option>Massachussetts</option>
                                                                         <option>Vermont</option>
@@ -544,13 +643,19 @@ const CoachApplication = () => {
                                                                         <option>Colorado</option>
                                                                     </Form.Control>
                                                                 </Form.Group>
+                                                                {
+                                                                stateError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                                                                }
                                                             </Col>
 
                                                             <Col style = {{width: "30%"}}>
-                                                                <Form.Group id="input" style = {{width: "100%"}}>
+                                                                <Form.Group id="input" style = {{width: "100%"}} onChange={ (e) => onChangeZip(e)}>
                                                                     <Form.Label id = "information"> Zip <span style={{ color: 'red'}}>*</span></Form.Label>
                                                                     <Form.Control  placeholder= ""/>
                                                                 </Form.Group>
+                                                                {
+                                                                zipError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                                                                }
 
                                                             </Col>
 
@@ -580,6 +685,7 @@ const CoachApplication = () => {
                                         <div id = "information">
                                             Coaching Experience
                                         </div>
+                                       
 
                                         <br/>
 
@@ -591,9 +697,12 @@ const CoachApplication = () => {
                                         
                                         <br/>
 
-                                        <Form.Group id="input" style = {{width: "100%"}}>
+                                        <Form.Group id="input" style = {{width: "100%"}} onChange={(e) => { onChangeExperience(e) }}>
                                             <Form.Control  placeholder= ""/>
                                         </Form.Group>
+                                        {
+                                        experienceError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                                        }
 
                                         <br/>
 
@@ -611,9 +720,12 @@ const CoachApplication = () => {
 
                                         <br/>
 
-                                        <Form.Group id="input" style = {{width: "100%"}}>
+                                        <Form.Group id="input" style = {{width: "100%"}} onChange={(e) => { onChangeCredential(e) }}>
                                             <Form.Control  placeholder= ""/>
                                         </Form.Group>
+                                        {
+                                        credentialError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                                        }
 
                                         <br/>
 
@@ -637,9 +749,12 @@ const CoachApplication = () => {
 
                                         <br/>
 
-                                        <Form.Group id="input" style = {{width: "100%"}}>
+                                        <Form.Group id="input" style = {{width: "100%"}} onChange={(e) => { onChangeSession(e) }}>
                                             <Form.Control  placeholder= ""/>
                                         </Form.Group>
+                                        {
+                                        sessionError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                                        }
 
                                         <br/>
 
@@ -692,11 +807,194 @@ const CoachApplication = () => {
                                         </Form.Group>
 
                                         <br/>
-                                                                                
 
+                                        <Button variant = "dark" disableElevation onClick={() => 
 
+                                            {if(validate2())
+                                            {
+                                                setTab("setPricing");
+                                            }
+                                            else{
+                                                setTab("background");
+                                            }}}
+
+                                            style = {{ marginLeft: "88%"}}>
+                                            Continue
+                                        </Button>
+
+                                        <Button variant = "dark" disableElevation onClick={() => 
+
+                                            {setTab("basicInfo");}}
+
+                                            style = {{ marginTop: "5%", marginLeft: "92.5%"}}>
+                                            Back
+                                        </Button>
+       
 
                                     </div> {/*page end*/}
+                                </Tab>
+
+                                <Tab eventKey= "setPricing" title="Set Pricing" tabClassName="profile-tabitem">
+                                    <div id = "centerBlockCoach" className = "col-sm mx-auto">
+
+                                        <div id = "page3Top">
+                                            Please enter your single session length and single session rate.
+                                            Here at EvolvU we want you to be able to provide your clients with multiple session options.
+                                            You get to list up to 5 different session packages. We do not offer the ability to hold group sessions at the moment.
+                                            You can set and change your package(s) anytime within your sessions tab on your dashboard.
+                                        </div>
+
+                                        <div id = "questionsRow" className = "d-flex row">
+
+                                            <div id="questionCol" className = "col-sm-5 mx-1">
+
+                                                <br/>
+                                                <br/>
+
+                                                <div id = "information">
+                                                    Session Length
+                                                </div>
+
+                                                <br/>
+
+                                                <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => onChangeState(e)}>
+                                                    <Form.Control as="select">
+                                                        <option>30 mins - 3 hours</option>
+                                                        <option>3 hours - 4 hours</option>
+                                                        <option>4 hours - 5 hours</option>
+                                                    </Form.Control>
+                                                </Form.Group>
+
+                                            </div>
+                                            
+                                            <div id="questionCol" className = "col-sm-1 mx-3"></div> 
+
+                                            <div id="questionCol" className = "col-sm-5 mx-1">
+
+                                                <br/>
+                                                <br/>
+
+                                                <div id = "information">
+                                                    Session Rate
+                                                </div>
+
+                                                <br/>
+
+                                                <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => onChangeState(e)}>
+                                                    <Form.Control as="select">
+                                                        <option>$25 - $250</option>
+                                                        <option>$250 - $300</option>
+                                                        <option>$300 - $350</option>
+                                                    </Form.Control>
+                                                </Form.Group>
+
+                                            </div>
+                                        </div> {/*row end*/}
+
+                                        <br/>
+                                        <br/>
+
+                                        <div style={{ borderTop: "2px solid #779ECC"}}></div>
+
+                                        <br/>
+
+                                        <div id = "blackHeader">
+                                            Are you willing to travel to clients
+                                        </div>
+
+                                        <br/>
+
+                                        <div id = "page3Descriptor">
+                                            Are you willing to meet clients at a location near them?
+                                            If yes, please enter your home or work address and how how many 
+                                            miles you’re willing to travel from there.
+                                        </div>
+
+                                        <form>
+
+                                            <div className="form-check">
+                                                <label>
+                                                    <input
+                                                    type="radio"
+                                                    name="react-tips"
+                                                    value="option1"
+                                                    checked={true}
+                                                    className="form-check-input"
+                                                    />
+                                                    Yes
+                                                </label>
+                                            </div>
+
+                                            <div className="form-check">
+                                                <label>
+                                                    <input
+                                                    type="radio"
+                                                    name="react-tips"
+                                                    value="option2"
+                                                    className="form-check-input"
+                                                    />
+                                                    No
+                                                </label>
+                                            </div>
+
+                                        </form>
+
+                                        <br/>
+
+                                        <div id = "blackHeader">
+                                            Add Specific Training Location
+                                        </div>
+
+                                        <br/>
+
+                                        <div id = "page3Descriptor">
+                                            You may add different session locations by name or address.
+                                            Please secure your location from the outer suggestion list that pops up when you begin typing.
+                                            Coaches who cannot travel to sessions must provide their specific session location here.
+                                            Clients will need to know where to meet you once they’ve booked.
+                                        </div>
+
+                                        <div id = "questionsRow" className = "d-flex row">
+
+                                            <div id="questionCol" className = "col-sm-5 mx-1">
+
+                                                <br/>
+                                                <br/>
+
+                                                <div id = "information">
+                                                    Location Name/Address
+                                                </div>
+
+                                                <br/>
+
+                                                <Form.Group id="input" style = {{width: "100%"}}>
+                                                    <Form.Control  placeholder= ""/>
+                                                </Form.Group>
+
+                                            </div>
+
+                                            <div id="questionCol" className = "col-sm-1 mx-3"></div> 
+
+                                            <div id="questionCol" className = "col-sm-5 mx-1">
+
+                                                <br/>
+                                                <br/>
+
+                                                <div id = "information">
+                                                    Phone Number
+                                                </div>
+
+                                                <br/>
+
+                                                <Form.Group id="input" style = {{width: "100%"}}>
+                                                    <Form.Control  placeholder= ""/>
+                                                </Form.Group>
+
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
                                 </Tab>
 
                             </Tabs>
