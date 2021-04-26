@@ -41,9 +41,9 @@ const getUser = (params) => {
 
 const getCoach = (params) => {
     return axios({
-        url: API_URL + "/api/coaches/get",
-        method: 'post',
-        data: params,
+        url: API_URL + "/api/coaches/",
+        method: 'get',
+        params,         // coach's slug
         headers: {
             "credentials": "same-origin",
         }
