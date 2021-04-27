@@ -102,7 +102,7 @@ const CoachProfileForm = () => {
                                     </Col>
                                     <Col xs={5}>
                                         <Form.Row style={{ marginBottom: "1rem"}}>
-                                            <label htmlFor="inlineFormInput" srOnly>
+                                            <label htmlFor="inlineFormInput" >
                                                 What languages do you speak?
                                             </label>
                                             <Form.Control
@@ -126,7 +126,7 @@ const CoachProfileForm = () => {
                                     </Col>
                                     <Col xs={5}>
                                         <Form.Row style={{ marginBottom: "1rem"}}>
-                                            <label htmlFor="inlineFormInput" srOnly>
+                                            <label htmlFor="inlineFormInput">
                                                 Brief Bio (1 sentence max.)
                                             </label>
                                             <Form.Control
@@ -150,7 +150,7 @@ const CoachProfileForm = () => {
                                     </Col>
                                     <Col xs={5}>
                                         <Form.Row style={{ marginBottom: "1rem"}}>
-                                            <label htmlFor="inlineFormInput" srOnly>
+                                            <label htmlFor="inlineFormInput" >
                                                 Career Highlight
                                             </label>
                                             <Form.Control
