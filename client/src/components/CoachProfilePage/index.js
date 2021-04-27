@@ -24,10 +24,10 @@ const CoachProfilePage = (props) => {
     useEffect( () => {
         getCoachProfile()
     // eslint-disable-next-line 
-    }, [profile.id])
+    }, [props.coach])
 
     const getCoachProfile = () => {
-        userServices.getCoach(profile.id)
+        userServices.getCoach(props.coach)
             .then( (res) =>{
                 setProfile(res.data)
             })
@@ -56,7 +56,7 @@ const CoachProfilePage = (props) => {
                                 alt="Generic placeholder"
                             />
                             <Media.Body id="coach-profile-card-desc">
-                            <h5>{profile.name}</h5>
+                            <h5>{profile.first_name}</h5>
                             <StarRatings
                                 rating={2.403}
                                 starDimension="20px"
@@ -64,7 +64,7 @@ const CoachProfilePage = (props) => {
                                 starRatedColor="orange"
                             />
                             <p>
-                                {profile.id} ratings
+                                {profile.avg_rating} ratings
                             </p>
                             <p>
                                 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque

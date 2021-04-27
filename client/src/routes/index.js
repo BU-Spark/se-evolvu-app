@@ -12,6 +12,7 @@ import CoachDash from '../components/Dashboards/Coach/Dashboard/index.js';
 import Dashboard from '../components/Dashboards/index.js';
 import CoachCalendar from '../components/Dashboards/Coach/Calendar/index.js';
 import CoachProfileForm from '../components/Dashboards/Coach/Profile/index.js';
+import CoachProfilePage from '../components/CoachProfilePage/index.js';
 import SessionHistory from '../components/Dashboards/Coach/History/index.js';
 import PaymentHistory from '../components/Dashboards/Coach/Payments/index.js';
 import SearchPage from '../components/SearchPage/index.js';
@@ -75,6 +76,10 @@ const unprotectedRoutes = [
         path: "/application",
         component: CoachApplication
     },
+    {
+        path: "/coach/profile/",
+        component: CoachProfilePage
+    }
 ];
 
 const protectedRoutes = [
@@ -103,7 +108,7 @@ const protectedRoutes = [
         component: PaymentHistory
     },
     {
-        path: "/coach/profile",
+        path: "/coach/forms",
         component: CoachProfileForm
     }
 

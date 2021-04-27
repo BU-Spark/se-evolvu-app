@@ -16,18 +16,18 @@ const ProfileModal = (props) => {
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter">
-            {props.coach.name}
+            {props.coach.first_name} {props.coach.last_name}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <StarRatings
-                    rating={2.403}
+                    rating={props.coach.avg_rating}
                     starDimension="20px"
                     starSpacing="1px"
                     starRatedColor="orange"
           />
           <p>
-              {props.coach.id} ratings
+              {props.coach.no_of_reviews} rating
           </p>
           <h4>Centered Modal</h4>
           <p>
@@ -47,7 +47,9 @@ const ProfileModal = (props) => {
                     to={{
                         pathname: "/coach/profile/",
                         state: {
-                            coach: props.coach
+                            slug: props.coach.slug,
+                            first_name: props.coach.first_name,
+                            last_name: props.coach.last_name,
                         }
                     }}
                 >

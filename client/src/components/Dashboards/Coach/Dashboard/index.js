@@ -2,16 +2,18 @@ import React, { useEffect } from 'react';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import DashCarousel from './Carousel/index.js';
+import { useSelector } from 'react-redux';
 
 import SidebarWrapper from '../../Sidebar/SidebarWrapper/index.js';
 
 const CoachDash = () => {
 
     let times = [("12:00 PM", 1), ("3:00 PM", 2), ("5:00 PM",3), ("6:00 PM",4)]
-    let name = "John"
+    const name = useSelector(state => state.userReducer.first_name)
 
     useEffect( () => {
 
@@ -19,6 +21,7 @@ const CoachDash = () => {
 
     return (
         <SidebarWrapper>
+            <Alert style={{ marginTop: "30px"}} variant="danger">Note: Not much functionality has been added to the dashboards. Only the frontend has been worked on.</Alert>
             <div style={{ textAlign: "left", paddingTop: "1rem"}}>
                 <h2>Your Dashboard</h2>
             </div>

@@ -11,6 +11,7 @@ import ProfileModal from '../ProfileModal/index.js';
 const ListProfileCard = (props) => {
 
     const [show, setShow] = useState(false)
+    console.log(props)
 
     return (
         <div className="coach-profile-card" >
@@ -23,15 +24,15 @@ const ListProfileCard = (props) => {
                     alt="Generic placeholder"
                 />
                 <Media.Body id="coach-profile-card-desc">
-                <h5>{props.coach.name}</h5>
+                <h5>{props.coach.first_name} {props.coach.last_name} </h5>
                 <StarRatings
-                    rating={2.403}
+                    rating={props.coach.avg_rating}
                     starDimension="20px"
                     starSpacing="1px"
                     starRatedColor="orange"
                 />
                 <p>
-                    {props.coach.id} ratings
+                    {props.coach.no_of_reviews} ratings
                 </p>
                 <p>
                     Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque

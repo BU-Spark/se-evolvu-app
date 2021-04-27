@@ -159,7 +159,7 @@ const SearchPage = (props) => {
                 You are searching for {label} in {zipCode}
             </p>
             <Row>
-                <Col sm={3}>
+                <Col sm={3} className="search-page-filter-container">
                     <div className="search-page-filter">
                         <Form>
                             <div>
