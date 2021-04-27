@@ -71,7 +71,7 @@ const EligibleCoach = () => {
                     </ol>
                     
                     {/*form check and radio*/}
-                    <Button variant = "dark" disableElevation onClick={() => setArea(false)}>
+                    <Button variant = "dark"  onClick={() => setArea(false)}>
                         Get Results
                     </Button>
 

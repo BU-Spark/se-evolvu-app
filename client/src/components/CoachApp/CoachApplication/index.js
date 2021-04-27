@@ -404,7 +404,7 @@ const CoachApplication = () => {
                                                <br/>
                                                <br/>
                                                <br/>
-                                                <Button variant = "dark" disableElevation onClick={() => 
+                                                <Button variant = "dark"  onClick={() => 
 
                                                     {if(validate())
                                                     {
@@ -522,7 +522,7 @@ const CoachApplication = () => {
                                                     </li>
 
                                                     <li>
-                                                        <Button variant = "dark" disableElevation  style = {{marginLeft: "25%", marginTop: "2%"}}>
+                                                        <Button variant = "dark" style = {{marginLeft: "25%", marginTop: "2%"}}>
                                                             Save
                                                         </Button>
                                                     </li>
@@ -805,7 +805,7 @@ const CoachApplication = () => {
 
                                         <br/>
 
-                                        <Button variant = "dark" disableElevation onClick={() => 
+                                        <Button variant = "dark"  onClick={() => 
 
                                             {if(validate2())
                                             {
@@ -819,7 +819,7 @@ const CoachApplication = () => {
                                             Continue
                                         </Button>
 
-                                        <Button variant = "dark" disableElevation onClick={() => 
+                                        <Button variant = "dark"  onClick={() => 
 
                                             {setTab("basicInfo");}}
 
