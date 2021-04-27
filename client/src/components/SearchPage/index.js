@@ -39,6 +39,7 @@ const SearchPage = (props) => {
 
     const [invalidZipCodeError, setInvalidZipCode] = useState(false);
     const [digitOnlyError, setDigitOnly] = useState(false);
+    const [searchError, setSearchError] = useState(false);
 
 
     const handleChange = () => {
@@ -53,18 +54,21 @@ const SearchPage = (props) => {
             remote: remote,
             distance: distance,
             gender: gender,
-            lifeFocus: lifeFocus,
-            nutritionFitnessFocus: nutritionFitnessFocus,
-            healthWellnessFocus: healthWellnessFocus,
-            holisticHealthFocus: holisticHealthFocus,
-            spiritualFocus: spiritualFocus,
-        }
+            focus_life: lifeFocus,
+            focus_behavioral: false,
+            focus_health_wellness: healthWellnessFocus,
+            focus_holistic: holisticHealthFocus,
+            focus_nutrition_fitness: nutritionFitnessFocus,
+            focus_business: false,
+            travel: false
+        };
         
         userServices.searchCoaches(params)
             .then( (res) => {
-                setCoachList(res.data)
+                setCoachList(res.data.results);
             }).catch( () =>{
-                setCoachList([])
+                setCoachList([]);
+                setSearchError(true);
             })
     };
 
@@ -133,15 +137,18 @@ const SearchPage = (props) => {
     // }
 
     let card;
-    if (!galleryView) {
+    if (searchError) {
+        card = <Alert  variant="danger">An error has occurred with searching for valid coaches. Please try again. </Alert>
+
+    } else if (!galleryView) {
         card = coachList.map( (coach) => (
-                <ListProfileCard key={coach.id} coach={coach}/>
+                <ListProfileCard key={coach.slug} coach={coach}/>
             ))
     } else {
         card = 
         <Row className="justify-content-md-center">
             {coachList.map( (coach) => (
-                <GalleryProfileCard key={coach.id} coach={coach}/>
+                <GalleryProfileCard key={coach.slug} coach={coach}/>
             ))}
         </Row>
     }

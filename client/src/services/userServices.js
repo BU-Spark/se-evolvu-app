@@ -12,7 +12,7 @@ const getTestItems = () => {
 const searchCoaches = (params) => {
     return axios({
         url: "/api/coaches/search",
-        method: 'post',
+        method: 'get',
         data: params,
     });
 };
