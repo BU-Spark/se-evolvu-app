@@ -3,7 +3,18 @@
 
 ## Table of Contents
 
+- [Problem Statement](#statement)
 - [Installation](#installation)
+
+## Problem Statement
+
+People lack accessibility to health and wellness coaches. Currently, finding coaches requires manual searching on the internet, obtaining additional information, and contacting them for booking and availability.
+
+As for the coaches, they have difficulty growing clientele, handling the logistics of multiple clients, and other bureaucracies of being a coach. This entire process of connecting coaches to clients is convoluted and needs to be simplified.
+
+## Solution
+
+Create a reliable platform for clients to find coaches more easily and schedule coaching sessions without having to manually search or contact coaches for additional information. This platform also allows coaches to easily track their clients and grow their clientele. Easing the process on both the clients and coaches ends. 
 
 ## Installation 
 

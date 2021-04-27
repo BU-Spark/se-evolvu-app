@@ -53,7 +53,7 @@ const CoachApplyLanding = () => {
                         </h3>
 
                         <Link to="/eligibility">
-                            <Button variant = "dark" disableElevation>
+                            <Button variant = "dark" >
                             Find out here
                             </Button>
                         </Link>

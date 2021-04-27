@@ -19,7 +19,8 @@ import './index.css';
 const SearchPage = (props) => {
 
     // Params Coach Search
-    const [zipCode, setZipCode] = useState(props.location.state.local);
+    const [zipCode, setZipCode] = useState("02215");
+    const [label, setLabel] = useState("Life Coaching");
     const [price, setPrice] = useState(50);
     const [remote, setRemote] = useState(false);
     const [distance, setDistance] = useState(10);
@@ -38,6 +39,7 @@ const SearchPage = (props) => {
 
     const [invalidZipCodeError, setInvalidZipCode] = useState(false);
     const [digitOnlyError, setDigitOnly] = useState(false);
+    const [searchError, setSearchError] = useState(false);
 
 
     const handleChange = () => {
@@ -52,18 +54,21 @@ const SearchPage = (props) => {
             remote: remote,
             distance: distance,
             gender: gender,
-            lifeFocus: lifeFocus,
-            nutritionFitnessFocus: nutritionFitnessFocus,
-            healthWellnessFocus: healthWellnessFocus,
-            holisticHealthFocus: holisticHealthFocus,
-            spiritualFocus: spiritualFocus,
-        }
+            focus_life: lifeFocus,
+            focus_behavioral: false,
+            focus_health_wellness: healthWellnessFocus,
+            focus_holistic: holisticHealthFocus,
+            focus_nutrition_fitness: nutritionFitnessFocus,
+            focus_business: false,
+            travel: false
+        };
         
         userServices.searchCoaches(params)
             .then( (res) => {
-                setCoachList(res.data)
+                setCoachList(res.data.results);
             }).catch( () =>{
-                setCoachList([])
+                setCoachList([]);
+                setSearchError(true);
             })
     };
 
@@ -86,7 +91,7 @@ const SearchPage = (props) => {
     }
 
     const setInitialFocus = () => {
-        let focus = props.location.state.focus;
+        let focus = props.location.state.focus || "life-coaching";
         switch (focus) {
             case "life-coaching":
                 setLifeFocus(true);
@@ -109,12 +114,16 @@ const SearchPage = (props) => {
     }
 
     useEffect( () => {
-        setInitialFocus();
-        onSearch();
-        if (JSON.stringify(props.location.state) === JSON.stringify({focus: "Select your area", focusLabel: "Select your area", local: ""})) {
+        
+        if (props.location.state === undefined || JSON.stringify(props.location.state) === JSON.stringify({focus: "Select your area", focusLabel: "Select your area", local: ""})) {
                 props.location.state = {focus: "life-coaching", focusLabel: "Life Coaching", local: "02215"
             }
+        } else {
+            setLabel(props.location.state.focusLabel);
+            setZipCode(props.location.state.local);
         }
+        setInitialFocus();
+        onSearch();
     // eslint-disable-next-line
     }, [])          // Add this line to prevent infinite loop 
 
@@ -128,15 +137,18 @@ const SearchPage = (props) => {
     // }
 
     let card;
-    if (!galleryView) {
+    if (searchError) {
+        card = <Alert  variant="danger">An error has occurred with searching for valid coaches. Please try again. </Alert>
+
+    } else if (!galleryView) {
         card = coachList.map( (coach) => (
-                <ListProfileCard key={coach.id} coach={coach}/>
+                <ListProfileCard key={coach.slug} coach={coach}/>
             ))
     } else {
         card = 
         <Row className="justify-content-md-center">
             {coachList.map( (coach) => (
-                <GalleryProfileCard key={coach.id} coach={coach}/>
+                <GalleryProfileCard key={coach.slug} coach={coach}/>
             ))}
         </Row>
     }
@@ -144,10 +156,10 @@ const SearchPage = (props) => {
     return (
         <div className="search-results-body container-fluid">
             <p className="font-weight-bold" style={{padding: "2rem", zIndex: "-1", background:""}}>
-                You are searching for {props.location.state.focusLabel} in {props.location.state.local}
+                You are searching for {label} in {zipCode}
             </p>
             <Row>
-                <Col sm={3}>
+                <Col sm={3} className="search-page-filter-container">
                     <div className="search-page-filter">
                         <Form>
                             <div>

@@ -61,7 +61,7 @@ const DashSidebar = () => {
             <Nav variant="pills" className="flex-column" style={{ textAlign: "center"}}>
                 {
                     sidebarRoutes.map(route => (
-                        <Nav.Item id="dashboard-nav-item">
+                        <Nav.Item id="dashboard-nav-item" key={route.path}>
                             <div id="dashboard-nav-link">
                                 <Link id="dashboard-router-link" to={route.path}>
                                     <div >

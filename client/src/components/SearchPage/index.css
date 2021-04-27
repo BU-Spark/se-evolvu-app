@@ -15,6 +15,10 @@
     border-radius: 0.25rem;
 }
 
+.search-page-filter-container {
+    margin-bottom: 30px;
+}
+
 .search-page-filter {
     background: #D0D0D0;
     padding: 1rem;

@@ -12,7 +12,7 @@ const Approved = () => {
                     to reviewing your application! Thank You!</h4>
 
                     <Link to="/application"> 
-                        <Button variant = "dark" disableElevation style= {{marginTop: "1rem"}}>Apply Here </Button>
+                        <Button variant = "dark"  style= {{marginTop: "1rem"}}>Apply Here </Button>
                     </Link> 
                 </div>
             </div>

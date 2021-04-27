@@ -68,15 +68,15 @@ const DashCarousel = () => {
         return res
     }
 
-  
+    let idx = 0;
     return (
       <Carousel activeIndex={index} onSelect={handleSelect} style={{ background: "#F6F6F6"}}>
           {
-              splitSessions(props).map((sessionListing, idx) => (
-                <Carousel.Item >
+              splitSessions(props).map((sessionListing) => (
+                <Carousel.Item key={idx++}>
                     <div style={{ display: 'flex', justifyContent: "space-between", alignContent: "center"}}>
                         {sessionListing.map((client) => (
-                            <div style={{ height: '15vh', width: '15vh'}}>  
+                            <div style={{ height: '15vh', width: '15vh'}} key={client.name}>  
                                 with {client.name} at <br/> {client.time}
                             </div>
                         ))}`
