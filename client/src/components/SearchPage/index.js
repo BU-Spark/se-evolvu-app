@@ -354,9 +354,8 @@ const SearchPage = (props) => {
                                 Sort by
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/action-1">Rating</Dropdown.Item>
-                                <Dropdown.Item href="/action-2">Distance</Dropdown.Item>
-                                <Dropdown.Item href="/action-3">Something else</Dropdown.Item>
+                                <Dropdown.Item>Rating</Dropdown.Item>
+                                <Dropdown.Item>Distance</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
