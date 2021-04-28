@@ -35,27 +35,21 @@ class RegistrationSerializer(serializers.ModelSerializer):
         if password != password2:
             raise serializers.ValidationError({'password': 'Passwords must match'})
 
-        coach_profile = Coach(
+        account.set_password(password)
+        account.save()
+
+        if is_coach == True:
+            coach_profile = Coach(
             coach = account,
             gender = "N",
             description = "",
-        )
-        # coach_profile.save()
-
-        profile = UserProfile(
+            )
+            coach_profile.save()
+        elif is_customer:
+            profile = UserProfile(
             user = account,
             gender = "N",
-        )
-        # profile.save()
-
-        account.set_password(password)
-        account.save()
-        coach_profile.save()
-        profile.save()
-
-        if is_coach == False:
-            coach_profile.delete()
-        if is_customer == False:
-            profile.delete()
+            )
+            profile.save()
 
         return account

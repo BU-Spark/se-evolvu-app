@@ -7,7 +7,8 @@ export const register = (registrationInfo) => (dispatch) => {
     return AuthService.register(registrationInfo).then( (data) => {
 
         dispatch({
-            type: Types.REGISTER_SUCCESS
+            type: Types.REGISTER_SUCCESS,
+            payload: data
         });
         return Promise.resolve();
     },
@@ -37,7 +38,7 @@ export const login = (email, password) => (dispatch) => {
     return AuthService.login(email, password).then( (data) => {
         dispatch({
             type: Types.LOGIN_SUCCESS,
-            payload: { user: data }
+            payload: data
         });
 
         return Promise.resolve();
@@ -47,12 +48,7 @@ export const login = (email, password) => (dispatch) => {
             type: Types.LOGIN_FAILED
         })
 
-        const message =
-            (
-                error.response &&
-                error.response.data &&
-                error.response.data.message
-            ) || error.message || error.toString();
+        const message = "Unable to login with provided credentials. Please try again."
 
         dispatch({
             type: Types.SET_MESSAGE,
@@ -61,6 +57,20 @@ export const login = (email, password) => (dispatch) => {
         return Promise.reject();
     }
     )
+};
+
+export const requestCSRF = () => (dispatch) => {
+    AuthService.csrfToken().then((data) => {
+        dispatch({
+            type: Types.SET_CSRF,
+            payload: data.token
+        })
+    }).catch((err) => {
+        dispatch({
+            type: Types.SET_CSRF,
+            payload: { csrfToken: "Unable to set CSRF Cookie :("}
+        })
+    })
 }
 
 export const logout = () => (dispatch) => {

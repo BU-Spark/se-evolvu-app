@@ -1,9 +1,11 @@
 // Code from https://bezkoder.com/react-hooks-redux-login-registration-example/
 
-export const authHeader = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
+import { useSelector } from 'react-redux';
 
-    if (user && user.token) {
-        return  user.token 
-    } else return null
+export const AuthHeader = () => {
+    const token = useSelector(state => state.authReducer.token);
+
+    if (token) {
+        return  token;
+    } else return null;
 }

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import  { isEmail } from 'validator';
-import { Types } from '../../redux/actions/actionTypes.js';
+import  { isEmail, isAlpha, isStrongPassword, equals, isNumeric, contains } from 'validator';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -10,6 +9,8 @@ import Alert from 'react-bootstrap/Alert';
 import Col from 'react-bootstrap/Col';
 
 import { register } from '../../redux/actions/authAction.js';
+import { clearMessage } from '../../redux/actions/messageAction.js';
+import { Types } from '../../redux/actions/actionTypes.js';
 
 import './index.css';
 
@@ -24,47 +25,83 @@ const RegisterPage = () => {
     const [password, setPassword] = useState(" ");
     const [confirmPassword, setConfirmPassword] = useState(" ");
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+    const [strongPasswordError, setStrongPasswordError] = useState(false);
+    const [nameError, setNameError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [zipCodeError, setZipCodeError] = useState(false);
     const [concentration, setConcentration] = useState(" ");
-    const [areaCode, setAreaCode] = useState(" ");
+    const [zipCode, setzipCode] = useState(" ");
 
     const [successfullyRegistered, setSuccessfullyRegistered] = useState(false);
 
     const validate = () => {
 
-        if (firstName === " " || firstName === "") {
-            return false;
+        let valid = true;
+
+        if (firstName === " " || firstName === "" || !isAlpha(firstName)) {
+            setNameError(true);
+            valid = false;
+        } else { 
+            setNameError(false);
         }
 
-        if (lastName === " " || lastName === "") {
-            return false;
+        if (lastName === " " || lastName === "" || !isAlpha(firstName)) {
+            setNameError(true);
+            valid = false;
+        } else { 
+            setNameError(false);
         }
 
         if (email === " " || email === "" || !isEmail(email)) {
-            return false;
+            setEmailError(true);
+            valid = false;
+        } else { 
+            setEmailError(false); 
         }
 
-        if (password === " " || password === "" || !isEmail(email)) {
-            return false;
-        }
 
-        if (areaCode === " " || areaCode === "" || !isEmail(email)) {
-            return false;
+        if (zipCode === " " || zipCode === "" || !isNumeric(zipCode)) {
+            setZipCodeError(true);
+            valid = false;
+        } else {
+            setZipCodeError(false);
         }
 
         // Check if passwords match
-        if (confirmPassword.localeCompare(password) ) {
-            setConfirmPasswordError(true)
+        if (!equals(password, confirmPassword) ) {
+            setConfirmPasswordError(true);
+            valid = false;
         } else {
-            setConfirmPasswordError(false)
+            setConfirmPasswordError(false);
         }
 
-        return true;
+        let score = isStrongPassword(password, 
+            {
+                minLength: 8, 
+                minLowercase: 1,
+                minUppercase: 1, 
+                minNumbers: 1, 
+                minSymbols: 1,
+                returnScore: true,
+            }
+        );
+        if (contains(password, "@")) {
+            score += 9;
+        }
+        if (password === " " || password === "" || score <= 50) {
+            setStrongPasswordError(true);
+            valid = false;
+        } else { 
+            setStrongPasswordError(false);
+        }
+        
+        return valid; 
     }
 
     const onRegister = (e) => {
-        e.preventDefault()
-
-        if (validate()) {
+        e.preventDefault();
+        let valid = validate();
+        if (valid) {
             const params = {
                 "first_name": firstName,
                 "last_name": lastName,
@@ -75,6 +112,7 @@ const RegisterPage = () => {
                 "is_coach": false,
                 "is_customer": true,
                 "concentration": concentration,
+                "zipCode": zipCode
             };
             dispatch(register(params))
                 .then( () => {
@@ -82,7 +120,7 @@ const RegisterPage = () => {
                 })
                 .catch( () => {
                     setSuccessfullyRegistered(false);
-                })
+                });
         } else {
             dispatch({
                 type: Types.SET_MESSAGE,
@@ -92,6 +130,7 @@ const RegisterPage = () => {
     }
 
     if (successfullyRegistered) {
+        dispatch(clearMessage());
         return <Redirect to="/login"/>
     }
 
@@ -102,7 +141,7 @@ const RegisterPage = () => {
                 <h2 style={{ paddingBottom: '10px', textAlign: 'center'}}>
                     Sign Up to Join the EvolvU Network and Find Your Coach
                 </h2>
-                <p style={{ paddingBottom: '10px', textAlign: 'center'}}> Already have an account? Sign in <Link to="/login"> here </Link>.</p>
+                <p style={{ paddingBottom: '10px', textAlign: 'center'}}> Already have an account? Sign in <Link to="/login"> here</Link>.</p>
                 <div className="register-form">
                 
                     <Form >
@@ -111,6 +150,36 @@ const RegisterPage = () => {
                                     {message}
                                 </Alert>
                         )}
+                        { nameError && (
+                                <Alert variant="danger">
+                                    First and Last names may only container alphabetic letters (A - Z).
+                                </Alert>
+                        )}
+                        { emailError && (
+                                <Alert variant="danger">
+                                    Please enter a valid email address.
+                                </Alert>
+                        )}
+                        { zipCodeError && (
+                                <Alert variant="danger">
+                                    Please enter a valid 5-digit zip code.
+                                </Alert>
+                        )}
+                        { strongPasswordError && (
+                                <Alert variant="danger">
+                                    Password is not strong enough. A strong password requires:
+                                    <ul>
+                                        <li>A minimum of 8 characters.</li>
+                                        <li>A minimum of 1 lowercase letter.</li>
+                                        <li>A minimum of 1 uppercase letter.</li>
+                                        <li>A minimum of 1 number.</li>
+                                        <li>A minimum of 1 symbol (e.g. #, $, !).</li>
+                                    </ul>
+                                </Alert>
+                        )}
+                        {
+                            confirmPasswordError ? <Alert variant="danger"> Passwords do not match. </Alert> : null
+                        }
                         <Form.Row>
                             <Col>
                                 <Form.Group controlId="registrationFirstName" className="register-form-input" onChange={ (e) => setFirstName(e.target.value)}>
@@ -143,12 +212,12 @@ const RegisterPage = () => {
                                 }
                             </Col>
                             <Col>
-                                <Form.Group controlId="registrationAreaCode" className="register-form-input" onChange={ (e) => setAreaCode(e.target.value)}>
-                                    <Form.Label>Area Code <span style={{ color: 'red'}}>*</span></Form.Label>
-                                    <Form.Control type="" placeholder="Area Code" />
+                                <Form.Group controlId="registrationzipCode" className="register-form-input" onChange={ (e) => setzipCode(e.target.value)}>
+                                    <Form.Label>Zip Code <span style={{ color: 'red'}}>*</span></Form.Label>
+                                    <Form.Control type="" placeholder="Zip Code" />
                                 </Form.Group>
                                 {
-                                    areaCode ? null : <Alert variant="danger"> This is a required field. </Alert>
+                                    zipCode ? null : <Alert variant="danger"> This is a required field. </Alert>
                                 }
                             </Col>
                         </Form.Row>
@@ -177,9 +246,6 @@ const RegisterPage = () => {
                                     <Form.Label>Password Confirmation <span style={{ color: 'red'}}>*</span></Form.Label>
                                     <Form.Control type="password" placeholder="Password" />
                                 </Form.Group>
-                                {
-                                    confirmPasswordError ? <Alert variant="danger"> Passwords do not match. </Alert> : null
-                                }
                             </Col>
                         </Form.Row>
                         <p>*By signing up and joining EvolvU, you agree to our <Link to="/tos-and-policy">Terms of Service and Privacy Policy</Link></p>

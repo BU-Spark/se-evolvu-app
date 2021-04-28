@@ -1,24 +1,19 @@
 import React, { useState } from 'react';
-import "./index.css";
-import InputGroup from 'react-bootstrap/InputGroup';
 import { Tabs, Tab } from 'react-bootstrap';
-import "./index.css";
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import FormControl from 'react-bootstrap/FormControl';
 import Form from 'react-bootstrap/Form';
-import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import  { isEmail } from 'validator';
 import Alert from 'react-bootstrap/Alert';
-import Image from 'react-bootstrap/Image'
 import { HiUserCircle } from "react-icons/hi";
 import Col from 'react-bootstrap/Form';
 
+import "./index.css";
+
 const CoachApplication = () => {
     
-    const [source, setSource] = useState("");
-    const [local, setLocal] = useState("");
-    const [area, setArea] = useState(1);
+    // const [source, setSource] = useState("");
+    // const [local, setLocal] = useState("");
+    // const [area, setArea] = useState(1);
     const [tab, setTab] = useState("basicInfo");
 
     
@@ -293,6 +288,7 @@ const CoachApplication = () => {
         return true;
     }
 
+<<<<<<< HEAD
     const validate3 = () => {
 
         
@@ -316,6 +312,10 @@ const CoachApplication = () => {
     }
 
     const [concentration, setConcentration] = useState(" ");
+=======
+    // const [concentration, setConcentration] = useState(" ");
+    
+>>>>>>> 681bcc831685cd1b7a2939b7b7c0bcda97343203
 
     return( 
 
@@ -437,7 +437,8 @@ const CoachApplication = () => {
                                                     <li id = "information">How did you hear about us?</li>
 
                                                     <li>
-                                                    <Form.Group id="information" className="register-form-input" onChange={ (e) => setConcentration(e.target.value)}>
+                                                        {/*onChange={ (e) => setConcentration(e.target.value)}*/}
+                                                     <Form.Group id="information" className="register-form-input" > 
                                                             <Form.Control as="select">
                                                                 <option></option>
                                                                 <option>Google</option>
@@ -452,7 +453,7 @@ const CoachApplication = () => {
                                                <br/>
                                                <br/>
                                                <br/>
-                                                <Button variant = "dark" disableElevation onClick={() => 
+                                                <Button variant = "dark"  onClick={() => 
 
                                                     {if(validate())
                                                     {
@@ -570,7 +571,7 @@ const CoachApplication = () => {
                                                     </li>
 
                                                     <li>
-                                                        <Button variant = "dark" disableElevation  style = {{marginLeft: "25%", marginTop: "2%"}}>
+                                                        <Button variant = "dark" style = {{marginLeft: "25%", marginTop: "2%"}}>
                                                             Save
                                                         </Button>
                                                     </li>
@@ -857,7 +858,7 @@ const CoachApplication = () => {
 
                                         <br/>
 
-                                        <Button variant = "dark" disableElevation onClick={() => 
+                                        <Button variant = "dark"  onClick={() => 
 
                                             {if(validate2())
                                             {
@@ -871,7 +872,7 @@ const CoachApplication = () => {
                                             Continue
                                         </Button>
 
-                                        <Button variant = "dark" disableElevation onClick={() => 
+                                        <Button variant = "dark"  onClick={() => 
 
                                             {setTab("basicInfo");}}
 

@@ -6,8 +6,13 @@ import reportWebVitals from './reportWebVitals';
 
 import { Provider } from 'react-redux';
 import { configureStore } from './redux/store';
+import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+axios.defaults.baseURL = '';
+axios.defaults.headers.common['Credentials'] = 'same-origin';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 const store = configureStore();
 

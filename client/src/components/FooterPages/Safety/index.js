@@ -1,11 +1,11 @@
 import './index.css'
 import { Tabs, Tab } from 'react-bootstrap';
-import React, {useState} from 'react';
+import React from 'react';
 
 
 
 const Safety = () => {
-    const [key, setKey] = useState('overview');
+    // const [key, setKey] = useState('overview');
 
     return(
         
