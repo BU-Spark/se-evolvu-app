@@ -25,48 +25,104 @@ const EligibleCoach = () => {
                         <li id = "quizQuestion"><div> Are you a coach with the health and wellness section? 
                             (This includes health, wellness, life, business)</div>
 
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                                    <label class="form-check-label" for="flexCheckDefault" style={{paddingRight: "2rem", color:"#373737"}}>
-                                        Yes
-                                    </label>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                                    <label class="form-check-label" for="flexCheckDefault" style={{paddingBottom: "2rem", color: "#373737"}}>
-                                        No
-                                    </label>
+                            <form>
+
+                                <div className="form-check">
+                                <label style = {{color: "#373737"}}>
+                                    <input
+                                    type="radio"
+                                    name="react-tips"
+                                    value="option1"
+                                    checked={true}
+                                    className="form-check-input"
+                                    
+                                    />
+                                    Yes
+                                </label>
                                 </div>
+
+                                <div className="form-check">
+                                <label style = {{color: "#373737"}}>
+                                    <input
+                                    type="radio"
+                                    name="react-tips"
+                                    value="option2"
+                                    className="form-check-input"
+                                    />
+                                    No
+                                </label>
+                                </div>
+
+                            </form>
                         </li>
 
-                        <li id = "quizQuestion"><div> Are you a certified coach from an accredited program?
-                            (Please check accredited programs with home we accept here)
+                        <li id = "quizQuestion">
+                            <div> 
+                                Are you a certified coach from an accredited program?
+                                (Please check accredited programs with home we accept here)
                             </div>
 
-                            <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                                    <label class="form-check-label" for="flexCheckDefault" style={{paddingRight: "2rem", color:"#373737"}}>
+                            <form>
+
+                                <div className="form-check">
+                                    <label style = {{color: "#373737"}}>
+                                        <input
+                                        type="radio"
+                                        name="react-tips"
+                                        value="option1"
+                                        checked={true}
+                                        className="form-check-input"
+                                        />
                                         Yes
                                     </label>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                                    <label class="form-check-label" for="flexCheckDefault" style={{paddingBottom: "2rem", color: "#373737"}}>
+                                </div>
+
+                                <div className="form-check">
+                                    <label style = {{color: "#373737"}}>
+                                        <input
+                                        type="radio"
+                                        name="react-tips"
+                                        value="option2"
+                                        className="form-check-input"
+                                        />
                                         No
                                     </label>
                                 </div>
+
+                            </form>
                         </li>
 
                         <li id = "quizQuestion"><div> Do you resonate with Evolve U's mission to help improve people's lives
                             and understand that each person has a unique journey?
                         </div>
 
-                            <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                                    <label class="form-check-label" for="flexCheckDefault" style={{paddingRight: "2rem", color:"#373737"}}>
+                            <form>
+                                <div className="form-check">
+                                    <label style = {{color: "#373737"}}>
+                                        <input
+                                        type="radio"
+                                        name="react-tips"
+                                        value="option1"
+                                        checked={true}
+                                        className="form-check-input"
+                                        />
                                         Yes
                                     </label>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
-                                    <label class="form-check-label" for="flexCheckDefault" style={{paddingBottom: "2rem", color: "#373737"}}>
+                                </div>
+
+                                <div className="form-check">
+                                    <label style = {{color: "#373737"}}>
+                                        <input
+                                        type="radio"
+                                        name="react-tips"
+                                        value="option2"
+                                        className="form-check-input"
+                                        />
                                         No
                                     </label>
                                 </div>
+                            </form>
+
                         </li>
                     </ol>
                     
