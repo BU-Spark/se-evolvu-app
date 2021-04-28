@@ -27,13 +27,27 @@ const CoachProfilePage = (props) => {
     }, [props.coach])
 
     const getCoachProfile = () => {
-        console.log(props.location.state.slug)
         userServices.getCoach(props.location.state.slug)
             .then( (res) =>{
                 setProfile(res.data)
             })
             .catch( () => <Redirect to="/error"/>)
     }
+
+    console.log(profile)
+
+    const handleReviewButton = (e) => {
+        e.preventDefault();
+        
+        history.push({
+            pathname: '/review',
+            search: `?coach=${profile.slug}`,
+            state: {
+                coach: profile
+            }
+        })
+    }
+
 
     if (props.location.state === undefined) {
         return <Redirect to="/error"/>
@@ -87,7 +101,7 @@ const CoachProfilePage = (props) => {
                     <Col sm={4} style={{ display: 'inline-block'}}>
                         <div style={{background: '#F2F2F2'}}>
                             <div style={{ flexDirection: 'column', padding: '1rem', alignContent: 'center'}}>
-                                <p>Book your first 15 minute consultation now</p>
+                                <p>Book your first 15 minute consultation:</p>
                                 <Button
                                     bsPrefix="coach-profile-book-btn"
                                 >
@@ -97,6 +111,17 @@ const CoachProfilePage = (props) => {
                                     bsPrefix="coach-profile-contact-btn"
                                 >
                                     Contact Coach
+                                </Button>
+                            </div>
+                            <div style={{ flexDirection: 'column', padding: '1rem', alignContent: 'center'}}>
+                                <hr></hr>
+                                <p>Leave a review</p>
+                                <Button
+                                    bsPrefix="coach-profile-book-btn"
+                                    onClick={e => handleReviewButton(e)}
+                                >
+
+                                    View Form
                                 </Button>
                             </div>
                             <div style={{ textAlign: 'left', padding: '1rem'}}>
