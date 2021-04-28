@@ -1046,7 +1046,7 @@ const CoachApplication = () => {
                                             </div>
                                         </div>
 
-                                        <Button variant = "dark" disableElevation onClick={() => 
+                                        <Button variant = "dark"  onClick={() => 
                                             {if(validate3())
                                             {
                                                 setTab("setSchedule");
@@ -1059,7 +1059,7 @@ const CoachApplication = () => {
                                             Continue
                                         </Button>
 
-                                        <Button variant = "dark" disableElevation onClick={() => 
+                                        <Button variant = "dark"  onClick={() => 
 
                                             {setTab("background");}}
 
@@ -1078,7 +1078,7 @@ const CoachApplication = () => {
                                     <div id = "centerBlockCoach" className = "col-sm mx-auto">
                                         Calendar goes here
 
-                                        <Button variant = "dark" disableElevation onClick={() => 
+                                        <Button variant = "dark"  onClick={() => 
 
                                             {setTab("payment");}}
 
@@ -1087,7 +1087,7 @@ const CoachApplication = () => {
 
                                             </Button>
 
-                                        <Button variant = "dark" disableElevation onClick={() => 
+                                        <Button variant = "dark"  onClick={() => 
 
                                             {setTab("setPricing");}}
 
@@ -1276,7 +1276,7 @@ const CoachApplication = () => {
                                             background check EvolvU performs.
                                         </div>
                                         
-                                        <Button variant = "dark" disableElevation 
+                                        <Button variant = "dark"  
 
                                             
 

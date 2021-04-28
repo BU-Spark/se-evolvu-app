@@ -50,6 +50,7 @@ The future tasks should also be considered unimplemented features so far. Note t
 Frontend:
 - BrowserRouter from 'react-router-dom' does not clear messages set by messageReducer (i.e. alerts that appear on registration will not go away on the login page)
 - Conditional rendering of dashboards for coaches goes to user dashboard then coach dashboard
+- Submitting a review requires clicking twice (state is not updating correctly)
 
 Backend:
 

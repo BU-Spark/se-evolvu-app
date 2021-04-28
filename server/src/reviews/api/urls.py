@@ -2,6 +2,7 @@ from django.urls import path
 
 from reviews.api.views import (
     ReviewView,
+    create_coach_review
 )
 
 from rest_framework import routers
@@ -15,5 +16,6 @@ router = routers.DefaultRouter()
 router.register('', ReviewView)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    # path('', include(router.urls)),
+    path('create/<slug>', create_coach_review, name='create'),
 ]

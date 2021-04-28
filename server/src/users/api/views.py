@@ -38,7 +38,7 @@ def get_user_profile(request):
         user = Account.objects.get(id=user_id).get_info()
         return Response({"user": user})
     except:
-        return Response(request.data)
+        return Response(status=status.HTTP_404_NOT_FOUND)
         # raise Exception("User not found")
 
 # Might not need this

@@ -48,7 +48,7 @@ const UserNavbar = () => {
                         </div>
                         <ul className="coach-nav-linklist">
                             <li className="navbar-link" >
-                                <Link className="greeting-navitem" disable> Hi Coach {firstName} </Link>
+                                <Link className="greeting-navitem" to="/"  disable> Hi Coach {firstName} </Link>
                             </li>
                             <li className="navbar-link" >
                                 <Link className="navitem" to="/">Home</Link>
@@ -69,25 +69,25 @@ const UserNavbar = () => {
         return (
             <div id="nav-wrapper">
                 <div id="navbar">
-                    <ul className="navbar-linklist">
-                        <li className="navbar-link" >
-                            <Link className="navitem" to="/profile"> Hello, {firstName} </Link>
-                        </li>
-                        <li className="navbar-link" >
-                            <Link className="navitem" to="/" onClick={ () => onLogout()}> Logout </Link>
-                        </li>
-                    </ul>
-                    <div className="nav-logo">
-                        <h2 className="nav-brand"> EvolvU </h2>
-                    </div>
-                    <ul className="navbar-linklist">
-                        <li className="navbar-link" >
-                            <Link className="navitem" to="/"> </Link>
-                        </li>
-                        <li className="navbar-link" >
-                            <Link className="navitem" to="/"> </Link>
-                        </li>
-                    </ul>
+                        <div className="nav-logo">
+                            <h2 className="nav-brand"> EvolvU </h2>
+                        </div>
+                        <ul className="coach-nav-linklist">
+                            <li className="navbar-link" >
+                                <Link className="greeting-navitem" to="/" disable="true"> Hi {firstName} </Link>
+                            </li>
+                            <li className="navbar-link" >
+                                <Link className="navitem" to="/">Home</Link>
+                            </li>
+                            <li className="navbar-link" >
+                                <Link className="navitem" to="/dashboard">Dashboard </Link>
+                            </li>
+                        </ul>
+                        <ul className="navbar-linklist">    
+                            <li className="navbar-link" >
+                                <Link className="navitem" to="/" onClick={ () => onLogout()}> Logout </Link>
+                            </li>
+                        </ul>
                 </div>
             </div>
         )

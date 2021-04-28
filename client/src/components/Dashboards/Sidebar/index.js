@@ -29,7 +29,7 @@ const DashSidebar = () => {
             component: <RiCalendarCheckFill size={40}/>
         },
         {
-            path: "/coach/profile",
+            path: "/coach/forms",
             name: "Profile",
             component: <BsFillPersonFill size={40}/>
         },
@@ -44,7 +44,7 @@ const DashSidebar = () => {
             component: <FiCreditCard size={40}/>
         },
         {
-            path: "/coach/forms",
+            path: "/coach/error",
             name: "Forms",
             component: <BsTextCenter size={40}/>
         },

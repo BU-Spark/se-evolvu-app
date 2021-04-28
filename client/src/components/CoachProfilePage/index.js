@@ -27,11 +27,28 @@ const CoachProfilePage = (props) => {
     }, [props.coach])
 
     const getCoachProfile = () => {
-        userServices.getCoach(props.coach)
+        userServices.getCoach(props.location.state.slug)
             .then( (res) =>{
                 setProfile(res.data)
             })
             .catch( () => <Redirect to="/error"/>)
+    }
+
+    const handleReviewButton = (e) => {
+        e.preventDefault();
+        
+        history.push({
+            pathname: '/review',
+            search: `?coach=${profile.slug}`,
+            state: {
+                coach: profile
+            }
+        })
+    }
+
+
+    if (props.location.state === undefined) {
+        return <Redirect to="/error"/>
     }
 
     return (
@@ -56,15 +73,15 @@ const CoachProfilePage = (props) => {
                                 alt="Generic placeholder"
                             />
                             <Media.Body id="coach-profile-card-desc">
-                            <h5>{profile.first_name}</h5>
+                            <h5>{profile.first_name} {profile.last_name}</h5>
                             <StarRatings
-                                rating={2.403}
+                                rating={profile.avg_rating}
                                 starDimension="20px"
                                 starSpacing="1px"
                                 starRatedColor="orange"
                             />
                             <p>
-                                {profile.avg_rating} ratings
+                                {profile.no_of_reviews} ratings
                             </p>
                             <p>
                                 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
@@ -82,7 +99,7 @@ const CoachProfilePage = (props) => {
                     <Col sm={4} style={{ display: 'inline-block'}}>
                         <div style={{background: '#F2F2F2'}}>
                             <div style={{ flexDirection: 'column', padding: '1rem', alignContent: 'center'}}>
-                                <p>Book your first 15 minute consultation now</p>
+                                <p>Book your first 15 minute consultation:</p>
                                 <Button
                                     bsPrefix="coach-profile-book-btn"
                                 >
@@ -92,6 +109,17 @@ const CoachProfilePage = (props) => {
                                     bsPrefix="coach-profile-contact-btn"
                                 >
                                     Contact Coach
+                                </Button>
+                            </div>
+                            <div style={{ flexDirection: 'column', padding: '1rem', alignContent: 'center'}}>
+                                <hr></hr>
+                                <p>Leave a review</p>
+                                <Button
+                                    bsPrefix="coach-profile-book-btn"
+                                    onClick={e => handleReviewButton(e)}
+                                >
+
+                                    View Form
                                 </Button>
                             </div>
                             <div style={{ textAlign: 'left', padding: '1rem'}}>

@@ -27,17 +27,25 @@ const getUser = (params) => {
 
 const getCoach = (params) => {
     return axios({
-        url: "/api/coaches/",
+        url: "/api/coaches/" + params,
         method: 'get',
-        params,         // coach's slug
     });
 };
+
+const createReview = (params) => {
+    return axios({
+        url: "/api/reviews/create/" + params.slug,
+        method: "post",
+        data: params
+    })
+}
 
 const userServices = {
     getTestItems,
     searchCoaches,
     getUser,
-    getCoach
+    getCoach,
+    createReview
 };
 
 export default userServices;
