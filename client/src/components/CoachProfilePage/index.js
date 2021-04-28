@@ -27,11 +27,16 @@ const CoachProfilePage = (props) => {
     }, [props.coach])
 
     const getCoachProfile = () => {
-        userServices.getCoach(props.coach)
+        console.log(props.location.state.slug)
+        userServices.getCoach(props.location.state.slug)
             .then( (res) =>{
                 setProfile(res.data)
             })
             .catch( () => <Redirect to="/error"/>)
+    }
+
+    if (props.location.state === undefined) {
+        return <Redirect to="/error"/>
     }
 
     return (

@@ -27,9 +27,8 @@ const getUser = (params) => {
 
 const getCoach = (params) => {
     return axios({
-        url: "/api/coaches/",
+        url: "/api/coaches/" + params,
         method: 'get',
-        params,         // coach's slug
     });
 };
 
