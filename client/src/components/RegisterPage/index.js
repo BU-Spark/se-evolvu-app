@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import  { isEmail, isAlpha, isStrongPassword, equals, isNumeric } from 'validator';
+import  { isEmail, isAlpha, isStrongPassword, equals, isNumeric, contains } from 'validator';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -75,23 +75,27 @@ const RegisterPage = () => {
             setConfirmPasswordError(false);
         }
 
-        if (password === " " || password === "" || 
-            !isStrongPassword(password, 
-                {
-                    minLength: 8, 
-                    minLowercase: 1,
-                    minUppercase: 1, 
-                    minNumbers: 1, 
-                    minSymbols: 1
-                }
-            )) {
+        let score = isStrongPassword(password, 
+            {
+                minLength: 8, 
+                minLowercase: 1,
+                minUppercase: 1, 
+                minNumbers: 1, 
+                minSymbols: 1,
+                returnScore: true,
+            }
+        );
+        if (contains(password, "@")) {
+            score += 9;
+        }
+        if (password === " " || password === "" || score <= 50) {
             setStrongPasswordError(true);
             valid = false;
         } else { 
             setStrongPasswordError(false);
         }
-
-        return valid;
+        
+        return valid; 
     }
 
     const onRegister = (e) => {
