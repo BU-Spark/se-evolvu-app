@@ -25,9 +25,10 @@ const ReviewFormPage = () => {
     const [repeatError, setRepeatError] = useState(false);
     const [ratingError, setRatingError] = useState(false);
     const [commentError, setCommentError] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     const token = useSelector(state => state.authReducer.token);
-    
+    const isCoach = useSelector(state => state.userReducer.coach);
     
 
     // Fetch coach and user object
@@ -35,7 +36,6 @@ const ReviewFormPage = () => {
         if (location.state.coach) {
             setFirstName(location.state.coach.first_name)
             setLastName(location.state.coach.last_name)
-
         }
     }, [location])
 
@@ -54,11 +54,16 @@ const ReviewFormPage = () => {
                 if (res.data.non_field_errors[0] === "The fields reviewer, coach must make a unique set.") {
                     setRepeatError(true);
                 };
+                setSuccess(true);
             }).catch(() => {
-
+                
             })
         }
+
+        console.log(success);
     }
+
+    console.log(success);
 
     const onRatingChange = (e) => {
         setRating(e.target.value);
@@ -86,7 +91,7 @@ const ReviewFormPage = () => {
         return valid;
     }
 
-    if (location.state === undefined) {
+    if (location.state === undefined || isCoach) {
         return <Redirect to="/error"/>
     }
 
@@ -110,20 +115,31 @@ const ReviewFormPage = () => {
                 { ratingError ? <Alert variant="danger">Please enter a digit from 0 - 5</Alert> : null}
                 { commentError ? <Alert variant="danger">Comments are limited to only 200 characters. Please shorten your response.</Alert> : null}
                 { repeatError ? <Alert variant="danger">You have already submitted a review for this coach. Only 1 review is allowed per coach per user.</Alert> : null}
-                <Form>
-                    <Form.Group controlId="rating" onChange={e => onRatingChange(e)}>
-                        <Form.Label>Rating</Form.Label>
-                        <Form.Control type="Rating" placeholder="Enter a number from 0-5" />
-                    </Form.Group>
-                    <Form.Group controlId="comment" onChange={e => onCommentChange(e)}>
-                        <Form.Label>Comments</Form.Label>
-                        <Form.Control as="textarea" rows={3} />
-                    </Form.Group>
+                { success ? (
+                    <>
+                        <Alert variant="success">Review successefully submitted. Please return to the previous page.</Alert>
+                        <Button id="login-form-submit" type="submit" onClick={e => history.goBack()}>
+                                Return to the Previous Page
+                        </Button>
+                    </>) : 
+                    (
+                        <Form>
+                            <Form.Group controlId="rating" onChange={e => onRatingChange(e)}>
+                                <Form.Label>Rating</Form.Label>
+                                <Form.Control type="Rating" placeholder="Enter a number from 0-5" />
+                            </Form.Group>
+                            <Form.Group controlId="comment" onChange={e => onCommentChange(e)}>
+                                <Form.Label>Comments</Form.Label>
+                                <Form.Control as="textarea" rows={3} />
+                            </Form.Group>
 
-                    <Button id="login-form-submit" type="submit" onClick={e => onSubmit(e)}>
-                        Submit
-                    </Button>
-                </Form>
+                            <Button id="login-form-submit" type="submit" onClick={e => onSubmit(e)}>
+                                Submit
+                            </Button>
+                        </Form>
+                    )
+                }
+                
                 <hr></hr>
             </div>
         </div>

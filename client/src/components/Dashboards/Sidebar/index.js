@@ -44,7 +44,7 @@ const DashSidebar = () => {
             component: <FiCreditCard size={40}/>
         },
         {
-            path: "/coach/forms",
+            path: "/coach/error",
             name: "Forms",
             component: <BsTextCenter size={40}/>
         },

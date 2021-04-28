@@ -45,7 +45,10 @@ def create_coach_review(request, slug):
     if serializer.is_valid():
         # Create Review if all fields are valid
         serializer.save()
-        return Response(status=status.HTTP_200_OK, message="success")
+        return Response({
+            "message": "success",
+            "status": 200
+        })
     else:
         data = serializer.errors
         return Response(data)
