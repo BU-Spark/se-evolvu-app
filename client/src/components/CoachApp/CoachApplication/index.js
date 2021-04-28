@@ -288,7 +288,6 @@ const CoachApplication = () => {
         return true;
     }
 
-<<<<<<< HEAD
     const validate3 = () => {
 
         
@@ -311,11 +310,7 @@ const CoachApplication = () => {
         return true;
     }
 
-    const [concentration, setConcentration] = useState(" ");
-=======
     // const [concentration, setConcentration] = useState(" ");
-    
->>>>>>> 681bcc831685cd1b7a2939b7b7c0bcda97343203
 
     return( 
 
