@@ -11,7 +11,6 @@ import ProfileModal from '../ProfileModal/index.js';
 const ListProfileCard = (props) => {
 
     const [show, setShow] = useState(false)
-    console.log(props)
 
     return (
         <div className="coach-profile-card" >

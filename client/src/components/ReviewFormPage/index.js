@@ -1,48 +1,132 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { Redirect, useLocation, useHistory } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 
-const ReviewFormPage = (props) => {
+import { isInt } from 'validator';
+import { IoIosArrowBack } from 'react-icons/io';
+
+import userServices from '../../services/userServices.js';
+
+
+const ReviewFormPage = () => {
 
     const location = useLocation();
+    const [rating, setRating] = useState(0);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [comment, setComment] = useState("");
 
-    const reviewer = useSelector(state => state.userReducer.slug);
+    const history = useHistory();
+
+    const [repeatError, setRepeatError] = useState(false);
+    const [ratingError, setRatingError] = useState(false);
+    const [commentError, setCommentError] = useState(false);
+
+    const token = useSelector(state => state.authReducer.token);
+    
+    
 
     // Fetch coach and user object
     useEffect(() => {
-        console.log(location.state)
+        if (location.state.coach) {
+            setFirstName(location.state.coach.first_name)
+            setLastName(location.state.coach.last_name)
+
+        }
     }, [location])
 
+    const onSubmit = (e) => {
+        e.preventDefault()
+
+        if (validate()) {
+            userServices.createReview({
+                slug: location.state.coach.slug,
+                reviewer: {
+                    token: token
+                },
+                rating: rating,
+                body: comment
+            }).then((res) => {
+                if (res.data.non_field_errors[0] === "The fields reviewer, coach must make a unique set.") {
+                    setRepeatError(true);
+                };
+            }).catch(() => {
+
+            })
+        }
+    }
+
+    const onRatingChange = (e) => {
+        setRating(e.target.value);
+    }
+
+    const onCommentChange = (e) => {
+        setComment(e.target.value);
+    }
+
+    const validate = () => {
+        let valid = true;
+        if (!isInt(rating)) {
+            setRatingError(true);
+            valid = false;
+        } else if (parseInt(rating) > 5) {
+            setRatingError(true);
+            valid = false;
+        }
+
+        if (comment.length > 200) {
+            setCommentError(true);
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    if (location.state === undefined) {
+        return <Redirect to="/error"/>
+    }
+
     return(
+        <div>
+            <div style={{ textAlign: "left", padding: '1rem', background: "#F2F2F2"}}>
+                <Button
+                    bsPrefix="coach-profile-return-btn"
+                    onClick={ () => history.goBack()}
+                >
+                    <IoIosArrowBack/> {'    '} Return to Results
+                </Button>
+            </div>
+        
         <div className="container" id="login-container">
             
             <div className="login-form">
                 <h3 style={{ paddingBottom: '10px'}}>
-                    Leave a review! 
+                    Leave a review for {firstName} {lastName}
                 </h3>
+                { ratingError ? <Alert variant="danger">Please enter a digit from 0 - 5</Alert> : null}
+                { commentError ? <Alert variant="danger">Comments are limited to only 200 characters. Please shorten your response.</Alert> : null}
+                { repeatError ? <Alert variant="danger">You have already submitted a review for this coach. Only 1 review is allowed per coach per user.</Alert> : null}
                 <Form>
-                    <Form.Group controlId="formBasicEmail" >
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                    <Form.Group controlId="rating" onChange={e => onRatingChange(e)}>
+                        <Form.Label>Rating</Form.Label>
+                        <Form.Control type="Rating" placeholder="Enter a number from 0-5" />
+                    </Form.Group>
+                    <Form.Group controlId="comment" onChange={e => onCommentChange(e)}>
+                        <Form.Label>Comments</Form.Label>
+                        <Form.Control as="textarea" rows={3} />
                     </Form.Group>
 
-                    <Form.Group controlId="formBasicPassword" >
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
-                    </Form.Group>
-
-                    <Button id="login-form-submit" type="submit" >
+                    <Button id="login-form-submit" type="submit" onClick={e => onSubmit(e)}>
                         Submit
                     </Button>
                 </Form>
                 <hr></hr>
-                <p> You can also login with: </p>
-                <Button id="login-social-media">Google</Button>
-                <Button id="login-social-media">Facebook</Button>
             </div>
+        </div>
         </div>
     )
 }
