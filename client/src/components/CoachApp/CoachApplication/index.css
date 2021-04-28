@@ -299,3 +299,73 @@
     color: #373737;
     opacity: 1;
 }
+
+#bigHeader{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) var(--unnamed-font-size-30)/var(--unnamed-line-spacing-29) var(--unnamed-font-family-acumin-pro);
+    letter-spacing: var(--unnamed-character-spacing-0-48);
+    color: var(--unnamed-color-373737);
+    text-align: left;
+    font: normal normal bold 30px/29px Acumin Pro;
+    letter-spacing: 0.48px;
+    color: #373737;
+    opacity: 1;
+}
+
+#coachFeatures{
+    padding: 0rem;
+    list-style: none;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) 20px/var(--unnamed-line-spacing-29) var(--unnamed-font-family-acumin-pro);
+    color: var(--unnamed-color-f6f6f6);
+    text-align: left;
+    font: normal normal bold 20px/29px Acumin Pro;
+    letter-spacing: 0.32px;
+    color: #F6F6F6;
+    opacity: 1;
+}
+
+
+.coachFeature::before {
+    content: "\25B8";
+    color: #FFB347; 
+	
+    padding-right: 10px;
+}
+
+#orangeText{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) 20px/var(--unnamed-line-spacing-29) var(--unnamed-font-family-acumin-pro);
+    color: var(--unnamed-color-f2c894);
+    text-align: left;
+    font: normal normal bold 20px/29px Acumin Pro;
+    letter-spacing: 0.32px;
+    color: #F2C894;
+}
+
+#whiteText{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) 20px/var(--unnamed-line-spacing-29) var(--unnamed-font-family-acumin-pro);
+    color: var(--unnamed-color-f6f6f6);
+    text-align: left;
+    font: normal normal bold 20px/29px Acumin Pro;
+    letter-spacing: 0.32px;
+    color: #F6F6F6;
+}
+
+#blackText{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-600) 20px/var(--unnamed-line-spacing-29) var(--unnamed-font-family-acumin-pro);
+    color: var(--unnamed-color-373737);
+    text-align: left;
+    font: normal normal 600 20px/29px Acumin Pro;
+    letter-spacing: 0.32px;
+    color: #373737;
+    opacity: 1;
+}
+
+#smallWhiteText{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) var(--unnamed-font-size-18)/var(--unnamed-line-spacing-29) var(--unnamed-font-family-acumin-pro);
+    letter-spacing: var(--unnamed-character-spacing-0-29);
+    color: var(--unnamed-color-f6f6f6);
+    text-align: left;
+    font: normal normal bold 18px/29px Acumin Pro;
+    letter-spacing: 0.29px;
+    color: #F6F6F6;
+    opacity: 1;
+}
