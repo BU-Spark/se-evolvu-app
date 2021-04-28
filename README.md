@@ -3,8 +3,14 @@
 
 ## Table of Contents
 
-- [Problem Statement](#statement)
-- [Installation](#installation)
+- [Problem Statement](#problem-statement)
+- [Solution](#solution)
+- [Current Status](#current-status)
+- [Future Tasks](#future-tasks)
+- [Unimplemented Features](#unimplemented-features)
+- [Bugs](#bugs)
+- [Setup and Installation](#setup-and-installation)
+
 
 ## Problem Statement
 
@@ -16,7 +22,27 @@ As for the coaches, they have difficulty growing clientele, handling the logisti
 
 Create a reliable platform for clients to find coaches more easily and schedule coaching sessions without having to manually search or contact coaches for additional information. This platform also allows coaches to easily track their clients and grow their clientele. Easing the process on both the clients and coaches ends. 
 
-## Installation 
+## Current Status
+Frontend:
+
+Backend:
+
+## Future Tasks
+Frontend:
+
+Backend:
+
+## Unimplemented Features
+Frontend:
+
+Backend:
+
+## Bugs
+Frontend:
+
+Backend:
+
+## Setup and Installation 
 
 The best way to get EvolvU running on your machine is to use Docker Compose. 
 
@@ -34,3 +60,4 @@ After obtaining a key and placing it in the `Dockerfile` in the server directory
 `docker-compose up --build`
 
 After the containers have been built and are running, visit http://localhost:81 to see the application. 
+
