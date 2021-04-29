@@ -111,6 +111,7 @@ const RegisterPage = () => {
                 "password2": confirmPassword,
                 "is_coach": false,
                 "is_customer": true,
+                "is_active": true,
                 "concentration": concentration,
                 "zipCode": zipCode
             };

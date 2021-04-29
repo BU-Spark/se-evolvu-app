@@ -32,7 +32,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
         is_customer = self.validated_data['is_customer']
         is_coach = self.validated_data['is_coach']
-        is_active = self.validated_data['is_active'],
+        is_active = self.validated_data['is_active']
 
         if password != password2:
             raise serializers.ValidationError({'password': 'Passwords must match'})
