@@ -106,7 +106,7 @@ WSGI_APPLICATION = 'evolvu.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'db',
+        'HOST': 'postgres_db',
         'NAME': 'evolvu_dev',
         'USER': 'admin',
         'PASSWORD': 'rpDEvGQxZtC5@',

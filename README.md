@@ -58,15 +58,21 @@ The future tasks should also be considered unimplemented features so far. Note t
 - Create production ready `Dockerfile`s and `docker-compose.yml` file using the build version of the client application and a production ready server for Django. 
 
 ## Bugs
-Frontend:
+### Frontend:
 - BrowserRouter from 'react-router-dom' does not clear messages set by messageReducer (i.e. alerts that appear on registration will not go away on the login page)
 - Conditional rendering of dashboards for coaches goes to user dashboard then coach dashboard
 - Submitting a review requires clicking twice (state is not updating correctly)
 
-Backend:
+### Backend:
 - CSRF token generation works, but causes errors when trying to be passed in with requests to the API endpoints.
 - Pagination and search sorting for the coach search functionality produces warnings when running this feature.
 - Model linking between the Coach model and Account model is made using models.ForeignKey, which may pose problems in the future for potential many-to-one linking of accounts to coaches, although this has not been the case thus far in any of our testing when creating coach accounts.
+
+## Known Vulnerabilities
+- Cross Site Request Forgery:
+    - We had a lot of trouble figuring out how to send the CSRF Tokens from the client to the server. Even after appending the token to the headers of a request, the server would throw an error saying that the tokens were not appended. It was an issue with the Django Framework not recognizing our tokens. 
+    - To view the progress we made against protecting CSRF Attacks, view the branch: `feature/csrf-protection`. 
+
 
 ## Setup and Installation 
 
@@ -83,7 +89,11 @@ Before running the containers, you will need to generate a `DJANGO_KEY` and plac
 
 After obtaining a key and placing it in the `Dockerfile` in the server directory, return to this directory and run the following command:
 
-`docker-compose up --build`
+```bash 
+docker-compose up --build
+```
 
-After the containers have been built and are running, visit http://localhost:81 to see the application. 
+After the containers have been built and are running (which could take a few minutes), visit http://localhost:81 to see the application. 
+
+If you try to restart the containers after stopping them, the Django server may fail. This is because we ran multiple commands for start-up and so you will need to remove all of the associated Docker containers and run the above command again. In other words, you will need to build the containers again from scratch without a cache.
 

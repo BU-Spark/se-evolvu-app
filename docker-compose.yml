@@ -2,12 +2,12 @@ version: '3.8'
 
 services: 
 
-  db:
+  postgres_db:
     image: postgres:latest
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=evolvu_dev
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=rpDEvGQxZtC5@
     ports:
       - "5432:5432"
 
@@ -15,17 +15,13 @@ services:
     build: ./server
     volumes: 
       - ./server:/usr/src/app
+    command: bash -c "python3 ./src/manage.py makemigrations && python3 ./src/manage.py migrate && python3 ./src/manage.py loaddata initial_data && python3 ./src/manage.py hashpasswords && python3 ./src/manage.py runserver 0.0.0.0:8000"
     expose:
       - 8000
-    environment:
-      - DB_HOST=db
-      - DB_NAME=dev
-      - DB_USER=postgres
-      - DB_PASS=postgres
-    links:
-      - db:db
     depends_on:
-      - db
+      - postgres_db
+    links:
+      - postgres_db
 
   client:
     build: ./client
