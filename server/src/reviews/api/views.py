@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
 # from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models import Q
 
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -53,7 +54,31 @@ def create_coach_review(request, slug):
         data = serializer.errors
         return Response(data)
 
+@api_view(['POST',])
+def approve_coach_review(request):
+    print(request.data)
+    coach = request.data['coach']
+    reviewer = request.data['reviewer']
 
+    try:
+        review = Review.objects.get(coach=coach, reviewer=reviewer)
+    except:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    review.approval = True
+    review.save()
+
+    review = Review.objects.get(coach=coach, reviewer=reviewer)
+    return Response({"message": "Successfully approved review."})
+
+class ReviewList(ListAPIView):
+    queryset = Review.objects.filter(approval=False)
+    serializer_class = ReviewSerializer 
+    authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+    pagination_class = PageNumberPagination
+    # filter_backends = (SearchFilter, OrderingFilter)
+    # search_fields = ('last_name',)
     
 
 class ReviewView(viewsets.ModelViewSet):

@@ -20,6 +20,8 @@ class Command(BaseCommand):
                 gender = "N",
                 description = "",
                 )
+                if account.is_active == True:
+                    coach_profile.approved = True
                 coach_profile.save()
             elif account.is_customer:
                 profile = UserProfile(

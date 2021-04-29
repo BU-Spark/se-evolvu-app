@@ -16,7 +16,8 @@ class Review(models.Model):
     coach = models.ForeignKey('coaches.Coach', on_delete=models.CASCADE)
     reviewer = models.ForeignKey(Account, on_delete=models.CASCADE)
     rating = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)])
-    body = models.TextField(max_length=3000, blank=True)
+    body = models.TextField(max_length=300, blank=True)
+    approval = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now_add=True)
     
     """

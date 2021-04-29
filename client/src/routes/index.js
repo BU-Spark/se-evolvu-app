@@ -21,6 +21,7 @@ import Contact from "../components/FooterPages/Contact";
 import Privacy from "../components/FooterPages/Privacy";
 import Testimonial from "../components/FooterPages/Testimonial";
 import Safety from "../components/FooterPages/Safety";
+import AdminDashboard from '../components/Dashboards/Admin/index.js';
 
 const unprotectedRoutes = [
     {
@@ -109,7 +110,11 @@ const protectedRoutes = [
     {
         path: "/review",
         component: ReviewFormPage
-    }
+    },
+    {
+        path: "/admin/dashboard",
+        component: AdminDashboard
+    },
 ]
 
 let routes = {

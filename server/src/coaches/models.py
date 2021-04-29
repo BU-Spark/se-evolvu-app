@@ -30,23 +30,24 @@ class Coach(models.Model):
     focus_business = models.BooleanField(default=False)
     travel = models.BooleanField(default=False)
     description = models.TextField(default="")
+    approved = models.BooleanField(default=False)
     # city = models.CharField(max_length=255)
     # location = PlainLocationField(based_fields=['city'], zoom=7)
     # slug = models.SlugField(blank=True, unique=True)
 
     
     def no_of_reviews(self):
-        reviews = Review.objects.filter(coach=self)
+        reviews = Review.objects.filter(coach=self, approval=True)
         return len(reviews)
 
     def avg_rating(self):
         sum = 0
-        reviews = Review.objects.filter(coach=self)
+        reviews = Review.objects.filter(coach=self, approval=True)
         for review in reviews:
             #print('HERE IS RATING')
             #print(rating)
             sum+= review.rating
-
+                
         if len(reviews) > 0:
             return sum / len(reviews)
         else:

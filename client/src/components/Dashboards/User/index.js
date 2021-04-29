@@ -8,8 +8,16 @@ const UserDashboard = () => {
 
     const name = useSelector(state => state.userReducer.first_name);
     const coach = useSelector(state => state.userReducer.coach);
+    const admin = useSelector(state => state.userReducer.admin);
+    
     if (coach) {
         return <Redirect to="/coach/dashboard"/>
+    } 
+
+    if (admin) {
+        return (
+            <Redirect to="/admin/dashboard"/>
+        )
     }
 
     return (
