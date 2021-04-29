@@ -102,11 +102,13 @@ const CoachProfilePage = (props) => {
                                 <p>Book your first 15 minute consultation:</p>
                                 <Button
                                     bsPrefix="coach-profile-book-btn"
+                                    disable
                                 >
                                     Book Now
                                 </Button>
                                 <Button
                                     bsPrefix="coach-profile-contact-btn"
+                                    disable
                                 >
                                     Contact Coach
                                 </Button>

@@ -2,12 +2,26 @@ version: '3.8'
 
 services: 
 
+  postgres_db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=evolvu_dev
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=rpDEvGQxZtC5@
+    ports:
+      - "5432:5432"
+
   django_server:
     build: ./server
     volumes: 
       - ./server:/usr/src/app
+    command: bash -c "rm -rf ./src/db.sqlite3 && python3 ./src/manage.py makemigrations && python3 ./src/manage.py migrate && python3 ./src/manage.py loaddata initial_data && python3 ./src/manage.py hashpasswords && python3 ./src/manage.py runserver 0.0.0.0:8000"
     expose:
       - 8000
+    depends_on:
+      - postgres_db
+    links:
+      - postgres_db
 
   client:
     build: ./client
@@ -18,7 +32,7 @@ services:
       - 3000
     depends_on:
       - django_server
-
+    
   nginx:
     build: ./nginx
     ports:

@@ -13,7 +13,7 @@ const searchCoaches = (params) => {
     return axios({
         url: "/api/coaches/search",
         method: 'get',
-        data: params,
+        params,
     });
 };
 

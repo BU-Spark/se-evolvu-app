@@ -156,6 +156,7 @@ class SearchCoaches(ListAPIView):
         travel = self.request.query_params.get('travel')
         query = Q()
 
+        print(travel)
         """
         print(life)
         print(behavioral)
@@ -166,37 +167,37 @@ class SearchCoaches(ListAPIView):
         print(coach_travel)
         """
 
-        if focus_life == "True":
+        if focus_life == "true":
             q = Q(focus_life = True)
             #print("here1")
             query |= q
 
-        if focus_behavioral == "True":
+        if focus_behavioral == "true":
             q = Q(focus_behavioral = True)
             #print("here2")
             query |= q
 
-        if focus_health_wellness == "True":
+        if focus_health_wellness == "true":
             q = Q(focus_life = True)
             #print("here3")
             query |= q
 
-        if focus_holistic == "True":
+        if focus_holistic == "true":
             q = Q(focus_holistic = True)
             #print("here4")
             query |= q
         
-        if focus_nutrition_fitness == "True":
+        if focus_nutrition_fitness == "true":
             q = Q(focus_nutrition_fitness = True)
             #print("here5")
             query |= q
 
-        if focus_business == "True":
+        if focus_business == "true":
             q = Q(focus_business = True)
             #print("here6")
             query |= q
 
-        if travel == "True":
+        if travel == "true":
             q = Q(travel = True)
             #print("here7")
             query |= q
