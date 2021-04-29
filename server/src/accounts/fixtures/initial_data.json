@@ -118,5 +118,25 @@
             "is_superuser": false,
             "password": "badpassword"
         } 
+    },
+    { 
+        "model": "accounts.account",
+        "pk": 10,
+        "fields": {
+            "first_name": "Tin",
+            "last_name": "Nguyen",
+            "email": "tin@evolvu.com",
+            "username": "tin@evolvu.com",
+            "slug": "tinevolvucom-42325223",
+            "is_customer": false,
+            "is_coach": false,
+            "date_joined": "2021-04-26T01:12:49.768Z", 
+            "last_login": "2021-04-26T01:12:49.768Z",
+            "is_admin": true,
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false,
+            "password": "badpassword"
+        } 
     }
 ]

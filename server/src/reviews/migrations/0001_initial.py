@@ -25,6 +25,7 @@ class Migration(migrations.Migration):
                 ('date', models.DateTimeField(auto_now_add=True)),
                 ('coach', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coaches.coach')),
                 ('reviewer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('approval', models.BooleanField(default=False)),
             ],
             options={
                 'unique_together': {('reviewer', 'coach')},

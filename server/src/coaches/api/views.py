@@ -67,6 +67,15 @@ class ApiCoachListView(ListAPIView):
     # filter_backends = (SearchFilter, OrderingFilter)
     # search_fields = ('last_name',)
 
+class FetchPendingCoaches(ListAPIView):
+    queryset = Coach.objects.filter(travel=False)
+    serializer_class = CoachSerializer
+    authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+    pagination_class = PageNumberPagination
+    # filter_backends = (SearchFilter, OrderingFilter)
+    # search_fields = ('last_name',)
+
 '''
 class FocusHealthView(ListAPIView):
     serializer_class = CoachSerializer

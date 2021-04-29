@@ -36,17 +36,17 @@ class Coach(models.Model):
 
     
     def no_of_reviews(self):
-        reviews = Review.objects.filter(coach=self)
+        reviews = Review.objects.filter(coach=self, approval=True)
         return len(reviews)
 
     def avg_rating(self):
         sum = 0
-        reviews = Review.objects.filter(coach=self)
+        reviews = Review.objects.filter(coach=self, approval=True)
         for review in reviews:
             #print('HERE IS RATING')
             #print(rating)
             sum+= review.rating
-
+                
         if len(reviews) > 0:
             return sum / len(reviews)
         else:
