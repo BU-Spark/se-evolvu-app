@@ -36,7 +36,6 @@ const AdminDashboard = () => {
     }
 
     const approveReview = (e, coach, reviewer) => {
-        console.log(coach, reviewer)
         e.preventDefault();
         adminServices.approveReview({ coach: coach, reviewer: reviewer}).then(() => {
             let updatedList = reviewList.filter((review) => review.coach !== coach);
@@ -48,8 +47,6 @@ const AdminDashboard = () => {
         getCoaches();
         getReviews();
     }, [])
-
-    console.log(coachList)
 
     if (!isAdmin) {
         <Redirect to="/error"/>

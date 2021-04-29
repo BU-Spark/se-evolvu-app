@@ -15,7 +15,7 @@ services:
     build: ./server
     volumes: 
       - ./server:/usr/src/app
-    command: bash -c "python3 ./src/manage.py makemigrations && python3 ./src/manage.py migrate && python3 ./src/manage.py loaddata initial_data && python3 ./src/manage.py hashpasswords && python3 ./src/manage.py runserver 0.0.0.0:8000"
+    command: bash -c "rm -rf ./src/db.sqlite3 && python3 ./src/manage.py makemigrations && python3 ./src/manage.py migrate && python3 ./src/manage.py loaddata initial_data && python3 ./src/manage.py hashpasswords && python3 ./src/manage.py runserver 0.0.0.0:8000"
     expose:
       - 8000
     depends_on:

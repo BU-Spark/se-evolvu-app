@@ -31,9 +31,7 @@ Redux has been implmented, and to see the current minimal configuration of the s
 ### Backend:
 The server-side backend is created using the Django REST framework to establish an API in which the frontend can send requests to.
 
-Several API endpoints have been created for each feature that has been currently implemented. The frontend can utilize these endpoints to make specific types of requests as needed to either get, put, or delete data corresponding depending on the purpose of the feature. To view the specific endpoints of a feature, these can be found by navigating to `server\src\<feature-label>\api\urls.py`, where `<feature-label>` can be any of the following components implemented thus far: accounts, coaches, reviews, users
-
-Additionally, a local database has been utilized to easily view and manage models currently created for the web application. While this is the case for testing purposes, the original tech stack calls for PostgreSQL as the intended means of storage. Therefore, we hope to see later versions of this project migrate over to PostgreSQL.
+Several API endpoints have been created for each feature that has been currently implemented. The frontend can utilize these endpoints to make specific types of requests as needed to either get, put, or delete data corresponding depending on the purpose of the feature. To view the specific endpoints of a feature, these can be found by navigating to `server\src\<feature-label>\api\urls.py`, where `<feature-label>` can be any of the following components implemented thus far: accounts, coaches, reviews, users.
 
 ## Future Tasks
 The future tasks should also be considered unimplemented features so far. Note that some buttons may appear on the frontend, but they may be static and non-functional. 

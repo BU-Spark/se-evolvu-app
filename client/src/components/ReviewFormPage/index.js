@@ -60,10 +60,7 @@ const ReviewFormPage = () => {
             })
         }
 
-        console.log(success);
     }
-
-    console.log(success);
 
     const onRatingChange = (e) => {
         setRating(e.target.value);
