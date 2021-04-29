@@ -30,6 +30,7 @@ class Coach(models.Model):
     focus_business = models.BooleanField(default=False)
     travel = models.BooleanField(default=False)
     description = models.TextField(default="")
+    approved = models.BooleanField(default=False)
     # city = models.CharField(max_length=255)
     # location = PlainLocationField(based_fields=['city'], zoom=7)
     # slug = models.SlugField(blank=True, unique=True)

@@ -27,9 +27,9 @@ const AdminDashboard = () => {
         })
     }
 
-    const onClick = (e, slug, obj) => {
+    const onClick = (e, slug) => {
         e.preventDefault();
-        adminServices.updateCoach(obj, slug).then(() => {
+        adminServices.updateCoach(slug).then(() => {
             let updatedList = coachList.filter((coach) => coach.slug !== slug);
             setCoachList(updatedList);
         });
@@ -48,6 +48,8 @@ const AdminDashboard = () => {
         getCoaches();
         getReviews();
     }, [])
+
+    console.log(coachList)
 
     if (!isAdmin) {
         <Redirect to="/error"/>
@@ -77,7 +79,7 @@ const AdminDashboard = () => {
                                     <td>{obj.email}</td>
                                     <td>{obj.travel ? "Completed" : "Pending" }</td>
                                     <td>
-                                        <Button onClick={e => onClick(e, obj.slug, { travel: true})}>Accept</Button> {' '}
+                                        <Button onClick={e => onClick(e, obj.slug)}>Accept</Button> {' '}
                                         <Button variant="danger" onClick={e => onClick(e, obj.slug, { is_rejected: true})}>Reject</Button>
                                     </td>
                                 </tr> 

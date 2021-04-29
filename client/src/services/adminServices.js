@@ -10,11 +10,10 @@ const getCoachList = () => {
     })
 };
 
-const updateCoach = (params, slug) => {
+const updateCoach = (slug) => {
     return axios({
-        url: "/api/coaches/" + slug + "/update/",
-        method: 'put',
-        body: params
+        url: "/api/coaches/approve/" + slug + "/",
+        method: 'post',
     }).then((res) => {
         return res.data;
     })

@@ -30,6 +30,7 @@ class Migration(migrations.Migration):
                 ('travel', models.BooleanField(default=False)),
                 ('description', models.TextField()),
                 ('coach', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('approved', models.BooleanField(default=False)),
             ],
         ),
     ]

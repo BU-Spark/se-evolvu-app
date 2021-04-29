@@ -12,7 +12,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ['first_name', 'last_name', 'email', 'username', 'password', 'password2', 'is_customer', 'is_coach',]
+        fields = ['first_name', 'last_name', 'email', 'username', 'password', 'password2', 'is_customer', 'is_coach', 'is_active',]
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -25,12 +25,14 @@ class RegistrationSerializer(serializers.ModelSerializer):
             last_name = self.validated_data['last_name'],
             is_customer = self.validated_data['is_customer'],
             is_coach = self.validated_data['is_coach'],
+            is_active = self.validated_data['is_active'],
         )
         password = self.validated_data['password']
         password2 = self.validated_data['password2']
 
         is_customer = self.validated_data['is_customer']
         is_coach = self.validated_data['is_coach']
+        is_active = self.validated_data['is_active'],
 
         if password != password2:
             raise serializers.ValidationError({'password': 'Passwords must match'})
@@ -39,11 +41,20 @@ class RegistrationSerializer(serializers.ModelSerializer):
         account.save()
 
         if is_coach == True:
-            coach_profile = Coach(
-            coach = account,
-            gender = "N",
-            description = "",
-            )
+            if is_active == True:
+                coach_profile = Coach(
+                coach = account,
+                gender = "N",
+                description = "",
+                approved = True,
+                )
+            else:
+                coach_profile = Coach(
+                coach = account,
+                gender = "N",
+                description = "",
+                approved = True,
+                )
             coach_profile.save()
         elif is_customer:
             profile = UserProfile(

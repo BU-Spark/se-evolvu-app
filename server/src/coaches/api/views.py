@@ -11,6 +11,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from coaches.models import Coach
+from accounts.models import Account
 from coaches.api.serializers import CoachSerializer, CoachListSerializer#, CoachSearchSerializer
 from rest_framework.filters import SearchFilter, OrderingFilter
 
@@ -42,6 +43,29 @@ def api_update_coach_view(request, slug):
             return Response(data=data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST', ])
+def api_approve_coach(request, slug):
+    try:
+        coach_profile = Coach.objects.get(coach__slug=slug)
+    except Coach.DoesNotExist:
+        print('here')
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == "POST":
+        try:
+            coach_account = Account.objects.get(coach_profile=coach_profile)
+        except Account.DoesNotExist:
+            print('here2')
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        coach_profile.approved = True
+        coach_account.is_active = True
+        coach_profile.save()
+        coach_account.save()
+
+        return Response({"status": "200", "message": "Successfully approved coach"})
+
+
 @api_view(['DELETE', ])
 def api_delete_coach_view(request, slug):
     try:
@@ -68,7 +92,7 @@ class ApiCoachListView(ListAPIView):
     # search_fields = ('last_name',)
 
 class FetchPendingCoaches(ListAPIView):
-    queryset = Coach.objects.filter(travel=False)
+    queryset = Coach.objects.filter(approved=False)
     serializer_class = CoachSerializer
     authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
@@ -121,7 +145,7 @@ class SearchCoaches(ListAPIView):
     # travel = self.request.query_params.get('travel', None)
 
     def get_queryset(self):
-        queryset = Coach.objects.all()
+        queryset = Coach.objects.filter(approved=True)
 
         focus_life = self.request.query_params.get('focus_life')
         focus_behavioral = self.request.query_params.get('focus_behavioral')

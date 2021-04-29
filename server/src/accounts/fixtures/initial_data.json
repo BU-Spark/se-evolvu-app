@@ -13,7 +13,7 @@
             "date_joined": "2021-04-26T01:12:49.768Z", 
             "last_login": "2021-04-26T01:12:49.768Z",
             "is_admin": false,
-            "is_active": true,
+            "is_active": false,
             "is_staff": false,
             "is_superuser": false,
             "password": "badpassword"
