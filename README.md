@@ -87,10 +87,10 @@ Before running the containers, you will need to generate a `DJANGO_KEY` and plac
 After obtaining a key and placing it in the `Dockerfile` in the server directory, return to this directory and run the following command:
 
 ```bash 
-docker-compose up --build
+docker-compose up
 ```
 
 After the containers have been built and are running (which could take a few minutes), visit http://localhost:81 to see the application. 
 
-If you try to restart the containers after stopping them, the Django server may fail. This is because we ran multiple commands for start-up and so you will need to remove all of the associated Docker containers and run the above command again. In other words, you will need to build the containers again from scratch without a cache.
+If you try to restart the containers after stopping them, the Django server will fail. This is because we ran multiple commands for start-up and so you will need to remove all of the associated Docker containers with this application (we did this by pruning our system, i.e. using `docker system prune -a`) and run the above command again. In other words, you will need to build the containers again from scratch without a cache.
 
