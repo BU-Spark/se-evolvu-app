@@ -2,12 +2,30 @@ version: '3.8'
 
 services: 
 
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+
   django_server:
     build: ./server
     volumes: 
       - ./server:/usr/src/app
     expose:
       - 8000
+    environment:
+      - DB_HOST=db
+      - DB_NAME=dev
+      - DB_USER=postgres
+      - DB_PASS=postgres
+    links:
+      - db:db
+    depends_on:
+      - db
 
   client:
     build: ./client
@@ -18,7 +36,7 @@ services:
       - 3000
     depends_on:
       - django_server
-
+    
   nginx:
     build: ./nginx
     ports:
