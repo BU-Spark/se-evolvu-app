@@ -107,10 +107,12 @@ If you try to restart the containers after stopping them, the Django server will
 ### User Types and Example Credentials
 
 If you would like to view the coach profile then use the following credentials:
+
 Email: Shanna@melissa.tv
 Password: badpassword
 
 If you would like to view the admin profile then use the following credentials:
+
 Email: tin@evolvu.comm
 Password: badpassword
 
