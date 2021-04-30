@@ -113,6 +113,8 @@ Email: Shanna@melissa.tv
 
 Password: badpassword
 
+Otherwise, creating a coach profile is currently unavailable. We created a script for inserting coaches into the database since we don't have an endpoint for doing so. Please visit `server/src/accounts/fixtures/initial_data.json` to insert more coaches by creating similar JSON objects where the `is_coach` and `is_active`field is set to `True`. If you set `is_active` to `False`, then they will need to be approved on the on the admin dashboard. 
+
 If you would like to view the admin profile then use the following credentials:
 
 Email: tin@evolvu.comm
