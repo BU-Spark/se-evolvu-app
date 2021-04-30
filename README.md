@@ -88,7 +88,8 @@ After obtaining a key and placing it in the `Dockerfile` in the server directory
 
 ```bash 
 docker-compose build
-docker-compose up
+docker-compose up               <---- First attempt may cause an error, see below
+docker-compose up               <---- Will properly run
 ```
 
 NOTE: On the rare occasion, the Django server will start before the PostgreSQL database for some reason and you may get an error in the logs for the Django Server saying:
@@ -98,7 +99,7 @@ django_server_1  |  Is the server running on host "postgres_db" (192.168.128.2) 
 django_server_1  | 	TCP/IP connections on port 5432?
 ```
 
-If this is the case, run `docker-compose up` again and everything will properly run.
+If this is the case, run `docker-compose up` again (as mentioned above) and everything will properly run.
 
 After the containers have been built and are running (which could take a few minutes), visit http://localhost:81 to see the application. 
 
