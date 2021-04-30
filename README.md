@@ -87,17 +87,18 @@ Before running the containers, you will need to generate a `DJANGO_KEY` and plac
 After obtaining a key and placing it in the `Dockerfile` in the server directory, return to this directory and run the following command:
 
 ```bash 
+docker-compose build
 docker-compose up
 ```
 
-NOTE: On the rare occasion, the Django server will start before the PostgreSQL database for some reason. If this is the case, you may get an error in the logs for the Django Server saying:
+NOTE: On the rare occasion, the Django server will start before the PostgreSQL database for some reason and you may get an error in the logs for the Django Server saying:
 
 ```bash
 django_server_1  |  Is the server running on host "postgres_db" (192.168.128.2) and accepting
 django_server_1  | 	TCP/IP connections on port 5432?
 ```
 
-If this is the case, please follow the steps above again. 
+If this is the case, run `docker-compose up` again and everything will properly run.
 
 After the containers have been built and are running (which could take a few minutes), visit http://localhost:81 to see the application. 
 
