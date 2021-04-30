@@ -104,3 +104,14 @@ After the containers have been built and are running (which could take a few min
 
 If you try to restart the containers after stopping them, the Django server will fail. This is because we ran multiple commands for start-up and so you will need to remove all of the associated Docker containers with this application (we did this by pruning our system, i.e. using `docker system prune -a`) and run the above command again. In other words, you will need to build the containers again from scratch without a cache.
 
+### User Types and Example Credentials
+
+If you would like to view the coach profile then use the following credentials:
+Email: Shanna@melissa.tv
+Password: badpassword
+
+If you would like to view the admin profile then use the following credentials:
+Email: tin@evolvu.comm
+Password: badpassword
+
+If you would like to view a client profile then register a new account on the registration page of the application. 
