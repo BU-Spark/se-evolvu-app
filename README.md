@@ -113,12 +113,14 @@ Email: Shanna@melissa.tv
 
 Password: badpassword
 
-Otherwise, creating a coach profile is currently unavailable. We created a script for inserting coaches into the database since we don't have an endpoint for doing so. Please visit `server/src/accounts/fixtures/initial_data.json` to insert more coaches by creating similar JSON objects where the `is_coach` and `is_active`field is set to `True`. If you set `is_active` to `False`, then they will need to be approved on the on the admin dashboard. 
+Otherwise, creating a coach profile is currently unavailable. We created a script for inserting coaches into the database on startup of the entire application using Docker since we don't have an endpoint for doing so. Please visit `server/src/accounts/fixtures/initial_data.json` to insert more coaches by creating similar JSON objects where the `is_coach` and `is_active`field is set to `True`. If you set `is_active` to `False`, then they will need to be approved on the on the admin dashboard before they appear on the search results. 
 
 If you would like to view the admin profile then use the following credentials:
 
 Email: tin@evolvu.comm
 
 Password: badpassword
+
+Creating an admin profile is similar to the above, with the exception that the `is_admin` field must be set to `True`. 
 
 If you would like to view a client profile then register a new account on the registration page of the application. 
