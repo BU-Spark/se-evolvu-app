@@ -21,6 +21,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('image', models.ImageField(blank=True, null=True, upload_to=coaches.models.upload_location)),
                 ('gender', models.CharField(max_length=1)),
+                ('price', models.IntegerField(default=50)),
                 ('focus_life', models.BooleanField(default=False)),
                 ('focus_behavioral', models.BooleanField(default=False)),
                 ('focus_health_wellness', models.BooleanField(default=False)),
