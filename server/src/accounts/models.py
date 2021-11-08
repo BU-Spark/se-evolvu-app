@@ -1,3 +1,4 @@
+import os
 import requests
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
@@ -108,7 +109,7 @@ class Account(AbstractBaseUser):
 
     def convertZipToLatLon(zip):
         # Turn zipCode into a lat and long 
-        API_KEY = "FU95KdRb7Ghv3UUUUK6jooAebgBTscSS"
+        API_KEY = os.environ['MAPQUEST_API_KEY']
         response = requests.get(f"http://open.mapquestapi.com/geocoding/v1/address?key={API_KEY}&location={zip}")
         json = response.json()
         latLng = json["results"][0]["locations"][0]
