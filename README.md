@@ -105,6 +105,164 @@ After the containers have been built and are running (which could take a few min
 
 If you try to restart the containers after stopping them, the Django server will fail. This is because we ran multiple commands for start-up and so you will need to remove all of the associated Docker containers with this application (we did this by pruning our system, i.e. using `docker system prune -a`) and run the above command again. In other words, you will need to build the containers again from scratch without a cache.
 
+
+### Run without Docker
+
+If you want to run the client and server without docker, follow the steps bellow
+
+Note you will need to install nvm to manage a different version of node [nvm](https://github.com/nvm-sh/nvm)
+
+```bash
+cd client 
+
+nvm install 13.12.0  | Installs node version 13.12.0
+
+nvm use 13.12.0      | Sets 13.12.0 as the current node version
+
+npm install 
+
+npm start
+```
+
+Now open another terminal instance to configure our server
+
+
+Get your [Django Key](https://djecrety.ir/)
+
+```bash
+cd server 
+
+python3 -m venv env
+
+source env/bin/activate
+
+pip3 install -r requirements.txt 
+
+export DJANGO_KEY="<Enter-Your-Django-Key>" | Can retrieve django key from link above
+
+export MAPQUEST_API_KEY="<Enter-MapQuest-API-Key>"
+
+```
+
+Now you must navigate to `src/evolvu/settings.py` and change the following lines 
+
+```python
+COMMENT THIS DATABASE OBJECT AND USE THE ONE BELOW INSTEAD
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': 'postgres_db',
+        'NAME': 'evolvu_dev',
+        'USER': 'admin',
+        'PASSWORD': 'rpDEvGQxZtC5@',
+        'PORT': 5432
+    }
+}
+
+# If you are running the backend without Docker, use the following for a database:
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
+SO IT SHOULD LOOK LIKE 
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'HOST': 'postgres_db',
+#         'NAME': 'evolvu_dev',
+#         'USER': 'admin',
+#         'PASSWORD': 'rpDEvGQxZtC5@',
+#         'PORT': 5432
+#     }
+# }
+
+# If you are running the backend without Docker, use the following for a database:
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+```
+
+If you want print statements to appear in the Python console while running locally, uncomment the following lines 
+
+```python
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#             'filters': ['require_debug_true'],
+#         },
+#     },
+#     'loggers': {
+#         'mylogger': {
+#             'handlers': ['console'],
+#             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+#             'propagate': True,
+#         },
+#     },
+
+---------
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'filters': ['require_debug_true'],
+        },
+    },
+    'loggers': {
+        'mylogger': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': True,
+        },
+    }
+```
+
+
+Finally, to run the application, use the following command
+
+```python
+bash -c "rm -rf ./src/db.sqlite3 && python3 ./src/manage.py makemigrations && python3 ./src/manage.py migrate && python3 ./src/manage.py loaddata initial_data && python3 ./src/manage.py hashpasswords && python3 ./src/manage.py runserver 0.0.0.0:8000"
+```
+
+In order to use logging in a file, do the following 
+
+```python
+import logging 
+logging.getLogger("myLogger")
+
+# Now you can print with 
+
+logger.info('Print to console')
+
+```
+
 ### User Types and Example Credentials
 
 If you would like to view the coach profile then use the following credentials:
@@ -124,3 +282,5 @@ Password: badpassword
 Creating an admin profile is similar to the above, with the exception that the `is_admin` field must be set to `True`. 
 
 If you would like to view a client profile then register a new account on the registration page of the application. 
+
+
