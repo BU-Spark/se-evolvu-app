@@ -52,6 +52,7 @@ const SearchPage = (props) => {
         const params = { 
             price: price,
             remote: remote,
+            zipCode: zipCode,
             distance: distance,
             gender: gender,
             focus_life: lifeFocus,

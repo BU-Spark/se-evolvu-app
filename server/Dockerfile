@@ -9,3 +9,4 @@ RUN pip install -r requirements.txt
 COPY . /backend/
 
 ENV DJANGO_KEY="Enter DJANGO_KEY here"
+ENV MAPQUEST_API_KEY="Enter MapQuest API key here"

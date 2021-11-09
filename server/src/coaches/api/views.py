@@ -1,7 +1,8 @@
+from django.core.management.base import BaseCommand
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
-from django.db.models import Q
+from django.db.models import Q, F
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
@@ -14,6 +15,9 @@ from coaches.models import Coach
 from accounts.models import Account
 from coaches.api.serializers import CoachSerializer, CoachListSerializer#, CoachSearchSerializer
 from rest_framework.filters import SearchFilter, OrderingFilter
+import logging
+logger = logging.getLogger("mylogger")
+
 
 # Create your views here
 @api_view(['GET', ])
@@ -132,8 +136,7 @@ class FocusWellnessView(ListAPIView):
 class SearchCoaches(ListAPIView):
     serializer_class = CoachSerializer
     # pagination_class = PageNumberPagination
-
-    
+        
     #status = self.request.query_params.get('status', None)
     # gender = self.request.query_params.get('gender', 'N')
     # focus_life = self.request.query_params.get('focus_life', None)
@@ -143,10 +146,11 @@ class SearchCoaches(ListAPIView):
     # focus_nutrition_fitness = self.request.query_params.get('focus_nutrition_fitness', None)
     # focus_business = self.request.query_params.get('focus_business', None)
     # travel = self.request.query_params.get('travel', None)
-
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         queryset = Coach.objects.filter(approved=True)
-
+        price = self.request.query_params.get("price")
+        zipCode = self.request.query_params.get("zipCode")
+        distance = self.request.query_params.get("distance")
         focus_life = self.request.query_params.get('focus_life')
         focus_behavioral = self.request.query_params.get('focus_behavioral')
         focus_health_wellness = self.request.query_params.get('focus_health_wellness')
@@ -154,9 +158,12 @@ class SearchCoaches(ListAPIView):
         focus_nutrition_fitness = self.request.query_params.get('focus_nutrition_fitness')
         focus_business = self.request.query_params.get('focus_business')
         travel = self.request.query_params.get('travel')
+        [lat, lon] = Account.convertZipToLatLon(zipCode)
         query = Q()
 
-        print(travel)
+
+
+
         """
         print(life)
         print(behavioral)
@@ -169,50 +176,45 @@ class SearchCoaches(ListAPIView):
 
         if focus_life == "true":
             q = Q(focus_life = True)
-            #print("here1")
             query |= q
 
         if focus_behavioral == "true":
             q = Q(focus_behavioral = True)
-            #print("here2")
             query |= q
 
         if focus_health_wellness == "true":
             q = Q(focus_life = True)
-            #print("here3")
             query |= q
 
         if focus_holistic == "true":
             q = Q(focus_holistic = True)
-            #print("here4")
             query |= q
         
         if focus_nutrition_fitness == "true":
             q = Q(focus_nutrition_fitness = True)
-            #print("here5")
             query |= q
 
         if focus_business == "true":
             q = Q(focus_business = True)
-            #print("here6")
             query |= q
 
         if travel == "true":
             q = Q(travel = True)
-            #print("here7")
             query |= q
 
-        #print("here8")
+        if price: 
+            q = Q(price__lte = price)
+            query &= q
 
         queryset = queryset.filter(query)
 
-        # if status is not None:
-        #     status = status.split('|')
-        #     query = Q()
-        #     for x in status:
-        #         q = Q(status=x)
-        #         query |= q
-        #     queryset = queryset.filter(query)
+        for coach in queryset: 
+            distFromZipcode = Coach.distanceFromLatLong(coach, lat, lon)
+            # Case when the coach is further away from zip than specified 
+            if distFromZipcode > int(distance):
+                queryset = queryset.filter(~Q(coach_id=coach.coach_id))
+        
+
         return queryset
 
     

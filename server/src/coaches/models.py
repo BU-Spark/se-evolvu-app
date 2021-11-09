@@ -1,3 +1,4 @@
+from math import sin, cos, sqrt, atan2, radians
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
@@ -22,6 +23,7 @@ class Coach(models.Model):
     #name = models.ForeignKey('accounts.Account.first_name', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=upload_location, blank=True, null=True)
     gender = models.CharField(max_length=1)
+    price = models.IntegerField(default=50)
     focus_life = models.BooleanField(default=False)
     focus_behavioral = models.BooleanField(default=False)
     focus_health_wellness = models.BooleanField(default=False)
@@ -34,7 +36,25 @@ class Coach(models.Model):
     # city = models.CharField(max_length=255)
     # location = PlainLocationField(based_fields=['city'], zoom=7)
     # slug = models.SlugField(blank=True, unique=True)
+    
 
+    def distanceFromLatLong(self, lat, long):
+        # approximate radius of earth in km
+        R = 6373.0
+        lat1 = radians(lat)
+        long1 = radians(long)
+        lat2 = radians(self.coach.lat)
+        long2 = radians(self.coach.lon)
+
+        dlon = long2 - long1
+        dlat = lat2 - lat1
+
+        a = sin(dlat / 2)**2 + cos(lat2) * cos(lat2) * sin(dlon / 2)**2
+        c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+        # miles = km * 0.62137
+        distance = (R*c)*0.62137
+        return distance
     
     def no_of_reviews(self):
         reviews = Review.objects.filter(coach=self, approval=True)
