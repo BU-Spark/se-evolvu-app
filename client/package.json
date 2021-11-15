@@ -19,6 +19,7 @@
     "redux": "4.0.5",
     "redux-devtools-extension": "2.13.9",
     "redux-thunk": "2.3.0",
+    "social-icon": "^1.2.1",
     "validator": "13.5.2",
     "web-vitals": "1.1.1"
   },
@@ -33,7 +34,7 @@
       "react-app"
     ]
   },
-  "proxy": "http://localhost:8000",
+  "proxy": "http://127.0.0.1:8000",
   "browserslist": {
     "production": [
       ">0.2%",

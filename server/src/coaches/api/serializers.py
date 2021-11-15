@@ -23,7 +23,8 @@ class CoachSerializer(serializers.ModelSerializer):
                 'focus_holistic',
                 'focus_business',
                 'travel',
-                'description',]
+                'description',
+                'image',]
 
     def get_coach_account_firstname(self, coach):
         return coach.coach.first_name

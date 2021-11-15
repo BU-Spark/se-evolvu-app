@@ -132,11 +132,21 @@ Get your [Django Key](https://djecrety.ir/)
 ```bash
 cd server 
 
-python3 -m venv env
+if mac: 
 
-source env/bin/activate
+    python3 -m venv env
 
-pip3 install -r requirements.txt 
+    source env/bin/activate
+
+    pip3 install -r requirements.txt 
+
+elif windows: 
+
+    py -m venv env
+
+    .\env\Scripts\activate
+
+    pip install -r requirements.txt
 
 export DJANGO_KEY="<Enter-Your-Django-Key>" | Can retrieve django key from link above
 
