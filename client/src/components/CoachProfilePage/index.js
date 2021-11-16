@@ -84,7 +84,7 @@ const CoachProfilePage = (props) => {
                                 {profile.no_of_reviews} ratings
                             </p>
                             <p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+                                Cras\ sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
                                 ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
                                 ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
                                 ante sollicitudin commodo. 

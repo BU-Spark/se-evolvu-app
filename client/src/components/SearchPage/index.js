@@ -302,6 +302,7 @@ const SearchPage = (props) => {
                                     id="search-page-preferences-one" 
                                     className={ !remote ? "active" : ""}
                                     onClick={ () => setRemote(false)}
+                                    disabled="True"
                                     >
                                         In-Person
                                 </Button>{' '}
@@ -337,7 +338,7 @@ const SearchPage = (props) => {
                                         handleChange()
                                     }}
                                     >
-                                        Grid
+                                        Gallery
                                 </Button>{' '}
                             </ButtonGroup>
                         </ButtonToolbar>
@@ -355,8 +356,9 @@ const SearchPage = (props) => {
                                 Sort by
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item>Rating</Dropdown.Item>
-                                <Dropdown.Item>Distance</Dropdown.Item>
+                                <Dropdown.Item>Rating (high to low)</Dropdown.Item>
+                                <Dropdown.Item>Price (high to low)</Dropdown.Item>
+                                <Dropdown.Item>Price (low to high)</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>

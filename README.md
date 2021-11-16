@@ -172,7 +172,7 @@ DATABASES = {
 
 SO IT SHOULD LOOK LIKE 
 
-# DATABASES = {
+/* # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'HOST': 'postgres_db',
@@ -181,7 +181,7 @@ SO IT SHOULD LOOK LIKE
 #         'PASSWORD': 'rpDEvGQxZtC5@',
 #         'PORT': 5432
 #     }
-# }
+# } */
 
 # If you are running the backend without Docker, use the following for a database:
 
