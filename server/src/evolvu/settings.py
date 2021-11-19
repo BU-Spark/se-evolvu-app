@@ -103,25 +103,25 @@ WSGI_APPLICATION = 'evolvu.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'HOST': 'postgres_db',
-#         'NAME': 'evolvu_dev',
-#         'USER': 'admin',
-#         'PASSWORD': 'rpDEvGQxZtC5@',
-#         'PORT': 5432
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': 'postgres_db',
+        'NAME': 'evolvu_dev',
+        'USER': 'admin',
+        'PASSWORD': 'rpDEvGQxZtC5@',
+        'PORT': 5432
+    }
+}
 
 # If you are running the backend without Docker, use the following for a database:
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # If you are running the backend without Docker, use the following for logging:
 # This will allow you to import logging and initialize logger with logging.getLogger(<logger_name>) 

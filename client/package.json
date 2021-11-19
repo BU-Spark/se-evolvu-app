@@ -34,7 +34,6 @@
       "react-app"
     ]
   },
-  "proxy": "http://127.0.0.1:8000",
   "browserslist": {
     "production": [
       ">0.2%",
