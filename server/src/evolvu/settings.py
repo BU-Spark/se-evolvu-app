@@ -92,7 +92,8 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:81',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'https://bu-spark.github.io'
 )
 
 AUTH_USER_MODEL = 'accounts.Account'

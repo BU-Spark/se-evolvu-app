@@ -273,6 +273,38 @@ logger.info('Print to console')
 
 ```
 
+
+## Deployment
+### Frontend
+
+In `src/index.js`, change the following: 
+
+```javascript
+axios.defaults.baseURL = '';
+axios.defaults.headers.common['Credentials'] = 'same-origin';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+To 
+
+axios.defaults.baseURL = 'http://ec2-3-144-146-103.us-east-2.compute.amazonaws.com:81';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+```
+
+Then run,
+
+```javascript
+npm run predeploy
+npm run deploy
+
+```
+### Backend
+
+
+
+
+
+
 ### User Types and Example Credentials
 
 If you would like to view the coach profile then use the following credentials:
