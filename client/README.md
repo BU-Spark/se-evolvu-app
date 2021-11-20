@@ -30,7 +30,6 @@ To the following settings:
 
 ```javascript
 axios.defaults.baseURL = 'http://localhost:8000';
-axios.defaults.headers.common['Credentials'] = '';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 ```
 
