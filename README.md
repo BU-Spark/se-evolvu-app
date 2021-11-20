@@ -286,7 +286,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 To 
 
-axios.defaults.baseURL = 'http://ec2-3-144-146-103.us-east-2.compute.amazonaws.com:81';
+axios.defaults.baseURL = 'http://ec2-3-144-146-103.us-east-2.compute.amazonaws.com';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 ```
@@ -300,7 +300,17 @@ npm run deploy
 ```
 ### Backend
 
+We are running an EC2 instance
 
+In order to access, the instance, go to your terminal and run the following command: 
+
+```bash
+ssh ubuntu@34.239.246.111
+```
+
+NOTE: If you get a permission denied error, contact BU Spark! or current administrators of the projec to add your public key to ~/.ssh/authorized_keys file
+
+Click [here](https://kb.iu.edu/d/aews) to learn about generating a public/private key pair on your laptop
 
 
 
