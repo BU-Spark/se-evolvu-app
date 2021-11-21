@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import useWindowDimensions from '../../hooks/useWindowDimensions.js'
+import EvolvULogo from '../../images/EvolvULogo.png'
+
 
 import "./index.css"
 
@@ -29,14 +31,14 @@ const CustomNavbar = () => {
                 <div id="navbar">
                     <ul className="navbar-linklist">
                         <li className="navbar-link" >
-                            <Link className="navitem" to="/"> Find a Coach </Link>
+                            <Link className="navitem" to="/">Find a Coach </Link>
                         </li>
                         <li className="navbar-link" >
-                            <Link className="navitem" to="/apply"> Apply as Coach </Link>
+                            <Link className="navitem" to="/apply"> Become a Coach </Link>
                         </li>
                     </ul>
                     <div className="nav-logo">
-                        <h2 className="nav-brand"> EvolvU </h2>
+                        <img class="navbar-brand" src={EvolvULogo} alt="EvolvU logo" width={"35%"}/>
                     </div>
                     <ul className="navbar-linklist">
                         <li className="navbar-link" >
@@ -54,7 +56,7 @@ const CustomNavbar = () => {
     return (
         <div id="nav-wrapper">
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand><Link className="navitem" to="/"> EvolvU </Link></Navbar.Brand>
+            <Navbar.Brand><Link className="navitem" to="/"><img src={EvolvULogo} alt="EvolvU logo"  width={"35%"} /></Link></Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav" animation="false">
                 <Nav className="mr-auto">

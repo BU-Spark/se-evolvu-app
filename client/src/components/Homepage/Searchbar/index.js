@@ -12,8 +12,8 @@ import './index.css'
 
 const SearchBar = () => {
 
-    const [area, setArea] = useState("Select your focus area");
-    const [areaLabel, setAreaLabel] = useState("Select your focus area");
+    const [area, setArea] = useState("Select Your Focus");
+    const [areaLabel, setAreaLabel] = useState("Select Your Focus");
     const [local, setLocal] = useState("");
     const [invalidZipCodeError, setInvalidZipCode] = useState(false);
     const [digitOnlyError, setDigitOnly] = useState(false);
@@ -97,26 +97,22 @@ const SearchBar = () => {
                                 { label: "Holistic Health & Wellness Coaching", key: "holistic-Health-wellness-coaching"},
                                 { label: "Spiritual Wellness Coaching", key: "spiritual-wellness-coaching"},
                             ].map((type) => (
-                            <Dropdown.Item key={type.key} onClick={() => updateAreaState(type.label, type.key)}>{type.label}</Dropdown.Item>
+                            <Dropdown.Item id="dropdown-items" key={type.key} onClick={() => updateAreaState(type.label, type.key)}>{type.label}</Dropdown.Item>
                         ))}
                     </Dropdown.Menu>
                 </Dropdown>
-                <InputGroup className="mb-3">
+                <InputGroup className="mb-3" id="zipcode-input">
                     <Form.Control
+                        id="zipcode-input"
                         placeholder="Enter Zip Code"
                         aria-label="Zipcode"
                         aria-describedby="basic-addon1"
                         onChange={e => handleZipChange(e)}
                     />
                 </InputGroup>
-            </div>
-            <div id="zip-code-error-alert">
-                { invalidZipCodeError ? <Alert  variant="danger">Please enter a valid 5 digit zipcode.</Alert> : null }
-                { digitOnlyError ? <Alert variant="danger">Please only enter digits. No characters or letters are allowed.</Alert> : null }
-                { areaError ? <Alert variant="danger">Please choose a focus area before proceeding.</Alert> : null }
-            </div>
-            <Button 
-                variant="secondary" 
+                <Button 
+                variant="secondary"
+                id="search-submit" 
                 onClick={e => {
                     onClickHandle()
                     onSubmit(e)
@@ -124,6 +120,12 @@ const SearchBar = () => {
             >
                 Find Your Coach
             </Button>
+            </div>
+            <div id="zip-code-error-alert">
+                { invalidZipCodeError ? <Alert  variant="danger">Please enter a valid 5 digit zipcode.</Alert> : null }
+                { digitOnlyError ? <Alert variant="danger">Please only enter digits. No characters or letters are allowed.</Alert> : null }
+                { areaError ? <Alert variant="danger">Please choose a focus area before proceeding.</Alert> : null }
+            </div>
         </div>
     )
 }
