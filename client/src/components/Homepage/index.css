@@ -2,6 +2,30 @@
     z-index: -1;
 }
 
+.homepage-title {
+    color: white;
+    padding-top: 5rem;
+    padding-bottom: 1rem;
+    font-size: 32px;
+    font-weight: 800;
+    padding: "1rem";
+}
+
+.homepage-desc {
+    font-weight: 500;
+}
+
+#homepage-info-title {
+    color: #646464;
+    font-weight: bold;
+}
+
+.homepage-sub-title {
+    color: #373737;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
 .homepage-search {
     padding: 5rem;
     background-image: url("../../images/homepage-background.png");

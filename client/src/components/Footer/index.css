@@ -6,6 +6,10 @@
 .footer h8{
     color: #4d4d4d;
 }
+
+.social-media-btn {
+    margin-right: 1rem;
+}
 /* 
 
 NOTE: Removed this because styling using this caused issues on mobie
