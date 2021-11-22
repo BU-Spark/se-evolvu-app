@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/se-evolvu-app/static/css/main.4dae8d70.chunk.css",
-    "main.js": "/se-evolvu-app/static/js/main.963ba284.chunk.js",
-    "main.js.map": "/se-evolvu-app/static/js/main.963ba284.chunk.js.map",
+    "main.css": "/se-evolvu-app/static/css/main.100a08f9.chunk.css",
+    "main.js": "/se-evolvu-app/static/js/main.ee79118c.chunk.js",
+    "main.js.map": "/se-evolvu-app/static/js/main.ee79118c.chunk.js.map",
     "runtime-main.js": "/se-evolvu-app/static/js/runtime-main.1e0cde1a.js",
     "runtime-main.js.map": "/se-evolvu-app/static/js/runtime-main.1e0cde1a.js.map",
     "static/css/2.1dd1e755.chunk.css": "/se-evolvu-app/static/css/2.1dd1e755.chunk.css",
@@ -12,15 +12,16 @@
     "static/js/3.f208362b.chunk.js.map": "/se-evolvu-app/static/js/3.f208362b.chunk.js.map",
     "index.html": "/se-evolvu-app/index.html",
     "static/css/2.1dd1e755.chunk.css.map": "/se-evolvu-app/static/css/2.1dd1e755.chunk.css.map",
-    "static/css/main.4dae8d70.chunk.css.map": "/se-evolvu-app/static/css/main.4dae8d70.chunk.css.map",
+    "static/css/main.100a08f9.chunk.css.map": "/se-evolvu-app/static/css/main.100a08f9.chunk.css.map",
     "static/js/2.ab97957a.chunk.js.LICENSE.txt": "/se-evolvu-app/static/js/2.ab97957a.chunk.js.LICENSE.txt",
+    "static/media/EvolvULogo.f9700f2e.png": "/se-evolvu-app/static/media/EvolvULogo.f9700f2e.png",
     "static/media/index.css": "/se-evolvu-app/static/media/homepage-background.08699237.png"
   },
   "entrypoints": [
     "static/js/runtime-main.1e0cde1a.js",
     "static/css/2.1dd1e755.chunk.css",
     "static/js/2.ab97957a.chunk.js",
-    "static/css/main.4dae8d70.chunk.css",
-    "static/js/main.963ba284.chunk.js"
+    "static/css/main.100a08f9.chunk.css",
+    "static/js/main.ee79118c.chunk.js"
   ]
 }
