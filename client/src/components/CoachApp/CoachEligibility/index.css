@@ -1,3 +1,13 @@
+#EligibilityPage {
+    margin-bottom: 5%;
+}
+
+#results-text {
+    color: #cacaca;
+    font-weight: bold;
+    margin-top: 3%;
+}
+
 #buffer{
     background-color: #f2f2f2;
     padding: 0px;
@@ -22,8 +32,19 @@
     text-align: center;
 }
 
+.form-check > label {
+    color: "#373737";
+    margin-right: 10%;
+}
+
 #Title{
-    color: #FFB347
+    color: #FFB347;
+    font-weight: bold;
+
+}
+
+#eligible-desc {
+    color: #f6f6f6;
 }
 
 #quizQuestions {
