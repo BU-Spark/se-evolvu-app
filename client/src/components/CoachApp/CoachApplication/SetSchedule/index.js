@@ -17,14 +17,16 @@ const SetSchedule = ({
         <div id = "centerBlockCoach" className = "col-sm mx-auto">
         Calendar goes here
 
-        <Button variant = "dark"  onClick={handleNext}
-            style = {{ marginTop: "5%", marginLeft: "85%"}}>
-            Continue
+        <div>
+            <Button variant = "dark"  onClick={handlePrev}
+                style = {{ float: "left"}}>
+                Back
             </Button>
-        <Button variant = "dark"  onClick={handlePrev}
-            style = {{ marginTop: "5%", marginLeft: "85%"}}>
-            Back
-        </Button>
+            <Button variant = "dark"  onClick={handleNext}
+                style = {{ float: "right"}}>
+                Continue
+                </Button>
+        </div>
     </div>                       
     )
 

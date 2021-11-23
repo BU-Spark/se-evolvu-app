@@ -11,23 +11,20 @@ import "../index.css";
 
 
 const SetPricing = ({
-    page3AddressError,
-    page3PhoneError,
+    trainingAddressError,
+    trainingPhoneError,
     onChangeSessionLength,
     onChangeSessionRate,
-    onChangePage3Address,
-    onChangePage3Phone,
+    onChangeTrainingAddress,
+    onChangeTrainingPhone,
     handlePrev,
-    handleNext
+    handleNext,
 }) => {
     return (
             <div id = "centerBlockCoach" className = "col-sm mx-auto">
 
                 <div id = "page3Top">
-                    Please enter your single session length and single session rate.
-                    Here at EvolvU we want you to be able to provide your clients with multiple session options.
-                    You get to list up to 5 different session packages. We do not offer the ability to hold group sessions at the moment.
-                    You can set and change your package(s) anytime within your sessions tab on your dashboard.
+                Set your pricing and so potential clients can quickly see it! Please enter your single session length and single session rate. You get to list up to 5 different session packages and can do this within your “packages” button on your dashboard. 
                 </div>
 
                 <div id = "questionsRow" className = "d-flex row">
@@ -111,9 +108,6 @@ const SetPricing = ({
                             />
                             Yes
                         </label>
-                    </div>
-
-                    <div className="form-check">
                         <label>
                             <input
                             type="radio"
@@ -124,7 +118,6 @@ const SetPricing = ({
                             No
                         </label>
                     </div>
-
                 </form>
 
                 <br/>
@@ -155,11 +148,11 @@ const SetPricing = ({
 
                         <br/>
 
-                        <Form.Group id="input" style = {{width: "100%"}} onChange={(e) => { onChangePage3Address(e) }}>
+                        <Form.Group id="input" style = {{width: "100%"}} onChange={(e) => { onChangeTrainingAddress(e) }}>
                             <Form.Control  placeholder= ""/>
                         </Form.Group>
                         {
-                            page3AddressError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                            trainingAddressError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
                         }
 
                     </div>
@@ -177,28 +170,26 @@ const SetPricing = ({
 
                         <br/>
 
-                        <Form.Group id="input" style = {{width: "100%"}} onChange={(e) => { onChangePage3Phone(e) }}>
+                        <Form.Group id="input" style = {{width: "100%"}} onChange={(e) => { onChangeTrainingPhone(e) }}>
                             <Form.Control  placeholder= ""/>
                         </Form.Group>
                         {
-                            page3PhoneError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                            trainingPhoneError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
                         }
 
                     </div>
                 </div>
 
-                <Button variant = "dark"  onClick={handleNext}
+                <div style={{marginTop: "5%"}}>
+                    <Button variant = "dark"  onClick={handlePrev} style={{float: "left"}}> 
+                        Back
+                    </Button>  
+                    <Button variant = "dark"  onClick={handleNext}
 
-                    style = {{marginTop: "5%", marginLeft: "85%"}}>
-                    Continue
-                </Button>
-
-                <Button variant = "dark"  onClick={handlePrev}
-
-                    style = {{ marginTop: "5%", marginLeft: "89%"}}>
-                    Back
-                    
-                </Button>                
+                        style = {{float: "right"}}>
+                        Continue
+                    </Button>    
+                </div>          
             </div>
                                     
     )

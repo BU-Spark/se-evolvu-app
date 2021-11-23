@@ -21,6 +21,8 @@ const Background = (
         emailError, 
         passwordError, 
         confirmPasswordError,
+        password,
+        confirmPassword,
         email,
         handleNext 
     }) => {
@@ -85,7 +87,7 @@ const Background = (
                                     <Form.Control type="password" placeholder= ""/>
                             </Form.Group>
                             {
-                            confirmPasswordError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                            confirmPasswordError ? <Alert style = {{padding: "0px"}} variant="danger"> {password !== confirmPassword ? "Confirmed password must equal password" : "This is a required field."} </Alert> : null
                             }
                         </li>
                     </ul>
@@ -100,12 +102,12 @@ const Background = (
                     </div>
 
                     <div id = "benefits" className = "container">
-                        Coach with EvolveU
+                        Join EvolvU
 
                         <ul id ="listBenefits">
                             <li id ="listBenefit"><small>Reach new clients</small></li>
                             <li id ="listBenefit"><small>Have endless acess to manage your business</small></li>
-                            <li id ="listBenefit"><small>Be part of a growing wellness community</small></li>
+                            <li id ="listBenefit"><small>Be a part of a growing wellness community</small></li>
                         </ul>
 
                     </div>
@@ -157,15 +159,12 @@ const Background = (
                     <br/>
                     <br/>
                     <br/>
-                    <Button variant = "dark"  onClick={handleNext}
-
-                        style = {{marginTop: "11.5rem", marginLeft: "7.5rem"}}>
-                        Continue
-                    </Button>
                 {/*END SECOND COLUMN BELOW*/}
                 </div>
             </div> 
-
+            <Button variant = "dark"  onClick={handleNext} style = {{float: "right"}}>
+            Continue
+            </Button>
         </div>
 )
 

@@ -43,10 +43,6 @@ const BasicInformation = ({
     return( 
                 <div id = "centerBlockCoach" className = "col-sm mx-auto">
 
-                    <div id = "applicationHeaders">EvolvU needs some more background about you first. All information is required to continue.</div>
-
-                    <br/>
-
                     <div id = "questionsRow" className = "d-flex row">
 
                         <div id="questionCol" className = "col-sm-5 mx-1">
@@ -55,7 +51,7 @@ const BasicInformation = ({
                                 <li>
 
                                     <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => onChangeFocus(e)}>
-                                        <Form.Label>My coaching focus is <span style={{ color: 'red'}}>*</span></Form.Label>
+                                        <Form.Label>Check every focus that applies to you <span style={{ color: 'red'}}>*</span></Form.Label>
                                         <Form.Control as="select">
                                             <option></option>
                                             <option>Life Coaching</option>
@@ -91,14 +87,26 @@ const BasicInformation = ({
                                         <Form.Label>Gender <span style={{ color: 'red'}}>*</span></Form.Label>
                                         <Form.Control as="select">
                                             <option></option>
-                                            <option>Male</option>
-                                            <option>Female</option>
                                             <option>Non-Binary</option>
-                                            <option>Other</option>
+                                            <option>Female</option>
+                                            <option>Male</option>
+                                            <option>Transgender</option>
+                                            <option>Prefer not to specify</option>
                                         </Form.Control>
                                     </Form.Group>
                                     {
                                     genderError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                                    }
+                                </li>
+
+
+                                <li>
+                                    <Form.Group id="input" style = {{width: "80%"}} onChange={ (e) => onChangePhone(e)}>
+                                        <Form.Label id = "information"> Phone Number <span style={{ color: 'red'}}>*</span></Form.Label>
+                                        <Form.Control  placeholder= ""/>
+                                    </Form.Group>
+                                    {
+                                    phoneError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
                                     }
                                 </li>
                                 
@@ -107,7 +115,8 @@ const BasicInformation = ({
                                 <br/>
 
                                 <li id = "information">
-                                    <Form.Check  inline label="LGBTQIA+ Inclusive"/>
+                                    <Form.Check  inline label="I am LGBTQIA+ Inclusive 
+                                    and have committed to following EvolvU’s Health and Wellness Community Commitment."/>
                                 </li>
 
                             </ul>
@@ -143,16 +152,6 @@ const BasicInformation = ({
                                 </li>
 
                                 <br/>
-
-                                <li>
-                                    <Form.Group id="input" style = {{width: "80%"}} onChange={ (e) => onChangePhone(e)}>
-                                        <Form.Label id = "information"> Phone Number <span style={{ color: 'red'}}>*</span></Form.Label>
-                                        <Form.Control  placeholder= ""/>
-                                    </Form.Group>
-                                    {
-                                    phoneError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
-                                    }
-                                </li>
                             </ul>
 
                         </div>
@@ -229,7 +228,7 @@ const BasicInformation = ({
                             <ul className="list-unstyled">
                                 <li>
                                     <Form.Group id="input" style = {{width: "80%"}} onChange={ (e) => onChangeApt(e)}>
-                                        <Form.Label id = "information"> Apt or Unit # <span style={{ color: 'red'}}>*</span></Form.Label>
+                                        <Form.Label id = "information"> Apt or Unit #</Form.Label>
                                         <Form.Control  placeholder= ""/>
                                     </Form.Group>
                                     {
@@ -377,7 +376,11 @@ const BasicInformation = ({
                     <div id = "information">
                         Are you CPR/AED Certified?
                     </div>
+
                     
+                    <Form style = {{marginLeft: "50%", paddingRight: "0%"}}>
+                        <Form.File style = {{width: "100%"}} id="custom-file" label="" data-browse="Upload Certification" custom/>
+                    </Form>
                     <form>
 
                         <div className="form-check">
@@ -423,19 +426,10 @@ const BasicInformation = ({
                     </Form.Group>
 
                     <br/>
-
-                    <Button variant = "dark"  onClick={handleNext}
-
-                        style = {{ marginLeft: "88%"}}>
-                        Continue
-                    </Button>
-
-                    <Button variant = "dark"  onClick={handlePrev}
-                        style = {{ marginTop: "5%", marginLeft: "92.5%"}}>
-                        Back
-                    </Button>
-
-
+                    <div>
+                        <Button variant = "dark"  onClick={handlePrev} style={{float: "left"}}>Back</Button>
+                        <Button variant = "dark"  onClick={handleNext} style={{float: "right"}}>Continue</Button>
+                    </div>
                 </div> 
     )        
 

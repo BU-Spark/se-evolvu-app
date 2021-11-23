@@ -18,11 +18,23 @@ import Finalize from './Finalize/index.js';
 
 const CoachApplication = () => {
     
-    // const [source, setSource] = useState("");
-    // const [local, setLocal] = useState("");
-    // const [area, setArea] = useState(1);
-    const [tab, setTab] = useState("basicInfo");
-    const [step, setStep] = useState(1);
+    const titles = [
+        "Welcome, let's set up your account!", 
+        "Allow clients to get to know you through your coach profile", 
+        "Next We’ll Set Up Your Single Session Rate!",
+        "Successful Health and Wellness Coaching Starts with an Accurate Calendar",
+        "You’ve Made it! Review Your Information Below to Get Started Coaching Clients!"
+    ];
+    const subtitles = [
+        "Start your account setup by providing some basic information",
+        "By selecting the focuses that apply to you, you'll show up in the search results for all services you select. All fields are required",
+        "",
+        "",
+        ""
+    ];
+    const [step, setStep] = useState(4);
+    const [title, setTitle] = useState(titles[0]);
+    const [subtitle, setSubtitle] = useState(subtitles[0])
 
     const nextStep = () => {
         setStep(prevStep => prevStep + 1)
@@ -36,21 +48,29 @@ const CoachApplication = () => {
         switch (step) {
             case 1:
                 if (validateBackground()) {
-                    nextStep()
+                    setTitle(titles[step]);
+                    setSubtitle(subtitles[step])
+                    nextStep();
                 }
                 break;
             case 2:
                 if (validateBasicInformation()){
-                    nextStep()
+                    setTitle(titles[step]);
+                    setSubtitle(subtitles[step])
+                    nextStep();
                 }
                 break;
             case 3: 
                 if (validatePricing()) {
+                    setTitle(titles[step]);
+                    setSubtitle(subtitles[step])
                     nextStep();
                 }
                 break;
             case 4:
                 if (validateSchedule()) {
+                    setTitle(titles[step]);
+                    setSubtitle(subtitles[step])
                     nextStep();
                 }
                 break;
@@ -62,9 +82,12 @@ const CoachApplication = () => {
     }
 
     const handlePrev = () => {
+        const curr = step;
+        setTitle(titles[curr -2])
+        setSubtitle(subtitles[curr -2])
         prevStep();
     }
-    
+
 
     const [firstNameError, setFirstNameError] = useState(true)
     const [firstName, setFirstName] = useState("");
@@ -92,7 +115,8 @@ const CoachApplication = () => {
     const [password, setPassword] = useState("");
     const onChangePassword = (e) => {
         setPassword(e.target.value);
-        setPasswordError(!password)
+        setPasswordError(!e.target.value);
+        setConfirmPasswordError(e.target.value !== confirmPassword)
     }
 
 
@@ -138,11 +162,10 @@ const CoachApplication = () => {
         setStreetError(!e.target.value);
     }
 
-    const [aptError, setAptError] = useState(true)
+    const [aptError, setAptError] = useState(false)
     const [apt, setApt] = useState("");
     const onChangeApt = (e) => {
         setApt(e.target.value);
-        setAptError(!e.target.value);
     }
 
     const [cityError, setCityError] = useState(true)
@@ -164,10 +187,12 @@ const CoachApplication = () => {
     const onChangeZip = (e) => {
         if (isNaN(e.target.value)) {
             setDigitOnly(true);
-        } else if (digitOnlyError) {
-            setDigitOnly(true);
+        }
+        else {
+            setDigitOnly(false);
         }
         setZip(e.target.value);
+        setZipError(!e.target.value);
     }
 
     const [countryError, setCountryError] = useState(true)
@@ -198,21 +223,21 @@ const CoachApplication = () => {
         setCredentialError(!e.target.value);
     }
 
-    const [page3PhoneError, setPage3PhoneError] = useState(true)
-    const [page3Phone, setPage3Phone] = useState("");
-    const onChangePage3Phone = (e) => {
-        setPage3Phone(e.target.value);
-        setPage3PhoneError(!e.target.value);
+    const [trainingPhoneError, setTrainingPhoneError] = useState(true)
+    const [trainingPhone, setTrainingPhone] = useState("");
+    const onChangeTrainingPhone = (e) => {
+        setTrainingPhone(e.target.value);
+        setTrainingPhoneError(!e.target.value);
     }
 
-    const [page3AddressError, setPage3AddressError] = useState(true)
-    const [page3Address, setPage3Address] = useState("");
-    const onChangePage3Address = (e) => {
-        setPage3Address(e.target.value);
-        setPage3AddressError(!e.target.value);
+    const [trainingAddressError, setTrainingAddressError] = useState(true)
+    const [trainingAddress, setTrainingAddress] = useState("");
+    const onChangeTrainingAddress = (e) => {
+        setTrainingAddress(e.target.value);
+        setTrainingAddressError(!e.target.value);
     }
 
-    const [digitOnlyError, setDigitOnly] = useState(true);
+    const [digitOnlyError, setDigitOnly] = useState(false);
 
     const [sessionLengthError, setSessionLengthError] = useState(true);
     const [sessionLength, setSessionLength] = useState("");
@@ -226,6 +251,10 @@ const CoachApplication = () => {
     const onChangeSessionRate = (e) => {
         setSessionRate(e.target.value);
         setSessionRateError(!e.target.value);
+    }
+
+
+    const handleSubmit = () => {
     }
 
     const validateBackground = () => {
@@ -252,7 +281,7 @@ const CoachApplication = () => {
     }
     
     const validatePricing = () => {
-        return !(sessionLengthError || sessionRateError || page3AddressError || page3PhoneError)
+        return !(sessionLengthError || sessionRateError || trainingAddressError || trainingPhoneError)
     }
 
     const validateSchedule = () => {
@@ -265,13 +294,10 @@ const CoachApplication = () => {
     return( 
 
         <div id= "CoachAppPage">
-            <div  id = "headerMessage" style = {{paddingTop:"2.5%", height: "0rem", paddingBottom: "1.25%"}}className = "col-sm-5 mx-auto">
-                <h1>Apply and Start Your Health
-                    <br/>and Wellness Coaching Journey with EvolvU!</h1>
+            <div  id = "headerMessage" className = "col-sm-5 mx-auto">
+                <h1>{title}</h1>
+                <h3 id="subtitleDesc">{subtitle}</h3>
             </div>
-
-
-                
                 <div id="ApplicationPage">
                     <div className = "container" style ={{width: "70%"}}>
 
@@ -292,6 +318,8 @@ const CoachApplication = () => {
                                             emailError={emailError}
                                             passwordError={passwordError}
                                             confirmPasswordError={confirmPasswordError}
+                                            password={password}
+                                            confirmPassword={confirmPassword}
                                             email={email}
                                             handleNext={handleNext}
                                             />
@@ -334,12 +362,12 @@ const CoachApplication = () => {
 
                                 <Tab eventKey={3} title="Set Pricing" tabClassName="profile-tabitem">
                                     <SetPricing 
-                                            page3AddressError={page3AddressError}
-                                            page3PhoneError={page3PhoneError}
+                                            trainingAddressError={trainingAddressError}
+                                            trainingPhoneError={trainingPhoneError}
                                             onChangeSessionLength={onChangeSessionLength}
                                             onChangeSessionRate={onChangeSessionRate}
-                                            onChangePage3Address={onChangePage3Address}
-                                            onChangePage3Phone={onChangePage3Phone}
+                                            onChangeTrainingAddress={onChangeTrainingAddress}
+                                            onChangeTrainingPhone={onChangeTrainingPhone}
                                             handlePrev={handlePrev}
                                             handleNext={handleNext}
                                     />
@@ -353,8 +381,8 @@ const CoachApplication = () => {
                                 </Tab>
 
                                 <Tab eventKey={5} title="Payment" tabClassName="profile-tabitem">
-                                    <Finalize 
-
+                                    <Finalize
+                                        handleSubmit={handleSubmit}
                                     />
                                 </Tab>
 
