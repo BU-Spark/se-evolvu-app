@@ -157,28 +157,7 @@ export MAPQUEST_API_KEY="<Enter-MapQuest-API-Key>"
 Now you must navigate to `src/evolvu/settings.py` and change the following lines 
 
 ```python
-COMMENT THIS DATABASE OBJECT AND USE THE ONE BELOW INSTEAD
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'postgres_db',
-        'NAME': 'evolvu_dev',
-        'USER': 'admin',
-        'PASSWORD': 'rpDEvGQxZtC5@',
-        'PORT': 5432
-    }
-}
-
-# If you are running the backend without Docker, use the following for a database:
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
+UNCOMMENT THE CURRENT DATABASE OBJECT AND USE THE SQLITE ONE  INSTEAD
 
 SO IT SHOULD LOOK LIKE 
 
@@ -202,58 +181,6 @@ DATABASES = {
     }
 }
 
-```
-
-If you want print statements to appear in the Python console while running locally, uncomment the following lines 
-
-```python
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'filters': {
-#         'require_debug_true': {
-#             '()': 'django.utils.log.RequireDebugTrue',
-#         },
-#     },
-#     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
-#             'filters': ['require_debug_true'],
-#         },
-#     },
-#     'loggers': {
-#         'mylogger': {
-#             'handlers': ['console'],
-#             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-#             'propagate': True,
-#         },
-#     },
-
----------
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'filters': ['require_debug_true'],
-        },
-    },
-    'loggers': {
-        'mylogger': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-            'propagate': True,
-        },
-    }
-```
-
 
 Finally, to run the application, use the following command
 
@@ -276,6 +203,7 @@ logger.info('Print to console')
 
 ## Deployment
 ### Frontend
+Our frontend is deployed on GitHub Pages
 
 In `src/index.js`, change the following: 
 
@@ -286,7 +214,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 To 
 
-axios.defaults.baseURL = 'http://ec2-3-144-146-103.us-east-2.compute.amazonaws.com';
+axios.defaults.baseURL = 'https://se-evolvu.buspark.io/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 ```
@@ -300,17 +228,30 @@ npm run deploy
 ```
 ### Backend
 
-We are running an EC2 instance
+We are running an Ubuntu EC2 instance
 
-In order to access, the instance, go to your terminal and run the following command: 
+In order to access the instance, go to your terminal and run the following command: 
 
 ```bash
-ssh ubuntu@34.239.246.111
+ssh -i /path/to/publickey ubuntu@34.239.246.111
 ```
 
-NOTE: If you get a permission denied error, contact BU Spark! or current administrators of the projec to add your public key to ~/.ssh/authorized_keys file
+NOTE: If you get a permission denied error, contact BU Spark! or current administrators of the projec to add your public key to ~/.ssh/authorized_keys file in the instance
 
 Click [here](https://kb.iu.edu/d/aews) to learn about generating a public/private key pair on your laptop
+
+After entering the server, you must pull the latest changes and then you can restart the docker container with the following commands
+
+```bash
+sudo docker-compose down
+sudo docker system prune -a 
+sudo docker-compose -f docker-compose-prod.yml build
+sudo docker-compose -f docker-compose-prod.yml up -d
+```
+These above commands will kill the current container and then rebuild and rerun them in the background. 
+
+If you navigate to the IP address or the link [here](https://se-evolvu.buspark.io/), you will see the deployed backend running
+
 
 
 
