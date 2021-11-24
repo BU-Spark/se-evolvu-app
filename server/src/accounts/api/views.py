@@ -1,3 +1,6 @@
+import os
+import requests
+from utils import convertZipToLatLon
 from django.shortcuts import render
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
@@ -7,7 +10,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from django.contrib.auth import authenticate, login
 
 from accounts.api.serializers import RegistrationSerializer
-
+from coaches.api.serializers import CoachSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
@@ -19,7 +22,6 @@ import json
 @api_view(['POST', ])
 def registration_view(request):
 
-    #print(request.data)
     if request.method == 'POST':
         serializer = RegistrationSerializer(data=request.data)
         data = {}
@@ -37,6 +39,39 @@ def registration_view(request):
     else:
         data = serializer.errors
     return Response(data)
+
+@api_view(['POST', ])
+def coach_registration_view(request):
+
+    if request.method == 'POST':
+        serializer = RegistrationSerializer(data=request.data)
+        data = {}
+
+    if serializer.is_valid():
+        account = serializer.save()
+        # Get Latitude and Longitude based on zipcode 
+        [lat, lon] = convertZipToLatLon(request.data['zip_code'])
+        focus = request.data['focus']
+        coachSerializer = CoachSerializer(data=request.data)
+        if coachSerializer.is_valid():
+            coach_profile = coachSerializer.save(account, lat, lon, focus)
+            data['response'] = "New coach successfully registered."
+            data['email'] = account.email
+            data['username'] = account.username
+            data['first_name'] = account.first_name
+            data['last_name'] = account.last_name
+            token = Token.objects.get(user=account).key
+            data['token'] = token
+            data['slug'] = account.slug
+        else:
+            print(coachSerializer.error_messages)
+            data = coachSerializer.errors
+            
+    else:
+        data = serializer.errors
+    print(data)
+    return Response(data)
+
 
 """
 @csrf_exempt
@@ -94,7 +129,6 @@ class CustomObtainAuthToken(ObtainAuthToken):
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
         return Response({'message': 'Successfully logged in', 'token': token.key, 'slug': user.slug})
-
 
 # @api_view(['GET', ])
 # def api_detail_coach_view(request, slug):

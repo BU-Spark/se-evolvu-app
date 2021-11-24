@@ -34,6 +34,38 @@ export const register = (registrationInfo) => (dispatch) => {
     )
 }
 
+
+export const register_coach = (registrationInfo) => (dispatch) => {
+    return AuthService.register_coach(registrationInfo).then( (data) => {
+        dispatch({
+            type: Types.REGISTER_SUCCESS,
+            payload: data
+        });
+        return Promise.resolve();
+    },
+    (error) => {
+        dispatch({
+            type: Types.REGISTER_FAILED
+        })
+
+        const message =
+            (
+                error.response &&
+                error.response.data &&
+                error.response.data.message
+            ) || error.message || error.toString();
+
+        dispatch({
+            type: Types.SET_MESSAGE,
+            payload: message,
+        });
+        
+        return Promise.reject();
+    }
+    )
+}
+
+
 export const login = (email, password) => (dispatch) => {
     return AuthService.login(email, password).then( (data) => {
         dispatch({

@@ -16,6 +16,22 @@ const register = (registrationInfo) => {
     })
 };
 
+const register_coach = (registrationInfo) => {
+    return axios({
+        url: "/api/accounts/register_coach",
+        method: "post",
+        data: registrationInfo
+    }).then((res) => {
+        // Check for validation (i.e. account has already been created)
+        if (res.data.email[0] === "account with this email already exists.") {
+            throw new Error("An account with this email already exists.")
+        }
+        return res.data;
+    }).catch(err => {
+        console.log(err);
+        throw new Error("Unable to register for a coach account")
+    })
+}
 const login = (email, password) => {
     return axios({
         url: "/api/accounts/login",
@@ -46,6 +62,7 @@ const logout = () => {
 
 const authServices = {
     register,
+    register_coach,
     login,
     logout,
     csrfToken

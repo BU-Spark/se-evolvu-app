@@ -27,19 +27,19 @@ class Command(BaseCommand):
 
                 if account.first_name == "Kevin":
                     coach_profile.focus_life = True
-                    coach_profile.price = 50
+                    coach_profile.maxPrice = 50
                 elif account.first_name == "Leanne":
                     coach_profile.focus_behavioral = True
-                    coach_profile.price = 10
+                    coach_profile.maxPrice = 10
                 elif account.first_name == "Ervin":
                     coach_profile.focus_health_wellness = True
-                    coach_profile.price = 25
+                    coach_profile.maxPrice = 25
                 elif account.first_name == "Nathan":
                     coach_profile.focus_holistic = True
-                    coach_profile.price = 100
+                    coach_profile.maxPrice = 100
                 elif account.first_name == "George":
                     coach_profile.focus_nutrition_fitness = True
-                    coach_profile.price = 500
+                    coach_profile.maxPrice = 500
                 coach_profile.save()
             elif account.is_customer:
                 profile = UserProfile(

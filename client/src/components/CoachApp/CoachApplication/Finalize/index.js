@@ -61,7 +61,7 @@ const Finalize = ({
                     </label>
             </div>
 
-            <Button variant = "dark" style = {{ marginTop: "15%", marginLeft: "75%"}} onClick={handleSubmit}>
+            <Button variant = "dark" style = {{ marginTop: "15%", marginLeft: "75%"}} onClick={(e) => handleSubmit(e)}>
                 Submit
             </Button>
             

@@ -22,8 +22,17 @@ class Coach(models.Model):
     coach = models.OneToOneField(Account, on_delete=models.CASCADE, related_name="coach_profile") #, related_name="coach_profile")
     #name = models.ForeignKey('accounts.Account.first_name', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=upload_location, blank=True, null=True)
-    gender = models.CharField(max_length=1)
-    price = models.IntegerField(default=50)
+    gender = models.CharField(max_length=25)
+    lat = models.FloatField(default=0.0)
+    lon = models.FloatField(default=0.0)
+    experienceDescription = models.TextField(default='')
+    credentialDescription = models.TextField(default='')
+    sessionDescription = models.TextField(default='')
+    trainingAddress = models.CharField(default='', max_length=200)
+    trainingPhone = models.CharField(default='', max_length=50)
+    sessionLength = models.CharField(default='', max_length=50)
+    minPrice = models.IntegerField(default=0)
+    maxPrice = models.IntegerField(default=50)
     focus_life = models.BooleanField(default=False)
     focus_behavioral = models.BooleanField(default=False)
     focus_health_wellness = models.BooleanField(default=False)
@@ -33,9 +42,6 @@ class Coach(models.Model):
     travel = models.BooleanField(default=False)
     description = models.TextField(default="")
     approved = models.BooleanField(default=False)
-    # city = models.CharField(max_length=255)
-    # location = PlainLocationField(based_fields=['city'], zoom=7)
-    # slug = models.SlugField(blank=True, unique=True)
     
 
     def distanceFromLatLong(self, lat, long):
@@ -43,8 +49,8 @@ class Coach(models.Model):
         R = 6373.0
         lat1 = radians(lat)
         long1 = radians(long)
-        lat2 = radians(self.coach.lat)
-        long2 = radians(self.coach.lon)
+        lat2 = radians(self.lat)
+        long2 = radians(self.lon)
 
         dlon = long2 - long1
         dlat = lat2 - lat1

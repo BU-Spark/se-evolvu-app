@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import  { isEmail } from 'validator';
-import Alert from 'react-bootstrap/Alert';
-import { HiUserCircle } from "react-icons/hi";
-import Col from 'react-bootstrap/Form';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
+import { Types } from '../../../redux/actions/actionTypes';
+import { register_coach } from '../../../redux/actions/authAction.js';
 import "./index.css";
 
 // Import Steps of the Form
@@ -32,9 +31,13 @@ const CoachApplication = () => {
         "",
         ""
     ];
-    const [step, setStep] = useState(4);
+    const [step, setStep] = useState(1);
     const [title, setTitle] = useState(titles[0]);
-    const [subtitle, setSubtitle] = useState(subtitles[0])
+    const [subtitle, setSubtitle] = useState(subtitles[0]);
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+
 
     const nextStep = () => {
         setStep(prevStep => prevStep + 1)
@@ -223,6 +226,13 @@ const CoachApplication = () => {
         setCredentialError(!e.target.value);
     }
 
+    const [bioError, setBioError] = useState(true)
+    const [bio, setBio] = useState("");
+    const onChangeBio = (e) => {
+        setBio(e.target.value);
+        setBioError(!e.target.value);
+    }
+
     const [trainingPhoneError, setTrainingPhoneError] = useState(true)
     const [trainingPhone, setTrainingPhone] = useState("");
     const onChangeTrainingPhone = (e) => {
@@ -243,7 +253,7 @@ const CoachApplication = () => {
     const [sessionLength, setSessionLength] = useState("");
     const onChangeSessionLength = (e) => {
         setSessionLength(e.target.value);
-        setSessionRateError(!e.target.value);
+        setSessionLengthError(!e.target.value);
     }
 
     const [sessionRateError, setSessionRateError] = useState(true);
@@ -254,7 +264,53 @@ const CoachApplication = () => {
     }
 
 
-    const handleSubmit = () => {
+    const handleSubmit = async (e) => {
+        try {
+            e.preventDefault();
+            const splitArray = sessionRate.split("-");
+            const minPrice = splitArray[0];
+            const maxPrice = splitArray[1];
+            const params = {
+                "first_name": firstName,
+                "last_name": lastName,
+                "email": email,
+                "username": firstName + lastName + Math.ceil(Math.random() * 10),
+                "password": password,
+                "password2": confirmPassword,
+                "dob": DateOfBirth,
+                "focus": focus,
+                "gender": gender,
+                "phone": phone,
+                "street": street,
+                "city": city,
+                "state": state,
+                "zip_code": zip,
+                "country": country,
+                'experienceDescription': experience, 
+                'credentialDescription': session, 
+                'sessionDescription': credential,
+                'description': bio, 
+                'trainingAddress': trainingAddress, 
+                'trainingPhone': trainingPhone, 
+                'sessionLength': sessionLength, 
+                'minPrice': parseInt(minPrice), 
+                'maxPrice': parseInt(maxPrice),
+                'is_customer': false,
+                'is_coach': true,
+                'is_active': true
+            }
+            console.log(params);
+            const response = await dispatch(register_coach(params));
+            console.log(response);
+            // Navigate to dashboard
+            history.push("/dashboard");
+        } catch (error) {
+            console.log(error);
+            dispatch({
+                type: Types.REGISTER_FAILED,
+                payload: "Unable to register for a coach account at this time.",
+            });
+        }
     }
 
     const validateBackground = () => {
@@ -307,7 +363,7 @@ const CoachApplication = () => {
 
                                 {/*xxxxxxxxxxxxxFIRST PAGExxxxxxxxxxx */}
                                 <Tab eventKey={1} title="Basic Information" tabClassName="profile-tabitem">
-                                    <Background 
+                                    <BasicInformation 
                                             onChangeFirstName={onChangeFirstName}
                                             onChangeLastName={onChangeLastName}
                                             onChangeEmail={onChangeEmail}
@@ -327,7 +383,7 @@ const CoachApplication = () => {
 
                                 {/*xxxxxxxxxxSECOND PAGExxxxxxxxxxxxxxxxxxxxx*/}
                                 <Tab eventKey={2} title="Background" tabClassName="profile-tabitem">
-                                    <BasicInformation 
+                                    <Background 
                                             focusError={focusError}
                                             birthdayError={birthdayError}
                                             genderError={genderError}
@@ -342,6 +398,7 @@ const CoachApplication = () => {
                                             experienceError={experienceError}
                                             credentialError={credentialError}
                                             sessionError={sessionError}
+                                            bioError={bioError}
                                             onChangeFocus={onChangeFocus}
                                             onChangeDateOfBirth={onChangeDateOfBirth}
                                             onChangeGender={onChangeGender}
@@ -355,13 +412,16 @@ const CoachApplication = () => {
                                             onChangeExperience={onChangeExperience}
                                             onChangeCredential={onChangeCredential}
                                             onChangeSession={onChangeSession}
+                                            onChangeBio={onChangeBio}
                                             handlePrev={handlePrev}
                                             handleNext={handleNext}
                                     />
                                 </Tab>
 
                                 <Tab eventKey={3} title="Set Pricing" tabClassName="profile-tabitem">
-                                    <SetPricing 
+                                    <SetPricing
+                                            sessionLengthError={sessionLengthError}
+                                            sessionRateError={sessionRateError} 
                                             trainingAddressError={trainingAddressError}
                                             trainingPhoneError={trainingPhoneError}
                                             onChangeSessionLength={onChangeSessionLength}

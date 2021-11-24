@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from utils import convertZipToLatLon
 from coaches.models import Coach
 
 class CoachSerializer(serializers.ModelSerializer):
@@ -15,6 +15,16 @@ class CoachSerializer(serializers.ModelSerializer):
                 'username',
                 'email',
                 'slug',
+                'gender',
+                'experienceDescription',
+                'credentialDescription',
+                'sessionDescription',
+                'trainingAddress',
+                'trainingPhone',
+                'description',
+                'sessionLength',
+                'minPrice',
+                'maxPrice',
                 'no_of_reviews',
                 'avg_rating',
                 'focus_life',
@@ -24,7 +34,54 @@ class CoachSerializer(serializers.ModelSerializer):
                 'focus_business',
                 'travel',
                 'description',
-                'image',]
+                'image']
+
+    def save(self, account, lat, lon, focus):
+        # Find which focuses that user specified and set them to be true
+        is_focus_life = False
+        is_focus_behavioral = False
+        is_focus_health_wellness = False
+        is_focus_holistic = False
+        is_focus_nutrition_fitness = False
+        is_focus_business = False
+
+        if focus == "life-coaching":
+            is_focus_life = True
+        if focus == "nutrition-fitness":
+            is_focus_nutrition_fitness = True
+        if focus == "health-and-wellness-coaching":
+            is_focus_health_wellness = True
+        if focus == "holistic-Health-wellness-coaching":
+            is_focus_holistic = True
+        if focus == "spiritual-wellness-coaching":
+            is_focus_behavioral = True
+
+        coach_profile = Coach(
+            coach = account,
+            gender = self.validated_data['gender'],
+            lat = lat,
+            lon = lon,
+            experienceDescription = self.validated_data['experienceDescription'],
+            credentialDescription = self.validated_data['credentialDescription'],
+            sessionDescription = self.validated_data['sessionDescription'],
+            trainingAddress=self.validated_data['trainingAddress'],
+            trainingPhone=self.validated_data['trainingPhone'],
+            description=self.validated_data['description'],
+            sessionLength=self.validated_data['sessionLength'],
+            minPrice=self.validated_data['minPrice'],
+            maxPrice=self.validated_data['maxPrice'],
+            focus_life = is_focus_life,
+            focus_behavioral = is_focus_behavioral,
+            focus_health_wellness = is_focus_health_wellness,
+            focus_holistic = is_focus_holistic,
+            focus_nutrition_fitness = is_focus_nutrition_fitness,
+            focus_business = False,
+            approved = True,
+        )
+        coach_profile.save()
+
+        return coach_profile
+
 
     def get_coach_account_firstname(self, coach):
         return coach.coach.first_name

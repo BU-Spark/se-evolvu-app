@@ -1,5 +1,3 @@
-import os
-import requests
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
@@ -11,7 +9,7 @@ import random
 from rest_framework.authtoken.models import Token
 
 class AccountManager(BaseUserManager):
-    def create_user(self, email, username, first_name, last_name, lat, lon, password=None):
+    def create_user(self, email, username, first_name, last_name, password=None):
         if not email:
             raise ValueError("Users must enter a valid email address")
         if not username:
@@ -20,34 +18,25 @@ class AccountManager(BaseUserManager):
             raise ValueError("Users must enter a first name")
         if not last_name:
             raise ValueError("Users must enter a last name")
-        if not lat: 
-            raise ValueError("Users must have a valid latitude")
-        if not lon:
-            raise ValueError("Users must enter a valid longitude")
 
         user = self.model(
             email = self.normalize_email(email),
             username = username,
             first_name = first_name,
             last_name = last_name,
-            lat = lat,
-            lon = lon,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, first_name, last_name, password, lat, lon):
+    def create_superuser(self, email, username, first_name, last_name, password):
         user = self.create_user(
             email = self.normalize_email(email),
             username = username,
             first_name = first_name,
             last_name = last_name,
             password=password,
-            lat = lat,
-            lon = lon,
-
         )
         user.is_admin = True
         user.is_staff = True
@@ -61,8 +50,12 @@ class Account(AbstractBaseUser):
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     slug = models.SlugField(blank=True, unique=True)
-    lat = models.FloatField()
-    lon = models.FloatField()
+    dob = models.CharField(max_length=10, default='')
+    street = models.CharField(max_length=100, default='')
+    city = models.CharField(max_length=50, default='')
+    state = models.CharField(max_length=50, default='')
+    country = models.CharField(max_length=50, default='')
+    zip_code = models.BigIntegerField(default=0)
     is_customer = models.BooleanField(default=False)
     is_coach = models.BooleanField(default=False)
     date_joined = models.DateTimeField(verbose_name='Date joined', auto_now_add=True)
@@ -79,8 +72,6 @@ class Account(AbstractBaseUser):
 
     def __str__(self):
         return self.last_name + ', ' + self.first_name
-        #self.email
-        #self.last_name, self.first_name
 
     def get_info(self):
         user = {
@@ -88,8 +79,12 @@ class Account(AbstractBaseUser):
             "last_name": self.last_name,
             "email": self.email,
             "username": self.username,
-            "lat": self.lat,
-            "lon": self.lon,
+            "dob": self.dob,
+            "street": self.street,
+            "city": self.city,
+            "state": self.state,
+            "country": self.country,
+            "zip_code": self.zip_code,
             "is_customer": self.is_customer,
             "is_coach": self.is_coach,
             "date_joined": self.date_joined,
@@ -106,16 +101,6 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-
-    def convertZipToLatLon(zip):
-        # Turn zipCode into a lat and long 
-        API_KEY = os.environ['MAPQUEST_API_KEY']
-        response = requests.get(f"http://open.mapquestapi.com/geocoding/v1/address?key={API_KEY}&location={zip}")
-        json = response.json()
-        latLng = json["results"][0]["locations"][0]
-        lat = latLng["latLng"]["lat"]
-        lon = latLng["latLng"]["lng"]
-        return [lat, lon]
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

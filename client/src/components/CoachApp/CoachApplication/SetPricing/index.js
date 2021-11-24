@@ -11,6 +11,8 @@ import "../index.css";
 
 
 const SetPricing = ({
+    sessionLengthError,
+    sessionRateError,
     trainingAddressError,
     trainingPhoneError,
     onChangeSessionLength,
@@ -42,11 +44,15 @@ const SetPricing = ({
 
                         <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => onChangeSessionLength(e)}>
                             <Form.Control as="select">
-                                <option>30 mins - 3 hours</option>
-                                <option>3 hours - 4 hours</option>
-                                <option>4 hours - 5 hours</option>
+                                <option></option>
+                                <option value="30 mins-3 hours">30 mins - 3 hours</option>
+                                <option value="3 hours-4 hours">3 hours - 4 hours</option>
+                                <option value="4 hours-5 hours">4 hours - 5 hours</option>
                             </Form.Control>
                         </Form.Group>
+                        {
+                        sessionLengthError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                        }
 
                     </div>
                     
@@ -65,11 +71,16 @@ const SetPricing = ({
 
                         <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => onChangeSessionRate(e)}>
                             <Form.Control as="select">
-                                <option>$25 - $250</option>
-                                <option>$250 - $300</option>
-                                <option>$300 - $350</option>
+                                <option></option>
+                                <option value="25-250">$25 - $250</option>
+                                <option value="250-300">$250 - $300</option>
+                                <option value="300-350">$300 - $350</option>
                             </Form.Control>
                         </Form.Group>
+
+                        {
+                        sessionRateError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                        }
 
                     </div>
                 </div> {/*row end*/}

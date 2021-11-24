@@ -113,7 +113,12 @@ const RegisterPage = () => {
                 "is_customer": true,
                 "is_active": true,
                 "concentration": concentration,
-                "zipCode": zipCode
+                "zipCode": zipCode,
+                'dob': '',
+                'street': '',
+                'city': '',
+                'state': '',
+                'country': ''
             };
             dispatch(register(params))
                 .then( () => {
