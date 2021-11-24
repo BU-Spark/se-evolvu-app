@@ -7,6 +7,13 @@ const initialState = {}
 
 export const authReducer = (state = initialState, action) => {
     switch(action.type) {
+        case Types.REGISTER_SUCCESS:
+            return {
+                ...state,
+                isLoggedin: true,
+                token: action.payload.token,
+                slug: action.payload.slug
+            }
         case Types.LOGIN_SUCCESS: 
             return {
                 ...state,
