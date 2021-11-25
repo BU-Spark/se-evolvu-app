@@ -68,7 +68,7 @@ const SearchBar = () => {
                                 { label: "Life Coaching", key: "life-coaching"},
                                 { label: "Nutrition & Fitness", key: "nutrition-fitness"},
                                 { label: "Health and Wellness Coaching", key: "health-and-wellness-coaching"},
-                                { label: "Holistic Health & Wellness Coaching", key: "holistic-Health-wellness-coaching"},
+                                { label: "Holistic Health & Wellness Coaching", key: "holistic-health-wellness-coaching"},
                                 { label: "Spiritual Wellness Coaching", key: "spiritual-wellness-coaching"},
                             ].map((type) => (
                             <Dropdown.Item id="dropdown-items" key={type.key} onClick={() => updateAreaState(type.label, type.key)}>{type.label}</Dropdown.Item>

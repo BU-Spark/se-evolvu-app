@@ -159,6 +159,7 @@ class SearchCoaches(ListAPIView):
         focus_nutrition_fitness = self.request.query_params.get('focus_nutrition_fitness')
         focus_business = self.request.query_params.get('focus_business')
         travel = self.request.query_params.get('travel')
+        sortBy = self.request.query_params.get('sortBy')
         [lat, lon] = convertLocationToLatLon(location)
         query = Q()
 
@@ -214,14 +215,19 @@ class SearchCoaches(ListAPIView):
             priceGreaterThanMin = Q(minPrice__lte = price)
             priceQueries |= priceGreaterThanMin
         queryset = queryset.filter(priceQueries)
-
+        
+        # remove values that are not within distance
         for coach in queryset: 
-            distFromZipcode = Coach.distanceFromLatLong(coach, lat, lon)
+            distFromZipcode = coach.distanceFromLatLong(lat, lon)
             # Case when the coach is further away from zip than specified 
             if distFromZipcode > int(distance):
                 queryset = queryset.filter(~Q(coach_id=coach.coach_id))
         
-
+        # Sort queryset if applicable
+        if sortBy == "avg_rating":
+            queryset = sorted(queryset, key= lambda coach: coach.avg_rating())
+        if sortBy == "distance":
+            queryset = sorted(queryset, key= lambda coach: coach.distanceFromLatLong(lat, lon))
         return queryset
 
     
