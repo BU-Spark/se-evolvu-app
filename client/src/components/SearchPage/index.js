@@ -19,7 +19,7 @@ import './index.css';
 const SearchPage = (props) => {
 
     // Params Coach Search
-    const [zipCode, setZipCode] = useState("02215");
+    const [location, setLocation] = useState("02215");
     const [label, setLabel] = useState("Life Coaching");
     const [price, setPrice] = useState(50);
     const [remote, setRemote] = useState(false);
@@ -37,8 +37,7 @@ const SearchPage = (props) => {
     const [coachList, setCoachList] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const [invalidZipCodeError, setInvalidZipCode] = useState(false);
-    const [digitOnlyError, setDigitOnly] = useState(false);
+    const [invalidLocationError, setInvalidLocation] = useState(false);
     const [searchError, setSearchError] = useState(false);
 
 
@@ -52,7 +51,7 @@ const SearchPage = (props) => {
         const params = { 
             price: price,
             remote: remote,
-            zipCode: zipCode,
+            location: location,
             distance: distance,
             gender: gender,
             focus_life: lifeFocus,
@@ -73,22 +72,9 @@ const SearchPage = (props) => {
             })
     };
 
-    const handleZipChange = (e) => {
-
-        if (isNaN(e.target.value)) {
-            setDigitOnly(true);
-        } else if (digitOnlyError) {
-            setDigitOnly(false);
-        }
-
-        if (e.target.value === "" || e.target.value.length !== 5) {
-            setInvalidZipCode(true);
-        } 
-        if (e.target.value.length === 5 && invalidZipCodeError) {
-            setInvalidZipCode(false);
-        }  
-
-        setZipCode(e.target.value)
+    const handleLocationChange = (e) => {
+        setInvalidLocation(e.target.value === "")
+        setLocation(e.target.value)
     }
 
     const setInitialFocus = () => {
@@ -121,7 +107,7 @@ const SearchPage = (props) => {
             }
         } else {
             setLabel(props.location.state.focusLabel);
-            setZipCode(props.location.state.local);
+            setLocation(props.location.state.local);
         }
         setInitialFocus();
         onSearch();
@@ -157,7 +143,7 @@ const SearchPage = (props) => {
     return (
         <div className="search-results-body container-fluid">
             <p className="font-weight-bold" style={{padding: "2rem", zIndex: "-1", background:""}}>
-                You are searching for {label} in {zipCode}
+                You are searching for {label} in {location}
             </p>
             <Row>
                 <Col sm={3} className="search-page-filter-container">
@@ -171,16 +157,15 @@ const SearchPage = (props) => {
                                 <p style={{textAlign: "left", fontWeight: "bold"}}>Location</p>
                                 <div>
                                     <Form.Group controlId="formBasicEmail">
-                                        <Form.Label>Zip Code</Form.Label>
+                                        <Form.Label>Location</Form.Label>
                                         <Form.Control 
                                             type="text" 
-                                            value={zipCode}
-                                            placeholder="Enter Zip Code Here" 
-                                            onChange={e => handleZipChange(e)}
+                                            value={location}
+                                            placeholder="Enter 'city, state' here" 
+                                            onChange={e => handleLocationChange(e)}
                                         />
                                     </Form.Group>
-                                    { invalidZipCodeError ? <Alert  variant="danger">Please enter a valid 5 digit zipcode.</Alert> : null }
-                                    { digitOnlyError ? <Alert variant="danger">Please only enter digits. No characters or letters are allowed.</Alert> : null }
+                                    { invalidLocationError ? <Alert  variant="danger">Please enter a valid location.</Alert> : null }
                                     <Form.Group controlId="formBasicRange">
                                         <Form.Label>Distance</Form.Label>
                                         <Form.Control 

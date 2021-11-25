@@ -28,18 +28,37 @@ class Command(BaseCommand):
                 if account.first_name == "Kevin":
                     coach_profile.focus_life = True
                     coach_profile.maxPrice = 50
+                    # Boston, MA
+                    coach_profile.lat=42.360081
+                    coach_profile.lon=-71.058884
                 elif account.first_name == "Leanne":
                     coach_profile.focus_behavioral = True
                     coach_profile.maxPrice = 10
+                    # Watertown, MA
+                    coach_profile.lat=42.370930
+                    coach_profile.lon=-71.182831
                 elif account.first_name == "Ervin":
                     coach_profile.focus_health_wellness = True
                     coach_profile.maxPrice = 25
+                    # New York City
+                    coach_profile.lat=40.712776
+                    coach_profile.lon=-74.005974
                 elif account.first_name == "Nathan":
                     coach_profile.focus_holistic = True
                     coach_profile.maxPrice = 100
+                    # Hartford, CT
+                    coach_profile.lat=41.765804
+                    coach_profile.lon=-72.673370
                 elif account.first_name == "George":
                     coach_profile.focus_nutrition_fitness = True
                     coach_profile.maxPrice = 500
+                    # Boston, MA
+                    coach_profile.lat=42.360081
+                    coach_profile.lon=-71.058884
+                else:
+                    # Boston, MA
+                    coach_profile.lat=42.360081
+                    coach_profile.lon=-71.058884
                 coach_profile.save()
             elif account.is_customer:
                 profile = UserProfile(

@@ -6,6 +6,7 @@ from django.db.models import Q, F
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
+from utils import convertLocationToLatLon
 # from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.authentication import TokenAuthentication
@@ -149,7 +150,7 @@ class SearchCoaches(ListAPIView):
     def get_queryset(self, *args, **kwargs):
         queryset = Coach.objects.filter(approved=True)
         price = self.request.query_params.get("price")
-        zipCode = self.request.query_params.get("zipCode")
+        location = self.request.query_params.get("location")
         distance = self.request.query_params.get("distance")
         focus_life = self.request.query_params.get('focus_life')
         focus_behavioral = self.request.query_params.get('focus_behavioral')
@@ -158,7 +159,7 @@ class SearchCoaches(ListAPIView):
         focus_nutrition_fitness = self.request.query_params.get('focus_nutrition_fitness')
         focus_business = self.request.query_params.get('focus_business')
         travel = self.request.query_params.get('travel')
-        [lat, lon] = Account.convertZipToLatLon(zipCode)
+        [lat, lon] = convertLocationToLatLon(location)
         query = Q()
 
 
@@ -201,12 +202,18 @@ class SearchCoaches(ListAPIView):
         if travel == "true":
             q = Q(travel = True)
             query |= q
-
-        if price: 
-            q = Q(price__lte = price)
-            query &= q
-
+        
         queryset = queryset.filter(query)
+        # Price queries 
+        priceQueries = Q()
+        if price: 
+            # Max that coach is requesting is less than what user is willing to offer
+            maxPriceLessThanPrice = Q(maxPrice__lte = price)
+            priceQueries |= maxPriceLessThanPrice
+            # Or price user is willing to pay is greater than minPrice
+            priceGreaterThanMin = Q(minPrice__lte = price)
+            priceQueries |= priceGreaterThanMin
+        queryset = queryset.filter(priceQueries)
 
         for coach in queryset: 
             distFromZipcode = Coach.distanceFromLatLong(coach, lat, lon)
