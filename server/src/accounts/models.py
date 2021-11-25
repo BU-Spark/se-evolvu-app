@@ -50,7 +50,7 @@ class Account(AbstractBaseUser):
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     slug = models.SlugField(blank=True, unique=True)
-    dob = models.CharField(max_length=10, default="", blank=True)
+    dob = models.CharField(max_length=50, default="", blank=True)
     street = models.CharField(max_length=100, default="", blank=True)
     city = models.CharField(max_length=50, default="", blank=True)
     state = models.CharField(max_length=50, default="", blank=True)

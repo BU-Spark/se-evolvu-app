@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from utils import convertZipToLatLon
 from coaches.models import Coach
 
 class CoachSerializer(serializers.ModelSerializer):

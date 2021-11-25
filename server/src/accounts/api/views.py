@@ -1,6 +1,6 @@
 import os
 import requests
-from utils import convertZipToLatLon
+from utils import convertLocationToLatLon
 from django.shortcuts import render
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
@@ -49,8 +49,13 @@ def coach_registration_view(request):
 
     if serializer.is_valid():
         account = serializer.save()
-        # Get Latitude and Longitude based on zipcode 
-        [lat, lon] = convertZipToLatLon(request.data['zip_code'])
+        # Get Latitude and Longitude based on city, state or zipcode 
+        location = ""
+        if (request.data['city'] and request.data['state']):
+            location = request.data['city'] + ", " + request.data['state'] 
+        else:
+            location = request.data['zip_code']
+        [lat, lon] = convertLocationToLatLon(location)
         focus = request.data['focus']
         coachSerializer = CoachSerializer(data=request.data)
         if coachSerializer.is_valid():
@@ -69,7 +74,6 @@ def coach_registration_view(request):
             
     else:
         data = serializer.errors
-    print(data)
     return Response(data)
 
 

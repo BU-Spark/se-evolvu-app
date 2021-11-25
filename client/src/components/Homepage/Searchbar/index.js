@@ -15,8 +15,7 @@ const SearchBar = () => {
     const [area, setArea] = useState("Select Your Focus");
     const [areaLabel, setAreaLabel] = useState("Select Your Focus");
     const [local, setLocal] = useState("");
-    const [invalidZipCodeError, setInvalidZipCode] = useState(false);
-    const [digitOnlyError, setDigitOnly] = useState(false);
+    const [invalidLocationError, setInvalidLocation] = useState(false);
     const [areaError, setAreaError] = useState(false);
 
     let history = useHistory();
@@ -27,46 +26,21 @@ const SearchBar = () => {
         setAreaError(false);
     }
 
-    const handleZipChange = (e) => {
-
-        if (isNaN(e.target.value)) {
-            setDigitOnly(true);
-        } else if (digitOnlyError) {
-            setDigitOnly(false);
-        }
-
-        if (e.target.value === "" || e.target.value.length !== 5) {
-            setInvalidZipCode(true);
-        } 
-        if (e.target.value.length === 5 && invalidZipCodeError) {
-            setInvalidZipCode(false);
-        }  
-
+    const handleLocationChange = (e) => {
+        setInvalidLocation(e.target.value === "")
         setLocal(e.target.value)
     }
 
     const onClickHandle = () => {
-        if (area === "Select your focus area") {
-            setAreaError(true)
-        } else {
-            setAreaError(false)
-        }
-        if (local === "") {
-            setInvalidZipCode(true)
-        } else {
-            setInvalidZipCode(false)
-        }
-        if (invalidZipCodeError || digitOnlyError || areaError) {
-            return false
-        } else {
-            return true
-        }
+        setAreaError(area === "Select your focus area");
+        setInvalidLocation(local==="");
+        return !(invalidLocationError || areaError);
     }
     
     const onSubmit = (e) => {
         e.preventDefault()
         let validated = onClickHandle()
-        if (validated && area !== "Select your focus area" && local !== "" && local.length === 5) {
+        if (validated && area !== "Select your focus area" && local !== "") {
             history.push({
                 pathname: "/search",
                 state: {
@@ -101,13 +75,13 @@ const SearchBar = () => {
                         ))}
                     </Dropdown.Menu>
                 </Dropdown>
-                <InputGroup className="mb-3" id="zipcode-input">
+                <InputGroup className="mb-3" id="location-input">
                     <Form.Control
-                        id="zipcode-input"
-                        placeholder="Enter Zip Code"
-                        aria-label="Zipcode"
+                        id="location-input"
+                        placeholder="Enter location"
+                        aria-label="Location"
                         aria-describedby="basic-addon1"
-                        onChange={e => handleZipChange(e)}
+                        onChange={e => handleLocationChange(e)}
                     />
                 </InputGroup>
                 <Button 
@@ -121,9 +95,8 @@ const SearchBar = () => {
                 Find Your Coach
             </Button>
             </div>
-            <div id="zip-code-error-alert">
-                { invalidZipCodeError ? <Alert  variant="danger">Please enter a valid 5 digit zipcode.</Alert> : null }
-                { digitOnlyError ? <Alert variant="danger">Please only enter digits. No characters or letters are allowed.</Alert> : null }
+            <div id="location-error-alert">
+                { invalidLocationError ? <Alert  variant="danger">Please enter a valid location.</Alert> : null }
                 { areaError ? <Alert variant="danger">Please choose a focus area before proceeding.</Alert> : null }
             </div>
         </div>

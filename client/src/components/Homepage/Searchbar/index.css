@@ -22,13 +22,13 @@
     color: #F6F6F6;
 }
 
-#zipcode-input {
+#location-input {
     width: 20rem;
     background-color: #373737;
     color: #F6F6F6;
 }
 
-#zip-code-error-alert {
+#location-error-alert {
     width: 75%;
     text-align: center;
     margin: auto;
