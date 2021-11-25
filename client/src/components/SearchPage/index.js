@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 
@@ -17,19 +18,23 @@ import userServices from '../../services/userServices.js';
 import './index.css';
 
 const SearchPage = (props) => {
-
+    // set initial focuses based on search
+    const initialLocation = props.location.state ? props.location.state.local : "02215"
+    const initialFocus = props.location.state ? props.location.state.focus : "life-coaching"
     // Params Coach Search
-    const [location, setLocation] = useState("02215");
+    const [location, setLocation] = useState(initialLocation);
     const [label, setLabel] = useState("Life Coaching");
     const [price, setPrice] = useState(50);
     const [remote, setRemote] = useState(false);
     const [distance, setDistance] = useState(10);
     const [gender, setGender] = useState("nopref");
-    const [lifeFocus, setLifeFocus] = useState(false);
-    const [nutritionFitnessFocus, setNutritionFitness] = useState(false);
-    const [healthWellnessFocus, setHealthWellnessFocus] = useState(false);
-    const [holisticHealthFocus, setHolsticHealthFocus] = useState(false);
-    const [spiritualFocus, setSpiritualFocus] = useState(false);
+    const [lifeFocus, setLifeFocus] = useState(initialFocus === "life-coaching" ? true : false);
+    const [nutritionFitnessFocus, setNutritionFitness] = useState(initialFocus === "nutrition-fitness" ? true : false);
+    const [healthWellnessFocus, setHealthWellnessFocus] = useState(initialFocus === "health-and-wellness-coaching" ? true : false);
+    const [holisticHealthFocus, setHolsticHealthFocus] = useState(initialFocus === "holistic-health-wellness-coaching" ? true : false);
+    const [spiritualFocus, setSpiritualFocus] = useState(initialFocus === "spiritual-wellness-coaching" ? true : false);
+    const [sortBy, setSortBy] = useState("");
+    const [sortByLabel, setSortByLabel] = useState("Sort By")
 
 
     // Additional States for component
@@ -51,6 +56,7 @@ const SearchPage = (props) => {
         const params = { 
             price: price,
             remote: remote,
+            sortBy: sortBy,
             location: location,
             distance: distance,
             gender: gender,
@@ -62,7 +68,6 @@ const SearchPage = (props) => {
             focus_business: false,
             travel: false
         };
-        
         userServices.searchCoaches(params)
             .then( (res) => {
                 setCoachList(res.data.results);
@@ -77,39 +82,19 @@ const SearchPage = (props) => {
         setLocation(e.target.value)
     }
 
-    const setInitialFocus = () => {
-        let focus = props.location.state.focus || "life-coaching";
-        switch (focus) {
-            case "life-coaching":
-                setLifeFocus(true);
-                break;
-            case "nutrition-fitness":
-                setNutritionFitness(true);
-                break;
-            case "health-and-wellness-coaching":
-                setHealthWellnessFocus(true);
-                break;
-            case "holistic-health-wellness-coaching":
-                setHolsticHealthFocus(true);
-                break;
-            case "spiritual-wellness-coaching":
-                setSpiritualFocus(true);
-                break;
-            default:
-                break;
+
+    const handleSortBy = (e) => {
+        setSortBy(e);
+        if (e === "avg_rating") {
+            setSortByLabel("Rating")
         }
+        else {
+            setSortByLabel("Distance")
+        }
+        onSearch();
     }
 
     useEffect( () => {
-        
-        if (props.location.state === undefined || JSON.stringify(props.location.state) === JSON.stringify({focus: "Select your area", focusLabel: "Select your area", local: ""})) {
-                props.location.state = {focus: "life-coaching", focusLabel: "Life Coaching", local: "02215"
-            }
-        } else {
-            setLabel(props.location.state.focusLabel);
-            setLocation(props.location.state.local);
-        }
-        setInitialFocus();
         onSearch();
     // eslint-disable-next-line
     }, [])          // Add this line to prevent infinite loop 
@@ -143,7 +128,7 @@ const SearchPage = (props) => {
     return (
         <div className="search-results-body container-fluid">
             <p className="font-weight-bold" style={{padding: "2rem", zIndex: "-1", background:""}}>
-                You are searching for {label} in {location}
+
             </p>
             <Row>
                 <Col sm={3} className="search-page-filter-container">
@@ -336,13 +321,10 @@ const SearchPage = (props) => {
                 <Col sm={3}>
                     <div>
                         <Dropdown size="sm">
-                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-search-sort">
-                                Sort by
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <Dropdown.Item>Rating</Dropdown.Item>
-                                <Dropdown.Item>Distance</Dropdown.Item>
-                            </Dropdown.Menu>
+                            <DropdownButton variant="outline-secondary" id="dropdown-search-sort" title={sortByLabel} onSelect={e => handleSortBy(e)}>
+                                <Dropdown.Item eventKey="avg_rating">Rating</Dropdown.Item>
+                                <Dropdown.Item eventKey="distance">Distance</Dropdown.Item>
+                            </DropdownButton>
                         </Dropdown>
                     </div>
                 </Col>

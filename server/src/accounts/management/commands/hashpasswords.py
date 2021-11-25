@@ -32,8 +32,8 @@ class Command(BaseCommand):
                     coach_profile.lat=42.360081
                     coach_profile.lon=-71.058884
                 elif account.first_name == "Leanne":
-                    coach_profile.focus_behavioral = True
-                    coach_profile.maxPrice = 10
+                    coach_profile.focus_life = True
+                    coach_profile.maxPrice = 50
                     # Watertown, MA
                     coach_profile.lat=42.370930
                     coach_profile.lon=-71.182831
