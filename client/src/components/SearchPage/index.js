@@ -29,10 +29,10 @@ const SearchPage = (props) => {
     const [distance, setDistance] = useState(10);
     const [gender, setGender] = useState("nopref");
     const [lifeFocus, setLifeFocus] = useState(initialFocus === "life-coaching" ? true : false);
-    const [nutritionFitnessFocus, setNutritionFitness] = useState(initialFocus === "nutrition-fitness" ? true : false);
-    const [healthWellnessFocus, setHealthWellnessFocus] = useState(initialFocus === "health-and-wellness-coaching" ? true : false);
+    const [behavioralWellness, setBehavioralWellness] = useState(initialFocus === "behavioral-wellness-coaching" ? true : false);
+    const [healthWellnessFocus, setHealthWellnessFocus] = useState(initialFocus === "health-wellness-coaching" ? true : false);
     const [holisticHealthFocus, setHolsticHealthFocus] = useState(initialFocus === "holistic-health-wellness-coaching" ? true : false);
-    const [spiritualFocus, setSpiritualFocus] = useState(initialFocus === "spiritual-wellness-coaching" ? true : false);
+    const [businessFocus, setBusinessFocus] = useState(initialFocus === "business-coaching" ? true : false);
     const [sortBy, setSortBy] = useState("");
     const [sortByLabel, setSortByLabel] = useState("Sort By")
 
@@ -61,11 +61,10 @@ const SearchPage = (props) => {
             distance: distance,
             gender: gender,
             focus_life: lifeFocus,
-            focus_behavioral: false,
+            focus_behavioral_wellness: behavioralWellness,
             focus_health_wellness: healthWellnessFocus,
             focus_holistic: holisticHealthFocus,
-            focus_nutrition_fitness: nutritionFitnessFocus,
-            focus_business: false,
+            focus_business: businessFocus,
             travel: false
         };
         userServices.searchCoaches(params)
@@ -199,13 +198,13 @@ const SearchPage = (props) => {
                                             checked={lifeFocus}
                                         />
                                     </div>
-                                    <div key={`search-focus-nutrition-fitness`} className="mb-3">
+                                    <div key={`search-focus-behavioral-wellness`} className="mb-3">
                                         <Form.Check 
                                             type="checkbox"
                                             id={`search-filter-focus`}
-                                            label={`Nutrition & Fitness`}
-                                            onChange={() => setNutritionFitness(!nutritionFitnessFocus)}
-                                            checked={nutritionFitnessFocus}
+                                            label={`Behavioral Wellness Coaching`}
+                                            onChange={() => setBehavioralWellness(!behavioralWellness)}
+                                            checked={behavioralWellness}
                                         />
                                     </div>
                                     <div key={`search-focus-health-and-wellness-coaching`} className="mb-3">
@@ -226,13 +225,13 @@ const SearchPage = (props) => {
                                             checked={holisticHealthFocus}
                                         />
                                     </div>
-                                    <div key={`search-focus-spiritual-wellness`} className="mb-3">
+                                    <div key={`search-focus-business-coaching`} className="mb-3">
                                         <Form.Check 
                                             type="checkbox"
                                             id={`search-filter-focus`}
-                                            label={`Spiritual Wellness Coaching`}
-                                            onChange={() => setSpiritualFocus(!spiritualFocus)}
-                                            checked={spiritualFocus}
+                                            label={`Business Coaching`}
+                                            onChange={() => setBusinessFocus(!businessFocus)}
+                                            checked={businessFocus}
                                         />
                                     </div>
                             </div>

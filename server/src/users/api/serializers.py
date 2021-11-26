@@ -14,13 +14,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
                 'email',
                 'gender',
                 'slug',
-                'focus_health',
-                'focus_wellness',
                 'focus_health_wellness',
                 'focus_holistic',
                 'focus_life',
-                'focus_behavioral',
-                'focus_unsure']
+                'focus_behavioral_wellness',
+                'focus_business']
 
     def get_user_account_firstname(self, user):
         return user.user.first_name

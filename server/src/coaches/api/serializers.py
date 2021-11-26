@@ -30,7 +30,7 @@ class CoachSerializer(serializers.ModelSerializer):
                 'no_of_reviews',
                 'avg_rating',
                 'focus_life',
-                'focus_behavioral',
+                'focus_behavioral_wellness',
                 'focus_health_wellness',
                 'focus_holistic',
                 'focus_business',
@@ -41,22 +41,21 @@ class CoachSerializer(serializers.ModelSerializer):
     def save(self, account, lat, lon, focus):
         # Find which focuses that user specified and set them to be true
         is_focus_life = False
-        is_focus_behavioral = False
+        is_focus_behavioral_wellness = False
         is_focus_health_wellness = False
         is_focus_holistic = False
-        is_focus_nutrition_fitness = False
         is_focus_business = False
 
         if focus == "life-coaching":
             is_focus_life = True
-        if focus == "nutrition-fitness":
-            is_focus_nutrition_fitness = True
-        if focus == "health-and-wellness-coaching":
+        if focus == "behavioral-wellness-coaching":
+            is_focus_behavioral_wellness = True
+        if focus == "health-wellness-coaching":
             is_focus_health_wellness = True
-        if focus == "holistic-Health-wellness-coaching":
+        if focus == "holistic-health-wellness-coaching":
             is_focus_holistic = True
-        if focus == "spiritual-wellness-coaching":
-            is_focus_behavioral = True
+        if focus == "business-coaching":
+            is_focus_business = True
 
         coach_profile = Coach(
             coach = account,
@@ -76,11 +75,10 @@ class CoachSerializer(serializers.ModelSerializer):
             remote = self.validated_data['remote'],
             inPerson = self.validated_data['inPerson'],
             focus_life = is_focus_life,
-            focus_behavioral = is_focus_behavioral,
+            focus_behavioral_wellness = is_focus_behavioral_wellness,
             focus_health_wellness = is_focus_health_wellness,
             focus_holistic = is_focus_holistic,
-            focus_nutrition_fitness = is_focus_nutrition_fitness,
-            focus_business = False,
+            focus_business = is_focus_business,
             approved = True,
         )
         coach_profile.save()
@@ -121,7 +119,7 @@ class CoachListSerializer(serializers.ModelSerializer):
                 'no_of_reviews',
                 'avg_rating',
                 'focus_life',
-                'focus_behavioral',
+                'focus_behavioral_wellness',
                 'focus_health_wellness',
                 'focus_holistic',
                 'focus_business',
@@ -142,40 +140,3 @@ class CoachListSerializer(serializers.ModelSerializer):
 
     def get_coach_account_slug(self, coach):
         return coach.coach.slug
-
-'''
-class CoachSearchSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Coach
-        fields = ['first_name', 'last_name',
-                'slug',
-                'username',
-                'gender',
-                'focus_health',
-                'focus_wellness',
-                'focus_health_wellness',
-                'focus_holistic',
-                'focus_life',
-                'focus_behavioral',
-                'travel',
-                'description',]
-
-    def save(self):
-        coach_profile = Coach(
-            first_name = self.validated_data['first_name'],
-            last_name = self.validated_data['last_name'],
-            user_name = self.validated_data['username'],
-            gender = self.validated_data['gender'],
-            focus_health = self.validated_data['focus_health'],
-            focus_wellness = self.validated_data['focus_wellness'],
-            focus_health_wellness = self.validated_data['focus_health_wellness'],
-            focus_holistic = self.validated_data['focus_holistic'],
-            focus_life = self.validated_data['focus_life'],
-            focus_behavioral = self.validated_data['focus_behavioral'],
-            travel = self.validated_data['travel'],
-            description = self.validated_data['description'],
-        )
-        coach_profile.save()
-
-        return coach_profile
-'''

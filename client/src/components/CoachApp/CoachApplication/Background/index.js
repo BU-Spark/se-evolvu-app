@@ -57,10 +57,10 @@ const Background = ({
                                         <Form.Control as="select">
                                             <option></option>
                                             <option value="life-coaching">Life Coaching</option>
-                                            <option value="nutrition-fitness">Nutrition & Fitness</option>
+                                            <option value="behavioral-wellness">Behavioral Wellness Coaching</option>
                                             <option value="health-and-wellness-coaching">Health and Wellness Coaching</option>
-                                            <option value="holistic-Health-wellness-coaching">Holistic Health & Wellness Coaching</option>
-                                            <option value="spiritual-wellness-coaching">Spiritual Wellness Coaching</option>
+                                            <option value="holistic-health-wellness-coaching">Holistic Health & Wellness Coaching</option>
+                                            <option value="spiritual-wellness-coaching">Business Coaching</option>
                                         </Form.Control>
                                     </Form.Group>
                                     {
