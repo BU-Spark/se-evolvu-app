@@ -28,9 +28,6 @@ const RegisterPage = () => {
     const [strongPasswordError, setStrongPasswordError] = useState(false);
     const [nameError, setNameError] = useState(false);
     const [emailError, setEmailError] = useState(false);
-    const [zipCodeError, setZipCodeError] = useState(false);
-    const [concentration, setConcentration] = useState(" ");
-    const [zipCode, setzipCode] = useState(" ");
 
     const [successfullyRegistered, setSuccessfullyRegistered] = useState(false);
 
@@ -57,14 +54,6 @@ const RegisterPage = () => {
             valid = false;
         } else { 
             setEmailError(false); 
-        }
-
-
-        if (zipCode === " " || zipCode === "" || !isNumeric(zipCode)) {
-            setZipCodeError(true);
-            valid = false;
-        } else {
-            setZipCodeError(false);
         }
 
         // Check if passwords match
@@ -112,8 +101,12 @@ const RegisterPage = () => {
                 "is_coach": false,
                 "is_customer": true,
                 "is_active": true,
-                "concentration": concentration,
-                "zipCode": zipCode
+                "zipCode": '',
+                'dob': '',
+                'street': '',
+                'city': '',
+                'state': '',
+                'country': ''
             };
             dispatch(register(params))
                 .then( () => {
@@ -159,11 +152,6 @@ const RegisterPage = () => {
                         { emailError && (
                                 <Alert variant="danger">
                                     Please enter a valid email address.
-                                </Alert>
-                        )}
-                        { zipCodeError && (
-                                <Alert variant="danger">
-                                    Please enter a valid 5-digit zip code.
                                 </Alert>
                         )}
                         { strongPasswordError && (
@@ -212,26 +200,7 @@ const RegisterPage = () => {
                                     email ? null : <Alert variant="danger"> {!isEmail(email) ? "Not a valid email" : "This is a required field."} </Alert> 
                                 }
                             </Col>
-                            <Col>
-                                <Form.Group controlId="registrationzipCode" className="register-form-input" onChange={ (e) => setzipCode(e.target.value)}>
-                                    <Form.Label>Zip Code <span style={{ color: 'red'}}>*</span></Form.Label>
-                                    <Form.Control type="" placeholder="Zip Code" />
-                                </Form.Group>
-                                {
-                                    zipCode ? null : <Alert variant="danger"> This is a required field. </Alert>
-                                }
-                            </Col>
                         </Form.Row>
-                        <Form.Group controlId="registrationConcentration" className="register-form-input" onChange={ (e) => setConcentration(e.target.value)}>
-                            <Form.Label>Concentration <span style={{ color: 'red'}}>*</span></Form.Label>
-                            <Form.Control as="select">
-                                <option>Life Coaching</option>
-                                <option>Nutrition & Fitness</option>
-                                <option>Health and Wellness Coaching</option>
-                                <option>Holistic Health & Wellness Coaching</option>
-                                <option>Spiritual Wellness Coaching</option>
-                            </Form.Control>
-                        </Form.Group>
                         <Form.Row>
                             <Col>
                                 <Form.Group controlId="registrationPassword" className="register-form-input" onChange={ (e) => setPassword(e.target.value)}>
@@ -244,7 +213,7 @@ const RegisterPage = () => {
                             </Col>
                             <Col>
                                 <Form.Group controlId="registrationPasswordConfirm" className="register-form-input" onChange={ (e) => setConfirmPassword(e.target.value)}>
-                                    <Form.Label>Password Confirmation <span style={{ color: 'red'}}>*</span></Form.Label>
+                                    <Form.Label>Confirm Password<span style={{ color: 'red'}}>*</span></Form.Label>
                                     <Form.Control type="password" placeholder="Password" />
                                 </Form.Group>
                             </Col>

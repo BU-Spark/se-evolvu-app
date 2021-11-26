@@ -1,5 +1,9 @@
 import React from 'react';
 import {   Link } from 'react-router-dom';
+import Instagram from "../../images/instagram.png"
+import Facebook from "../../images/facebook-logo.png"
+import Google from "../../images/google-plus.png"
+import LinkedIn from "../../images/linkedin.png"
 import "./index.css";
 
 const Footer = () => {
@@ -45,10 +49,10 @@ const Footer = () => {
                         <div className= "col-xs-6 px-3">
                             <ul className="list-unstyled">
                                 <li>
-                                    <a href="https://www.instagram.com/"><small>Instagram </small></a>
-                                    <a href="https://www.facebook.com/"><small>Facebook </small></a>
-                                    <a href="https://www.google.com/"><small>GooglePlus </small></a>
-                                    <a href="https://www.linkedin.com/"><small>LinkedIn</small></a>
+                                    <img src={Instagram} alt="Instagram icon" className="social-media-btn" />
+                                    <img src={Facebook} alt="Instagram icon" className="social-media-btn"/>
+                                    <img src={Google} alt="Instagram icon" className="social-media-btn"/>
+                                    <img src={LinkedIn} alt="Instagram icon" className="social-media-btn"/>
                                 </li>
                             </ul>
                         </div>

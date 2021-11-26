@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('rating', models.IntegerField(validators=[django.core.validators.MinValueValidator(0), django.core.validators.MaxValueValidator(5)])),
-                ('body', models.TextField(blank=True, max_length=3000)),
+                ('body', models.TextField(blank=True, max_length=300)),
                 ('date', models.DateTimeField(auto_now_add=True)),
                 ('coach', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='coaches.coach')),
                 ('reviewer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),

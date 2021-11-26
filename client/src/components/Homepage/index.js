@@ -2,7 +2,6 @@ import React from "react";
 
 import { BsSearch, BsCalendarFill } from "react-icons/bs";
 import { GiFlowerEmblem } from "react-icons/gi";
-
 import Searchbar from "./Searchbar/index.js"
 
 import "./index.css";
@@ -13,39 +12,39 @@ const Homepage = () => {
         <div className="homepage-body">
             <div className="container-fluid homepage-search">
                 <div className="homepage-search-text">
-                    <h2 className="homepage-title" style={{color: "white", padding: "1rem"}}>Get Started on Your Journey with Evolv U</h2>
-                    <h3 className="homepage-desc">Evolv U offers a network of authentic Health and Wellness Coaches with extensive accreditation to help you evolve in the area of your choice</h3>
+                    <h2 className="homepage-title">FIND YOUR IDEAL HEALTH AND WELLNESS COACH</h2>
+                    <h3 className="homepage-desc">Offering a network of authentic Health and Wellness coaches with profound accreditation that are here to support you.  </h3>
                 </div>
                 <Searchbar/>
             </div>
             <div className="container homepage-info">
-                <h2>How Evolv U Works</h2>
+                <h2 id="homepage-info-title">How EvolvU Works</h2>
                 <div className="row">
                     <div className="col-sm">
                         <div className="row-icon">
                             <BsSearch size={60}/>
                         </div>
-                        <h4>Search</h4>
+                        <h4 className="homepage-sub-title">Search</h4>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Save time by effortlessly searching for certified Health and Wellness coaches near you. Start by entering your location and session focus. 
                         </p>
                     </div>
                     <div className="col-sm">
                         <div className="row-icon">
                             <BsCalendarFill size={60}/>
                         </div>
-                        <h4>Book a Coach</h4>
+                        <h4 className="homepage-sub-title">Book a Coach</h4>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Visit the coaches profiles to learn more about them, read past client reviews, and get a glimpse of their availability. Click the “Book Now” button to schedule your session! 
                         </p>
                     </div>
                     <div className="col-sm">
                         <div className="row-icon">
                             <GiFlowerEmblem size={60}/>
                         </div>
-                        <h4>Life Coach</h4>
+                        <h4 className="homepage-sub-title">Evolve</h4>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Get started on your journey with coaches you can trust! EvolvU takes the stress out of finding a health and wellness coach so that you can spend more time focusing in sessions  
                         </p>
                     </div>
                 </div>

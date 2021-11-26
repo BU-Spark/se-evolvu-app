@@ -3,7 +3,7 @@ import './App.css';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route
 } from 'react-router-dom';

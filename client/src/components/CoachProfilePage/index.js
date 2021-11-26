@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import 'social-icon/dile-social-icon.js';
 import Button from 'react-bootstrap/Button';
 import Media from 'react-bootstrap/Media';
 import Col from 'react-bootstrap/Col';
@@ -69,7 +69,7 @@ const CoachProfilePage = (props) => {
                                 width={128}
                                 height={128}
                                 className="mr-3 rounded-circle"
-                                src="https://via.placeholder.com/600/771796"
+                                src={profile.image ? profile.image : "https://via.placeholder.com/600/771796"}
                                 alt="Generic placeholder"
                             />
                             <Media.Body id="coach-profile-card-desc">
@@ -84,12 +84,23 @@ const CoachProfilePage = (props) => {
                                 {profile.no_of_reviews} ratings
                             </p>
                             <p>
-                                Cras\ sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. 
+                                {"Bio: "} 
+                                {profile.description ? profile.description :
+                                "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo."} 
                             </p>
-                            Response Rate: {profile.id}
+                            Response Rate: {profile.id ? profile.id : "N/A"}
+                            <br/><br/>
+                            <p className="social-media-icons">
+                                <dile-social-icon icon="facebook"></dile-social-icon>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <dile-social-icon icon="twitter"></dile-social-icon>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <dile-social-icon icon="instagram"></dile-social-icon>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <dile-social-icon icon="linkedin"></dile-social-icon>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <dile-social-icon icon="gmail"></dile-social-icon>
+                            </p> 
                             </Media.Body>
                         </Media>
                         <div style={{ background: '#F2F2F2', marginTop: '1rem'}}>

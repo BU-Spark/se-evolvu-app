@@ -1,4 +1,4 @@
-from math import sin, cos, sqrt, atan2, radians
+from math import sin, cos, sqrt, atan2, radians, floor
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
@@ -19,23 +19,30 @@ def upload_location(instance, filename, **kwargs):
     return file_path
 
 class Coach(models.Model):
-    coach = models.OneToOneField(Account, on_delete=models.CASCADE, related_name="coach_profile") #, related_name="coach_profile")
-    #name = models.ForeignKey('accounts.Account.first_name', on_delete=models.CASCADE)
+    coach = models.OneToOneField(Account, on_delete=models.CASCADE, related_name="coach_profile")
     image = models.ImageField(upload_to=upload_location, blank=True, null=True)
-    gender = models.CharField(max_length=1)
-    price = models.IntegerField(default=50)
+    gender = models.CharField(max_length=25)
+    lat = models.FloatField(default=0.0)
+    lon = models.FloatField(default=0.0)
+    experienceDescription = models.TextField(default='')
+    credentialDescription = models.TextField(default='')
+    sessionDescription = models.TextField(default='')
+    trainingAddress = models.CharField(default='', max_length=200)
+    trainingPhone = models.CharField(default='', max_length=50)
+    sessionLength = models.CharField(default='', max_length=50)
+    minPrice = models.IntegerField(default=0)
+    maxPrice = models.IntegerField(default=50)
+    remotePlatform = models.CharField(default='', max_length=50)
+    remote = models.BooleanField(default=False)
+    inPerson = models.BooleanField(default=False)
     focus_life = models.BooleanField(default=False)
-    focus_behavioral = models.BooleanField(default=False)
+    focus_behavioral_wellness = models.BooleanField(default=False)
     focus_health_wellness = models.BooleanField(default=False)
     focus_holistic = models.BooleanField(default=False)
-    focus_nutrition_fitness = models.BooleanField(default=False)
     focus_business = models.BooleanField(default=False)
     travel = models.BooleanField(default=False)
     description = models.TextField(default="")
     approved = models.BooleanField(default=False)
-    # city = models.CharField(max_length=255)
-    # location = PlainLocationField(based_fields=['city'], zoom=7)
-    # slug = models.SlugField(blank=True, unique=True)
     
 
     def distanceFromLatLong(self, lat, long):
@@ -43,8 +50,8 @@ class Coach(models.Model):
         R = 6373.0
         lat1 = radians(lat)
         long1 = radians(long)
-        lat2 = radians(self.coach.lat)
-        long2 = radians(self.coach.lon)
+        lat2 = radians(self.lat)
+        long2 = radians(self.lon)
 
         dlon = long2 - long1
         dlat = lat2 - lat1
@@ -61,17 +68,23 @@ class Coach(models.Model):
         return len(reviews)
 
     def avg_rating(self):
-        sum = 0
+        ar = 0
+        # ratings array index = # of reviews for that rating (e.g if index 1 has a value of a 5, then the coach has 5 one-star reviews)
+        ratings = [0, 0, 0, 0, 0, 0]
         reviews = Review.objects.filter(coach=self, approval=True)
         for review in reviews:
-            #print('HERE IS RATING')
-            #print(rating)
-            sum+= review.rating
-                
-        if len(reviews) > 0:
-            return sum / len(reviews)
-        else:
-            return 0
+            val = floor(review.rating)
+            ratings[val] += ratings[val] + 1
+
+        # final rating calculate is  1*a+2*b+3*c+4*d+5*e/5 where 
+        # a= # of 1 star ratings 
+        # b= # of 2 star ratings 
+        # c= # of 3 star ratings 
+        # d= # of 4 star ratings  
+        # e= # of 5 star rating.
+        for i, v in enumerate(ratings):
+            ar += i*v
+        return ar / 5
     
     
     def __str__(self):

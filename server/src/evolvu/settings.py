@@ -26,7 +26,7 @@ SECRET_KEY = os.environ['DJANGO_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '*']
 
 
 # Application definition
@@ -92,7 +92,8 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:81',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'https://bu-spark.github.io'
 )
 
 AUTH_USER_MODEL = 'accounts.Account'

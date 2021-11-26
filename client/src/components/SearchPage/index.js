@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 
@@ -17,19 +18,23 @@ import userServices from '../../services/userServices.js';
 import './index.css';
 
 const SearchPage = (props) => {
-
+    // set initial focuses based on search
+    const initialLocation = props.location.state ? props.location.state.local : "02215"
+    const initialFocus = props.location.state ? props.location.state.focus : "life-coaching"
     // Params Coach Search
-    const [zipCode, setZipCode] = useState("02215");
+    const [location, setLocation] = useState(initialLocation);
     const [label, setLabel] = useState("Life Coaching");
     const [price, setPrice] = useState(50);
     const [remote, setRemote] = useState(false);
     const [distance, setDistance] = useState(10);
     const [gender, setGender] = useState("nopref");
-    const [lifeFocus, setLifeFocus] = useState(false);
-    const [nutritionFitnessFocus, setNutritionFitness] = useState(false);
-    const [healthWellnessFocus, setHealthWellnessFocus] = useState(false);
-    const [holisticHealthFocus, setHolsticHealthFocus] = useState(false);
-    const [spiritualFocus, setSpiritualFocus] = useState(false);
+    const [lifeFocus, setLifeFocus] = useState(initialFocus === "life-coaching" ? true : false);
+    const [behavioralWellness, setBehavioralWellness] = useState(initialFocus === "behavioral-wellness-coaching" ? true : false);
+    const [healthWellnessFocus, setHealthWellnessFocus] = useState(initialFocus === "health-wellness-coaching" ? true : false);
+    const [holisticHealthFocus, setHolsticHealthFocus] = useState(initialFocus === "holistic-health-wellness-coaching" ? true : false);
+    const [businessFocus, setBusinessFocus] = useState(initialFocus === "business-coaching" ? true : false);
+    const [sortBy, setSortBy] = useState("");
+    const [sortByLabel, setSortByLabel] = useState("Sort By")
 
 
     // Additional States for component
@@ -37,8 +42,7 @@ const SearchPage = (props) => {
     const [coachList, setCoachList] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const [invalidZipCodeError, setInvalidZipCode] = useState(false);
-    const [digitOnlyError, setDigitOnly] = useState(false);
+    const [invalidLocationError, setInvalidLocation] = useState(false);
     const [searchError, setSearchError] = useState(false);
 
 
@@ -52,18 +56,17 @@ const SearchPage = (props) => {
         const params = { 
             price: price,
             remote: remote,
-            zipCode: zipCode,
+            sortBy: sortBy,
+            location: location,
             distance: distance,
             gender: gender,
             focus_life: lifeFocus,
-            focus_behavioral: false,
+            focus_behavioral_wellness: behavioralWellness,
             focus_health_wellness: healthWellnessFocus,
             focus_holistic: holisticHealthFocus,
-            focus_nutrition_fitness: nutritionFitnessFocus,
-            focus_business: false,
+            focus_business: businessFocus,
             travel: false
         };
-        
         userServices.searchCoaches(params)
             .then( (res) => {
                 setCoachList(res.data.results);
@@ -73,57 +76,24 @@ const SearchPage = (props) => {
             })
     };
 
-    const handleZipChange = (e) => {
-
-        if (isNaN(e.target.value)) {
-            setDigitOnly(true);
-        } else if (digitOnlyError) {
-            setDigitOnly(false);
-        }
-
-        if (e.target.value === "" || e.target.value.length !== 5) {
-            setInvalidZipCode(true);
-        } 
-        if (e.target.value.length === 5 && invalidZipCodeError) {
-            setInvalidZipCode(false);
-        }  
-
-        setZipCode(e.target.value)
+    const handleLocationChange = (e) => {
+        setInvalidLocation(e.target.value === "")
+        setLocation(e.target.value)
     }
 
-    const setInitialFocus = () => {
-        let focus = props.location.state.focus || "life-coaching";
-        switch (focus) {
-            case "life-coaching":
-                setLifeFocus(true);
-                break;
-            case "nutrition-fitness":
-                setNutritionFitness(true);
-                break;
-            case "health-and-wellness-coaching":
-                setHealthWellnessFocus(true);
-                break;
-            case "holistic-health-wellness-coaching":
-                setHolsticHealthFocus(true);
-                break;
-            case "spiritual-wellness-coaching":
-                setSpiritualFocus(true);
-                break;
-            default:
-                break;
+
+    const handleSortBy = (e) => {
+        setSortBy(e);
+        if (e === "avg_rating") {
+            setSortByLabel("Rating")
         }
+        else {
+            setSortByLabel("Distance")
+        }
+        onSearch();
     }
 
     useEffect( () => {
-        
-        if (props.location.state === undefined || JSON.stringify(props.location.state) === JSON.stringify({focus: "Select your area", focusLabel: "Select your area", local: ""})) {
-                props.location.state = {focus: "life-coaching", focusLabel: "Life Coaching", local: "02215"
-            }
-        } else {
-            setLabel(props.location.state.focusLabel);
-            setZipCode(props.location.state.local);
-        }
-        setInitialFocus();
         onSearch();
     // eslint-disable-next-line
     }, [])          // Add this line to prevent infinite loop 
@@ -157,7 +127,7 @@ const SearchPage = (props) => {
     return (
         <div className="search-results-body container-fluid">
             <p className="font-weight-bold" style={{padding: "2rem", zIndex: "-1", background:""}}>
-                You are searching for {label} in {zipCode}
+
             </p>
             <Row>
                 <Col sm={3} className="search-page-filter-container">
@@ -171,16 +141,15 @@ const SearchPage = (props) => {
                                 <p style={{textAlign: "left", fontWeight: "bold"}}>Location</p>
                                 <div>
                                     <Form.Group controlId="formBasicEmail">
-                                        <Form.Label>Zip Code</Form.Label>
+                                        <Form.Label>Location</Form.Label>
                                         <Form.Control 
                                             type="text" 
-                                            value={zipCode}
-                                            placeholder="Enter Zip Code Here" 
-                                            onChange={e => handleZipChange(e)}
+                                            value={location}
+                                            placeholder="Enter 'city, state' here" 
+                                            onChange={e => handleLocationChange(e)}
                                         />
                                     </Form.Group>
-                                    { invalidZipCodeError ? <Alert  variant="danger">Please enter a valid 5 digit zipcode.</Alert> : null }
-                                    { digitOnlyError ? <Alert variant="danger">Please only enter digits. No characters or letters are allowed.</Alert> : null }
+                                    { invalidLocationError ? <Alert  variant="danger">Please enter a valid location.</Alert> : null }
                                     <Form.Group controlId="formBasicRange">
                                         <Form.Label>Distance</Form.Label>
                                         <Form.Control 
@@ -229,13 +198,13 @@ const SearchPage = (props) => {
                                             checked={lifeFocus}
                                         />
                                     </div>
-                                    <div key={`search-focus-nutrition-fitness`} className="mb-3">
+                                    <div key={`search-focus-behavioral-wellness`} className="mb-3">
                                         <Form.Check 
                                             type="checkbox"
                                             id={`search-filter-focus`}
-                                            label={`Nutrition & Fitness`}
-                                            onChange={() => setNutritionFitness(!nutritionFitnessFocus)}
-                                            checked={nutritionFitnessFocus}
+                                            label={`Behavioral Wellness Coaching`}
+                                            onChange={() => setBehavioralWellness(!behavioralWellness)}
+                                            checked={behavioralWellness}
                                         />
                                     </div>
                                     <div key={`search-focus-health-and-wellness-coaching`} className="mb-3">
@@ -256,13 +225,13 @@ const SearchPage = (props) => {
                                             checked={holisticHealthFocus}
                                         />
                                     </div>
-                                    <div key={`search-focus-spiritual-wellness`} className="mb-3">
+                                    <div key={`search-focus-business-coaching`} className="mb-3">
                                         <Form.Check 
                                             type="checkbox"
                                             id={`search-filter-focus`}
-                                            label={`Spiritual Wellness Coaching`}
-                                            onChange={() => setSpiritualFocus(!spiritualFocus)}
-                                            checked={spiritualFocus}
+                                            label={`Business Coaching`}
+                                            onChange={() => setBusinessFocus(!businessFocus)}
+                                            checked={businessFocus}
                                         />
                                     </div>
                             </div>
@@ -352,14 +321,10 @@ const SearchPage = (props) => {
                 <Col sm={3}>
                     <div>
                         <Dropdown size="sm">
-                            <Dropdown.Toggle variant="outline-secondary" id="dropdown-search-sort">
-                                Sort by
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <Dropdown.Item>Rating (high to low)</Dropdown.Item>
-                                <Dropdown.Item>Price (high to low)</Dropdown.Item>
-                                <Dropdown.Item>Price (low to high)</Dropdown.Item>
-                            </Dropdown.Menu>
+                            <DropdownButton variant="outline-secondary" id="dropdown-search-sort" title={sortByLabel} onSelect={e => handleSortBy(e)}>
+                                <Dropdown.Item eventKey="avg_rating">Rating</Dropdown.Item>
+                                <Dropdown.Item eventKey="distance">Distance</Dropdown.Item>
+                            </DropdownButton>
                         </Dropdown>
                     </div>
                 </Col>

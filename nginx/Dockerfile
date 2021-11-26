@@ -1,2 +1,5 @@
 FROM nginx:latest
-COPY ./nginx.conf /etc/nginx/nginx.conf
+# Dev Commmand
+# COPY ./nginx.conf /etc/nginx/nginx.conf
+# Prod command
+COPY ./nginx-prod.conf /etc/nginx/nginx.conf
