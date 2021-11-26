@@ -11,10 +11,15 @@ import "../index.css";
 
 
 const SetPricing = ({
+    isRemote,
+    isInPerson,
+    isRemoteError,
     sessionLengthError,
     sessionRateError,
     trainingAddressError,
     trainingPhoneError,
+    onChangeRemotePlatform,
+    onChangeRemoteStatus,
     onChangeSessionLength,
     onChangeSessionRate,
     onChangeTrainingAddress,
@@ -27,6 +32,38 @@ const SetPricing = ({
 
                 <div id = "page3Top">
                 Set your pricing and so potential clients can quickly see it! Please enter your single session length and single session rate. You get to list up to 5 different session packages and can do this within your “packages” button on your dashboard. 
+                </div>
+
+                <br/>
+                <br/>
+                <div id = "questionsRow" className = "d-flex row">
+
+                    <div id="questionCol" className = "col-sm-5 mx-1">
+
+                        <br/>
+                        <br/>
+
+                        <div id = "information">
+                            Do you plan to hold sessions remotely, in-person, or both? 
+                        </div>
+
+                        <br/>
+
+                        <Form.Group id="dropDown" className="register-form-input" onChange={ (e) => onChangeRemoteStatus(e)}>
+                            <Form.Control as="select">
+                                <option></option>
+                                <option value="remote">Remote</option>
+                                <option value="in-person">In-person</option>
+                                <option value="both">Both</option>
+                            </Form.Control>
+                        </Form.Group>
+                        {
+                            isRemoteError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
+                        }
+
+                    </div>
+
+                    <div id="questionCol" className = "col-sm-1 mx-3"></div> 
                 </div>
 
                 <div id = "questionsRow" className = "d-flex row">
@@ -190,6 +227,39 @@ const SetPricing = ({
 
                     </div>
                 </div>
+
+                <br/>
+                <br/>
+                
+                {isRemote ? (
+                <>
+                <div id="blackHeader">
+                What Platform Do You Typically Use?
+                </div>
+                <br /> 
+                <div id="page3Descriptor">
+                    You are responsible for providing the information on which platform you utilize for each session–
+                    this could be Zoom, Google Meet, or Skype.
+                </div>
+                <div id="questionsRow" className="d-flex row">
+
+                    <div id="questionCol" className="col-sm-5 mx-1">
+
+                        <br />
+                        <br />
+
+                        <Form.Group id="dropDown" className="register-form-input" onChange={(e) => onChangeRemotePlatform(e)}>
+                            <Form.Control as="select">
+                                <option value="zoom">Zoom</option>
+                                <option value="google-meet">Google Meet</option>
+                                <option value="skype">Skype</option>
+                                <option value="other">Other</option>
+                            </Form.Control>
+                        </Form.Group>
+
+                    </div>
+                </div>
+                </>) : <div></div>}
 
                 <div style={{marginTop: "5%"}}>
                     <Button variant = "dark"  onClick={handlePrev} style={{float: "left"}}> 

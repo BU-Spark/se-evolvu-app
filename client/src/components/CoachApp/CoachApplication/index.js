@@ -233,6 +233,29 @@ const CoachApplication = () => {
         setBioError(!e.target.value);
     }
 
+    const [isRemote, setIsRemote] = useState(false);
+    const [isInPerson, setIsInPerson] = useState(false);
+    const [isRemoteError, setIsRemoteError] = useState(true);
+    const [remotePlatform, setRemotePlatform] = useState("zoom");
+    const onChangeRemotePlatform = (e) => {
+        setRemotePlatform(e.target.value);
+    }
+    const onChangeRemoteStatus = (e) => {
+        setIsRemoteError(!e.target.value);
+        if (e.target.value === "remote") {
+            setIsRemote(true);
+            setIsInPerson(false);
+        }
+        if (e.target.value === "in-person") {
+            setIsInPerson(true);
+            setIsRemote(false);
+        }
+        if (e.target.value === "both") {
+            setIsInPerson(true);
+            setIsRemote(true);
+        }
+    }
+
     const [trainingPhoneError, setTrainingPhoneError] = useState(true)
     const [trainingPhone, setTrainingPhone] = useState("");
     const onChangeTrainingPhone = (e) => {
@@ -290,6 +313,9 @@ const CoachApplication = () => {
                 'credentialDescription': session, 
                 'sessionDescription': credential,
                 'description': bio, 
+                'remote': isRemote,
+                'inPerson': isInPerson,
+                'remotePlatform': remotePlatform,
                 'trainingAddress': trainingAddress, 
                 'trainingPhone': trainingPhone, 
                 'sessionLength': sessionLength, 
@@ -299,9 +325,7 @@ const CoachApplication = () => {
                 'is_coach': true,
                 'is_active': true
             }
-            console.log(params);
             const response = await dispatch(register_coach(params));
-            console.log(response);
             // Navigate to dashboard
             history.push("/dashboard");
         } catch (error) {
@@ -420,10 +444,15 @@ const CoachApplication = () => {
 
                                 <Tab eventKey={3} title="Set Pricing" tabClassName="profile-tabitem">
                                     <SetPricing
+                                            isRemote={isRemote}
+                                            isInPerson={isInPerson}
+                                            isRemoteError={isRemoteError}
                                             sessionLengthError={sessionLengthError}
                                             sessionRateError={sessionRateError} 
                                             trainingAddressError={trainingAddressError}
                                             trainingPhoneError={trainingPhoneError}
+                                            onChangeRemotePlatform={onChangeRemotePlatform}
+                                            onChangeRemoteStatus={onChangeRemoteStatus}
                                             onChangeSessionLength={onChangeSessionLength}
                                             onChangeSessionRate={onChangeSessionRate}
                                             onChangeTrainingAddress={onChangeTrainingAddress}
