@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
-        speciality = ["focus_life", "focus_behavioral", "focus_health_wellness", "focus_holistic", "focus_nutrition_fitness", "focus_business"]
+        speciality = ["focus_life", "focus_behavioral_wellness", "focus_health_wellness", "focus_holistic", "focus_business"]
 
         for account in Account.objects.all():
             if account.is_coach == True:
@@ -58,7 +58,7 @@ class Command(BaseCommand):
                     coach_profile.lat=41.765804
                     coach_profile.lon=-72.673370
                 elif account.first_name == "George":
-                    coach_profile.focus_nutrition_fitness = True
+                    coach_profile.focus_business = True
                     coach_profile.maxPrice = 500
                     coach_profile.remote = True
                     coach_profile.inPerson = True

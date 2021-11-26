@@ -136,17 +136,6 @@ class FocusWellnessView(ListAPIView):
 
 class SearchCoaches(ListAPIView):
     serializer_class = CoachSerializer
-    # pagination_class = PageNumberPagination
-        
-    #status = self.request.query_params.get('status', None)
-    # gender = self.request.query_params.get('gender', 'N')
-    # focus_life = self.request.query_params.get('focus_life', None)
-    # focus_behavioral = self.request.query_params.get('focus_behavioral', None)
-    # focus_health_wellness = self.request.query_params.get('focus_health_wellness', None)
-    # focus_holistic = self.request.query_params.get('focus_holistic', None)
-    # focus_nutrition_fitness = self.request.query_params.get('focus_nutrition_fitness', None)
-    # focus_business = self.request.query_params.get('focus_business', None)
-    # travel = self.request.query_params.get('travel', None)
     def get_queryset(self, *args, **kwargs):
         queryset = Coach.objects.filter(approved=True)
         price = self.request.query_params.get("price")
@@ -154,10 +143,9 @@ class SearchCoaches(ListAPIView):
         remote = self.request.query_params.get("remote")
         distance = self.request.query_params.get("distance")
         focus_life = self.request.query_params.get('focus_life')
-        focus_behavioral = self.request.query_params.get('focus_behavioral')
+        focus_behavioral_wellness = self.request.query_params.get('focus_behavioral_wellness')
         focus_health_wellness = self.request.query_params.get('focus_health_wellness')
         focus_holistic = self.request.query_params.get('focus_holistic')
-        focus_nutrition_fitness = self.request.query_params.get('focus_nutrition_fitness')
         focus_business = self.request.query_params.get('focus_business')
         travel = self.request.query_params.get('travel')
         sortBy = self.request.query_params.get('sortBy')
@@ -165,34 +153,20 @@ class SearchCoaches(ListAPIView):
         query = Q()
 
 
-        """
-        print(life)
-        print(behavioral)
-        print(health_wellness)
-        print(holistic)
-        print(nutrition_fitness)
-        print(business)
-        print(coach_travel)
-        """
-
         if focus_life == "true":
             q = Q(focus_life = True)
             query |= q
 
-        if focus_behavioral == "true":
-            q = Q(focus_behavioral = True)
+        if focus_behavioral_wellness == "true":
+            q = Q(focus_behavioral_wellness = True)
             query |= q
 
         if focus_health_wellness == "true":
-            q = Q(focus_life = True)
+            q = Q(focus_health_wellness = True)
             query |= q
 
         if focus_holistic == "true":
             q = Q(focus_holistic = True)
-            query |= q
-        
-        if focus_nutrition_fitness == "true":
-            q = Q(focus_nutrition_fitness = True)
             query |= q
 
         if focus_business == "true":
@@ -239,63 +213,3 @@ class SearchCoaches(ListAPIView):
         if sortBy == "distance":
             queryset = sorted(queryset, key= lambda coach: coach.distanceFromLatLong(lat, lon))
         return queryset
-
-    
-
-    """
-    gender 
-    focus_life 
-    focus_behavioral 
-    focus_health_wellness 
-    focus_holistic 
-    focus_nutrition_fitness 
-    focus_business 
-    travel 
-
-    if holistic ===true:
-        add to filter
-    """
-
-# class FocusLifeView(ListAPIView):
-#     serializer_class = CoachSerializer
-#     pagination_class = PageNumberPagination
-
-#     def get_queryset(self):
-#         return Coach.objects.filter(focus_life=True)
-
-# class FocusBehavioralView(ListAPIView):
-#     serializer_class = CoachSerializer
-#     pagination_class = PageNumberPagination
-
-#     def get_queryset(self):
-#         return Coach.objects.filter(focus_behavioral=True)
-
-# class FocusHWView(ListAPIView):
-#     serializer_class = CoachSerializer
-#     pagination_class = PageNumberPagination
-
-#     def get_queryset(self):
-#         return Coach.objects.filter(focus_health_wellness=True)
-
-# class FocusHolisticView(ListAPIView):
-#     serializer_class = CoachSerializer
-#     pagination_class = PageNumberPagination
-
-#     def get_queryset(self):
-#         return Coach.objects.filter(focus_holistic=True)
-
-#
-# class FocusNFView(ListAPIView):
-#     serializer_class = CoachSerializer
-#     pagination_class = PageNumberPagination
-
-#     def get_queryset(self):
-#         return Coach.objects.filter(focus_nutrition_fitness=True)
-#
-
-# class FocusBusinessView(ListAPIView):
-#     serializer_class = CoachSerializer
-#     pagination_class = PageNumberPagination
-
-#     def get_queryset(self):
-#         return Coach.objects.filter(focus_business=True)
