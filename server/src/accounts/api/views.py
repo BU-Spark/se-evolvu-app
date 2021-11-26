@@ -1,5 +1,3 @@
-import os
-import requests
 from utils import convertLocationToLatLon
 from django.shortcuts import render
 from rest_framework import status
@@ -52,7 +50,7 @@ def coach_registration_view(request):
         # Get Latitude and Longitude based on city, state or zipcode 
         location = ""
         if (request.data['city'] and request.data['state']):
-            location = request.data['city'] + ", " + request.data['state'] 
+            location = request.data['city'] + ", " + request.data['state']
         else:
             location = request.data['zip_code']
         [lat, lon] = convertLocationToLatLon(location)
@@ -69,7 +67,6 @@ def coach_registration_view(request):
             data['token'] = token
             data['slug'] = account.slug
         else:
-            print(coachSerializer.error_messages)
             data = coachSerializer.errors
             
     else:

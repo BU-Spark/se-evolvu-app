@@ -151,6 +151,7 @@ class SearchCoaches(ListAPIView):
         queryset = Coach.objects.filter(approved=True)
         price = self.request.query_params.get("price")
         location = self.request.query_params.get("location")
+        remote = self.request.query_params.get("remote")
         distance = self.request.query_params.get("distance")
         focus_life = self.request.query_params.get('focus_life')
         focus_behavioral = self.request.query_params.get('focus_behavioral')
@@ -162,8 +163,6 @@ class SearchCoaches(ListAPIView):
         sortBy = self.request.query_params.get('sortBy')
         [lat, lon] = convertLocationToLatLon(location)
         query = Q()
-
-
 
 
         """
@@ -205,6 +204,17 @@ class SearchCoaches(ListAPIView):
             query |= q
         
         queryset = queryset.filter(query)
+        
+        remoteQuery = Q()
+        if remote == "true":
+            q = Q(remote = True)
+            remoteQuery = q
+        else:
+            q = Q(inPerson = True)
+            remoteQuery = q
+
+        queryset = queryset.filter(remoteQuery)
+
         # Price queries 
         priceQueries = Q()
         if price: 

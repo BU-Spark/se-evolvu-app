@@ -250,7 +250,7 @@ const Background = ({
                                                 <Form.Control as="select">
                                                     <option></option>
                                                     <option>New York</option>
-                                                    <option>Massachussetts</option>
+                                                    <option>Massachusetts</option>
                                                     <option>Vermont</option>
                                                     <option>New Mexico</option>
                                                     <option>Colorado</option>
