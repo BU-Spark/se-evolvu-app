@@ -113,6 +113,26 @@
     background: white;
 }
 
+
+#squares div {
+    /* these styles will let the divs line up next to each other
+       while accepting dimensions */
+    float: left;
+    width: 90px;
+    height: 45px;
+    background: #779ecc;
+    margin-right: 1%;
+    padding-right: 10%;
+}
+
+.day-block {
+    /* these styles will let the divs line up next to each other
+       while accepting dimensions */
+    float: left;
+    border: 1px solid white;
+    background: #779ecc;
+}
+
 #headerMessage{
     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-72) var(--unnamed-font-family-acumin-pro);
     letter-spacing: var(--unnamed-character-spacing-0-96);
