@@ -1,9 +1,9 @@
 from django.db import models
-from accounts.models import Account
+from coaches.models import Coach
 
 
 class Calendar(models.Model):
-    coach = models.OneToOneField(Account, on_delete=models.CASCADE, related_name="coach_profile", unique=True)
+    coach = models.OneToOneField(Coach, on_delete=models.CASCADE, related_name="coach_profile", unique=True)
     monday = models.TextField(default='')
     tuesday = models.TextField(default='')
     wednesday = models.TextField(default='')

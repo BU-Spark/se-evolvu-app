@@ -286,6 +286,56 @@ const CoachApplication = () => {
         setSessionRateError(!e.target.value);
     }
 
+    const [schedule, setSchedule] = useState([]);
+    const [scheduleError, setScheduleError] = useState(true);
+    const onChangeSchedule = (newSchedule) => {
+        setScheduleError(newSchedule.length === 0)
+        setSchedule(newSchedule);
+    }
+
+    const formatSchedule = (schedule) => { 
+        const scheduleObj = {
+            "monday": [], 
+            "tuesday": [], 
+            "wednesday": [], 
+            "thursday": [], 
+            "friday": [], 
+            "saturday": [], 
+            "sunday": []
+        };
+
+        const mapping = {
+            0: "sunday",
+            1: "monday", 
+            2: "tuesday",
+            3: "wednesday",
+            4: "thursday",
+            5: "friday",
+            6: "saturday"
+        }
+
+
+
+        schedule.forEach(timeslot => {
+            // returns int (0-6) indicating day of the week: Sunday = 0; Saturday = 6
+            const dayInt = timeslot.getDay();
+            // returns hour in day in miliatry time (0-23)
+            const hours = timeslot.getHours();
+            // returns string equivalent of day (0-6) e.g 0 ----> sunday
+            const dayString = mapping[dayInt];
+
+            // if user selects 12pm, then their availability is from 12pm-1pm ----> 12 - 13
+            const formattedString = hours + " - " + (hours + 1)
+            scheduleObj[dayString] = [...scheduleObj[dayString], formattedString]
+
+        });
+
+        // convert each array into a json string that will be stored in our database: might need a better approach tb
+        for (const [key, value] of Object.entries(scheduleObj)) {
+            scheduleObj[key] = JSON.stringify(value);
+          }
+        return scheduleObj;
+    }
 
     const handleSubmit = async (e) => {
         try {
@@ -315,6 +365,7 @@ const CoachApplication = () => {
                 'description': bio, 
                 'remote': isRemote,
                 'inPerson': isInPerson,
+                'schedule': formatSchedule(schedule),
                 'remotePlatform': remotePlatform,
                 'trainingAddress': trainingAddress, 
                 'trainingPhone': trainingPhone, 
@@ -365,6 +416,10 @@ const CoachApplication = () => {
     }
 
     const validateSchedule = () => {
+        if (schedule.length === 0) {
+            setScheduleError(true);
+            return false;
+        }
         return true;
     }
 
@@ -463,7 +518,10 @@ const CoachApplication = () => {
                                 </Tab>
 
                                 <Tab eventKey={4} title="Set Schedule" tabClassName="profile-tabitem">
-                                    <SetSchedule 
+                                    <SetSchedule
+                                        schedule={schedule}
+                                        scheduleError={scheduleError}
+                                        onChangeSchedule={onChangeSchedule} 
                                         handlePrev={handlePrev}
                                         handleNext={handleNext}
                                     />

@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.COACH_MODEL),
     ]
 
     operations = [
@@ -19,13 +19,13 @@ class Migration(migrations.Migration):
             name='Calendar',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('coach', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='coach_profile', to=settings.AUTH_USER_MODEL)),
+                ('coach', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='coach_profile', to=settings.COACH_MODEL)),
                 ('monday', models.TextField(default='')),
                 ('tuesday', models.TextField(default='')),
                 ('wednesday', models.TextField(default='')),
                 ('thursday', models.TextField(default='')),
                 ('friday', models.TextField(default='')),
-                ('saturday', models.TextField(default=''))
+                ('saturday', models.TextField(default='')),
                 ('sunday', models.TextField(default=''))
             ],
         ),

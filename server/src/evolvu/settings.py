@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users',
     'accounts',
     'reviews',
+    'calendars',
     'corsheaders',
 ]
 
@@ -97,6 +98,7 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 AUTH_USER_MODEL = 'accounts.Account'
+COACH_MODEL = 'coaches.Coach'
 
 WSGI_APPLICATION = 'evolvu.wsgi.application'
 
