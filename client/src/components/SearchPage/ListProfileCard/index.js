@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Media from 'react-bootstrap/Media';
 import Button from 'react-bootstrap/Button';
 import StarRatings from 'react-star-ratings';
+import { Link } from 'react-router-dom';
 
 
 import './index.css';
@@ -23,7 +24,7 @@ const ListProfileCard = (props) => {
                     alt="Generic placeholder"
                 />
                 <Media.Body id="coach-profile-card-desc">
-                <h5>{props.coach.first_name} {props.coach.last_name} </h5>
+                <h5 style={{color: "#779ECC"}}>{props.coach.first_name} {props.coach.last_name} </h5>
                 <StarRatings
                     rating={props.coach.avg_rating}
                     starDimension="20px"
@@ -45,14 +46,35 @@ const ListProfileCard = (props) => {
                     Starting at: <br/>
                     ${props.coach.id} <br/>/ Session + one time fees
                 </p>
-                <Button className="coach-profile-view-btn" onClick={() => setShow(true)}>
-                    View
-                </Button>
-                <ProfileModal
-                    show={show}
-                    onHide={ () => setShow(false)}
-                    coach={props.coach}
-                />
+                <Link
+                    to={{
+                        pathname: "/coach/profile/",
+                        state: {
+                            slug: props.coach.slug,
+                            first_name: props.coach.first_name,
+                            last_name: props.coach.last_name,
+                        }
+                    }}
+                >
+                    <Button>
+                        View Profile
+                    </Button>
+                </Link>
+                { 
+                    /* 
+                        Getting rid of popup view and redirecting it directly to the coach's page
+
+                        <Button className="coach-profile-view-btn" onClick={() => setShow(true)}>
+                            View
+                        </Button> 
+
+                        <ProfileModal
+                            show={show}
+                            onHide={ () => setShow(false)}
+                            coach={props.coach}
+                        /> 
+                    */ 
+               }
             </div>
         </div>
     )

@@ -271,6 +271,7 @@ const SearchPage = (props) => {
                                     id="search-page-preferences-one" 
                                     className={ !remote ? "active" : ""}
                                     onClick={ () => setRemote(false)}
+                                    disabled="True"
                                     >
                                         In-Person
                                 </Button>{' '}
@@ -306,7 +307,7 @@ const SearchPage = (props) => {
                                         handleChange()
                                     }}
                                     >
-                                        Grid
+                                        Gallery
                                 </Button>{' '}
                             </ButtonGroup>
                         </ButtonToolbar>
