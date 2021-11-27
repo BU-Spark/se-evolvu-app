@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login
 
 from accounts.api.serializers import RegistrationSerializer
 from coaches.api.serializers import CoachSerializer
+from calendars.api.serializers import CalendarSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
@@ -46,29 +47,42 @@ def coach_registration_view(request):
         data = {}
 
     if serializer.is_valid():
+        # Create Account
         account = serializer.save()
+        focus = request.data['focus']
         # Get Latitude and Longitude based on city, state or zipcode 
         location = ""
         if (request.data['city'] and request.data['state']):
             location = request.data['city'] + ", " + request.data['state']
         else:
             location = request.data['zip_code']
-        [lat, lon] = convertLocationToLatLon(location)
-        focus = request.data['focus']
+        try: 
+            # Convert location to lat and lon values using MapQuest API
+            [lat, lon] = convertLocationToLatLon(location)
+        except:
+            Response(status=status.HTTP_400_BAD_REQUEST)
+        # Create Coach
         coachSerializer = CoachSerializer(data=request.data)
         if coachSerializer.is_valid():
             coach_profile = coachSerializer.save(account, lat, lon, focus)
-            data['response'] = "New coach successfully registered."
-            data['email'] = account.email
-            data['username'] = account.username
-            data['first_name'] = account.first_name
-            data['last_name'] = account.last_name
-            token = Token.objects.get(user=account).key
-            data['token'] = token
-            data['slug'] = account.slug
+            calendarObj = request.data['schedule'];
+            # Create Calendar with Coach profile 
+            calendarSerializer = CalendarSerializer(data=calendarObj)
+            # If invalid, exception will be raised
+            if calendarSerializer.is_valid():
+                calendar = calendarSerializer.save(coach_profile)
+                data['response'] = "New coach successfully registered."
+                data['email'] = account.email
+                data['username'] = account.username
+                data['first_name'] = account.first_name
+                data['last_name'] = account.last_name
+                token = Token.objects.get(user=account).key
+                data['token'] = token
+                data['slug'] = account.slug
+            else:
+                data = calendarSerializer.errors
         else:
             data = coachSerializer.errors
-            
     else:
         data = serializer.errors
     return Response(data)
