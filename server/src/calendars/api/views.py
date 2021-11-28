@@ -12,24 +12,54 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.authtoken.models import Token
 from coaches.models import Coach
+from accounts.models import Account
 from calendars.models import Calendar
+from calendars.api.serializers import CalendarSerializer
 
-
-@api_view(['POST', ])
+@api_view(['GET', ])
 def get_coach_calendar(request, slug):
-    
-    # Fetch Coach Profile 
+    # Fetch Account 
     try:
-        coach = Coach.objects.get(coach__slug=slug)
-    except Coach.DoesNotExist:
+        account = Account.objects.get(slug=slug)
+        coach_id = account.id
+    except Account.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    # Fetch Coach 
+    try:
+        coach = Coach.objects.get(coach_id=coach_id)
+    except Account.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    # Fetch Coach's Calendar
     try:
-        calendar = Calendar.objects.get(coach=coach)
-        return Response(calendar)
+        calendar = Calendar.objects.get(coach=coach.id)
+        serializer = CalendarSerializer(calendar)
+        return Response(serializer.data)
     except:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
+@api_view(['POST', ])
+def update_coach_calendar(request, slug):
+    # Fetch Account 
+    try:
+        account = Account.objects.get(slug=slug)
+        coach_id = account.id
+    except Account.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    # Fetch Coach 
+    try:
+        coach = Coach.objects.get(coach_id=coach_id)
+    except Account.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    # Update Calendar
+    if request.method == "POST":
+        serializer = CalendarSerializer(data=request.data['schedule'])
+        data = {}
+        if serializer.is_valid():
+            serializer.update(coach)
+            data["Success"] = "Coach calendar successfully updated."
+            return Response(data=data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
