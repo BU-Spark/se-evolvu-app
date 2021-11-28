@@ -125,6 +125,37 @@
     padding-right: 10%;
 }
 
+.left-text {
+    width: 70%;
+    float: left;
+}
+
+.right-image {
+    width: 30%;
+    padding-left: 80%;
+}
+
+#why-header-title{
+    text-align: left;
+    padding: 2% 6%;
+}
+
+#why-coaching-container{
+    float: left;
+    width: 100%;
+    background-color: white;
+}
+
+.describe-coaching{
+    text-align: left;
+    padding: 5% 20% 0% 18%;
+}
+
+.float-child {
+    width: 33%;
+    float:left;
+}  
+
 .day-block {
     /* these styles will let the divs line up next to each other
        while accepting dimensions */

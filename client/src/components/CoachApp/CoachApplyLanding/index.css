@@ -4,7 +4,9 @@
 }
 
 #try-coaching-container {
-    background-color: #e1ecf7;
+    background-color: #a7cef6;
+    padding: 6%;
+    text-align: left;
 }
 
 #img-header {
@@ -13,14 +15,17 @@
     background-repeat: no-repeat;
     background-position: center; 
     position: relative;
+    padding-top: 10%;
 }
 
 #img-header-title { 
     color: #FFFFFF;
     font-weight: bold;
+    font-size: 50px;
 }
 
 #img-header-desc { 
     color: #FFFFFF;
     font-weight: bold;
+    padding-bottom: 10%;
 }
