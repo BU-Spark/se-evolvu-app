@@ -6,6 +6,7 @@ import { useHistory } from 'react-router';
 
 import { Types } from '../../../redux/actions/actionTypes';
 import { register_coach } from '../../../redux/actions/authAction.js';
+import coachServices from '../../../services/coachServices';
 import "./index.css";
 
 // Import Steps of the Form
@@ -293,50 +294,6 @@ const CoachApplication = () => {
         setSchedule(newSchedule);
     }
 
-    const formatSchedule = (schedule) => { 
-        const scheduleObj = {
-            "monday": [], 
-            "tuesday": [], 
-            "wednesday": [], 
-            "thursday": [], 
-            "friday": [], 
-            "saturday": [], 
-            "sunday": []
-        };
-
-        const mapping = {
-            0: "sunday",
-            1: "monday", 
-            2: "tuesday",
-            3: "wednesday",
-            4: "thursday",
-            5: "friday",
-            6: "saturday"
-        }
-
-
-
-        schedule.forEach(timeslot => {
-            // returns int (0-6) indicating day of the week: Sunday = 0; Saturday = 6
-            const dayInt = timeslot.getDay();
-            // returns hour in day in miliatry time (0-23)
-            const hours = timeslot.getHours();
-            // returns string equivalent of day (0-6) e.g 0 ----> sunday
-            const dayString = mapping[dayInt];
-
-            // if user selects 12pm, then their availability is from 12pm-1pm ----> 12 - 13
-            const formattedString = hours + " - " + (hours + 1)
-            scheduleObj[dayString] = [...scheduleObj[dayString], formattedString]
-
-        });
-
-        // convert each array into a json string that will be stored in our database: might need a better approach tb
-        for (const [key, value] of Object.entries(scheduleObj)) {
-            scheduleObj[key] = JSON.stringify(value);
-          }
-        return scheduleObj;
-    }
-
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
@@ -365,7 +322,7 @@ const CoachApplication = () => {
                 'description': bio, 
                 'remote': isRemote,
                 'inPerson': isInPerson,
-                'schedule': formatSchedule(schedule),
+                'schedule': coachServices.formatCalendarForUpload(schedule),
                 'remotePlatform': remotePlatform,
                 'trainingAddress': trainingAddress, 
                 'trainingPhone': trainingPhone, 

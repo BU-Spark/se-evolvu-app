@@ -1,0 +1,15 @@
+#title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2.5%;
+    font-weight: bold;
+}
+
+#submit-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}

@@ -6,6 +6,7 @@ import  { isEmail } from 'validator';
 import Alert from 'react-bootstrap/Alert';
 import { HiUserCircle } from "react-icons/hi";
 import Col from 'react-bootstrap/Form';
+import AvailabilitySelector from '../../../AvailabilitySelector';
 import ScheduleSelector from 'react-schedule-selector'
 
 
@@ -20,18 +21,11 @@ const SetSchedule = ({
 }) => {
     return( 
         <div id = "centerBlockCoach" className = "col-sm mx-auto">
-            <div style={{"marginBottom": "5%"}} id = "page3Top">
-                Drag and select your weekly availability
-            </div>
-            <ScheduleSelector
-                dateFormat={"dd"}
-                selection={schedule}
-                numDays={7}
-                minTime={0}
-                maxTime={24}
-                hourlyChunks={1}
-                onChange={onChangeSchedule}
-      />
+            <AvailabilitySelector 
+                schedule={schedule}
+                onChangeSchedule={onChangeSchedule}
+                title={"Drag and select your weekly availability"}
+            />
         {
             scheduleError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null
         }
