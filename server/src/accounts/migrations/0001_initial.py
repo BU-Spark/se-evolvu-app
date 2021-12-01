@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('state', models.CharField(max_length=50, blank=True, default="")),
                 ('country', models.CharField(max_length=50, blank=True, default="")),
                 ('street', models.CharField(max_length=100, blank=True, default="")),
-                ('zip_code', models.BigIntegerField(default=0)),
+                ('zip_code', models.CharField(default="", blank=True, max_length=25)),
                 ('slug', models.SlugField(blank=True, unique=True)),
                 ('is_customer', models.BooleanField(default=False)),
                 ('is_coach', models.BooleanField(default=False)),

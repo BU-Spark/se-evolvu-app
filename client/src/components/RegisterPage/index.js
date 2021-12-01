@@ -101,7 +101,7 @@ const RegisterPage = () => {
                 "is_coach": false,
                 "is_customer": true,
                 "is_active": true,
-                "zipCode": '',
+                "zip_code": '',
                 'dob': '',
                 'street': '',
                 'city': '',

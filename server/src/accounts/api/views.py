@@ -22,7 +22,24 @@ import json
 def registration_view(request):
 
     if request.method == 'POST':
-        serializer = RegistrationSerializer(data=request.data)
+        account_params = {
+            "first_name": request.data['first_name'],
+            "last_name": request.data['last_name'],
+            "email": request.data['email'],
+            "username": request.data['username'],
+            "password": request.data['password'],
+            "password2": request.data['password2'],
+            "dob": request.data['dob'] if 'dob' in request.data else "",
+            "street": request.data['street'] if 'street' in request.data else "",
+            "city": request.data['city'] if 'city' in request.data else "",
+            "state": request.data['state'] if 'state' in request.data else "",
+            "country": request.data['country'] if 'country' in request.data else "",
+            "zip_code": request.data['zip_code'] if 'zip_code' in request.data else "",
+            "is_customer": request.data['is_customer'] if 'is_customer' in request.data else False,
+            "is_coach": request.data['is_coach'] if 'is_coach' in request.data else True,
+            "is_active": request.data['is_active'] if 'is_active' in request.data else True,
+        }
+        serializer = RegistrationSerializer(data=account_params)
         data = {}
 
     if serializer.is_valid():
@@ -43,7 +60,24 @@ def registration_view(request):
 def coach_registration_view(request):
 
     if request.method == 'POST':
-        serializer = RegistrationSerializer(data=request.data)
+        account_params = {
+            "first_name": request.data['first_name'],
+            "last_name": request.data['last_name'],
+            "email": request.data['email'],
+            "username": request.data['username'],
+            "password": request.data['password'],
+            "password2": request.data['password2'],
+            "dob": request.data['dob'] if 'dob' in request.data else "",
+            "street": request.data['street'] if 'street' in request.data else "",
+            "city": request.data['city'] if 'city' in request.data else "",
+            "state": request.data['state'] if 'state' in request.data else "",
+            "country": request.data['country'] if 'country' in request.data else "",
+            "zip_code": request.data['zip_code'] if 'zip_code' in request.data else "",
+            "is_customer": request.data['is_customer'] if 'is_customer' in request.data else False,
+            "is_coach": request.data['is_coach'] if 'is_coach' in request.data else True,
+            "is_active": request.data['is_active'] if 'is_active' in request.data else True,
+        }
+        serializer = RegistrationSerializer(data=account_params)
         data = {}
 
     if serializer.is_valid():
@@ -144,56 +178,3 @@ class CustomObtainAuthToken(ObtainAuthToken):
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
         return Response({'message': 'Successfully logged in', 'token': token.key, 'slug': user.slug})
-
-# @api_view(['GET', ])
-# def api_detail_coach_view(request, slug):
-#     try:
-#         coach_profile = Coach.objects.get(slug=slug)
-#     except Coach.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-
-#     if request.method == "GET":
-#         serializer = CoachSerializer(coach_profile)
-#         return Response(serializer.data)
-
-# @api_view(['PUT', ])
-# def api_update_coach_view(request, slug):
-#     try:
-#         coach_profile = Coach.objects.get(slug=slug)
-#     except Coach.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-    
-#     if request.method == "PUT":
-#         serializer = CoachSerializer(coach_profile)
-#         data = {}
-#         if serializer.is_valid():
-#             serializer.save()
-#             data["Success"] = "Coach profile successfully updated."
-#             return Response(data=data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# @api_view(['DELETE', ])
-# def api_delete_coach_view(request, slug):
-#     try:
-#         coach_profile = Coach.objects.get(slug=slug)
-#     except Coach.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-    
-#     if request.method == "DELETE":
-#         operation = coach_profile.DELETE()
-#         data = {}
-#         if operation == True:
-#             data["Success"] = "Successfully deleted specified coach."
-#         else:
-#             data["Failure"] = "Unable to delete specified coach."
-#         return Response(data=data)
-
-# class ApiCoachListView(ListAPIView):
-#     queryset = Coach.objects.all() 
-#     #print("This is the queryset:", queryset)
-#     serializer_class = CoachSerializer
-#     # authentication_classes = (TokenAuthentication,)
-#     # permission_classes = (IsAuthenticated,)
-#     pagination_class = PageNumberPagination
-#     filter_backends = (SearchFilter, OrderingFilter,)
-#     search_fields = ('last_name',)

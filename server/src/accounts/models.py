@@ -55,7 +55,7 @@ class Account(AbstractBaseUser):
     city = models.CharField(max_length=50, default="", blank=True)
     state = models.CharField(max_length=50, default="", blank=True)
     country = models.CharField(max_length=50, default="", blank=True)
-    zip_code = models.BigIntegerField(default=0)
+    zip_code = models.CharField(default="", blank=True, max_length=25)
     is_customer = models.BooleanField(default=False)
     is_coach = models.BooleanField(default=False)
     date_joined = models.DateTimeField(verbose_name='Date joined', auto_now_add=True)
