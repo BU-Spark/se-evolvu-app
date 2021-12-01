@@ -75,7 +75,7 @@ const Background = ({
                                 <li>
                                     <Form.Group id= "input" onChange={ (e) => onChangeDateOfBirth(e)}>
                                             <Form.Label id = "information"> Date of birth <span style={{ color: 'red'}}>*</span></Form.Label>
-                                            <Form.Control placeholder = "Year/Month/Day"/>
+                                            <Form.Control placeholder = "Month/Day/Year"/>
                                     </Form.Group>
                                     {
                                     birthdayError ? <Alert style = {{padding: "0px"}} variant="danger"> This is a required field. </Alert> : null

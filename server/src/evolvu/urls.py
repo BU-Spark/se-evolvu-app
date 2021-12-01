@@ -32,6 +32,9 @@ from reviews.api import urls, views, serializers
 import calendars
 from calendars.api import urls, views, serializers
 
+import appointments
+from appointments.api import urls, views, serializers
+
 router = routers.DefaultRouter()
 
 urlpatterns = [
@@ -43,5 +46,6 @@ urlpatterns = [
     path('api/users/', include(users.api.urls, namespace='users_api')),
     path('api/coaches/', include(coaches.api.urls, namespace='coaches_api')),
     path('api/reviews/', include(reviews.api.urls, namespace='reviews_api')),
-    path('api/calendars/', include(calendars.api.urls, namespace='calendars_api'))
+    path('api/calendars/', include(calendars.api.urls, namespace='calendars_api')),
+    path('api/appointments/', include(appointments.api.urls, namespace='appointments_api'))
 ]

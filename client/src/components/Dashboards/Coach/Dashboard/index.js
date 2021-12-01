@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -12,12 +12,33 @@ import SidebarWrapper from '../../Sidebar/SidebarWrapper/index.js';
 
 const CoachDash = () => {
 
+
+    const [currentDate, setCurrentDate] = useState("");
+    const [currentTime, setCurrentTime] = useState("");
     let times = [("12:00 PM", 1), ("3:00 PM", 2), ("5:00 PM",3), ("6:00 PM",4)]
     const name = useSelector(state => state.userReducer.first_name)
 
-    useEffect( () => {
+    // Sets current date to format mm/dd/yyyy
+    const getCurrentDate = () => {
+        const current = new Date().toLocaleDateString();
+        setCurrentDate(current)
+    }
 
+    const getCurrentTime = () => {
+        const currentTime = new Date().toLocaleTimeString('en-US', { hour12: true, 
+            hour: "numeric", 
+            minute: "numeric"});
+        setCurrentTime(currentTime);
+    }
+
+    useEffect(() => {
+        getCurrentTime();
     })
+
+    useEffect( () => {
+        // Set Date and Time
+        getCurrentDate();
+    }, [])
 
     return (
         <SidebarWrapper>
@@ -45,9 +66,8 @@ const CoachDash = () => {
                         <Col sm={3} >
                             <div style={{ background: "#F2F2F2"}}>
                                 <div style={{ padding: "1rem"}}>
-                                    <p>Time</p>
-                                    <p>Day</p>
-                                    <p>Year</p>
+                                    <p>{currentTime}</p>
+                                    <p>{currentDate}</p>
 
                                 </div>
                             </div>
