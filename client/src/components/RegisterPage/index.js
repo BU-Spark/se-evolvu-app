@@ -129,13 +129,13 @@ const RegisterPage = () => {
     }
 
     return (
-        <div className="container" id="register-container">
+        <div className="container-fluid" id="register-container">
             
             <div className="register-form-container">
-                <h2 style={{ paddingBottom: '10px', textAlign: 'center'}}>
+                <h1 style={{ paddingBottom: '10px', textAlign: 'center'}}>
                     Sign Up to Join the EvolvU Network and Find Your Coach
-                </h2>
-                <p style={{ paddingBottom: '10px', textAlign: 'center'}}> Already have an account? Sign in <Link to="/login"> here</Link>.</p>
+                </h1>
+                <p style={{ paddingBottom: '10px', textAlign: 'center', fontSize: '1.5rem'}}> Already have an account? Sign in <Link to="/login"> here</Link></p>
                 <div className="register-form">
                 
                     <Form >
@@ -177,7 +177,7 @@ const RegisterPage = () => {
                                 </Form.Group>
                                 {
                                     firstName ? null : <Alert variant="danger"> This is a required field </Alert> 
-                            }
+                                }
                             </Col>
                             <Col>
                                 <Form.Group controlId="registrationLastName" className="register-form-input" onChange={ (e) => setLastName(e.target.value)}>
@@ -223,6 +223,10 @@ const RegisterPage = () => {
                             Submit
                         </Button>
                     </Form>
+                    <hr></hr>
+                    <p> You can also sign up with: </p>
+                    <Button id="login-social-media">Google</Button>
+                    <Button id="login-social-media">Facebook</Button>
                 </div>
             </div>
             

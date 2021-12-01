@@ -1,17 +1,34 @@
-
 #login-container {
     text-align: left;
+    padding: 5%;
+    padding-left: 20%;
+    padding-right: 20%;
+    height: 100vh;
+    background-image: url("../../images/homepage-background.png");
+}
+
+.login-header{
+    text-align: center;
+}
+
+.login-subtitle{
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
 }
 
 .login-form {
-    margin: 15%;
-    padding: 10%;
-    background: #CACACA;
+    margin-bottom: 30%;
+    margin-left: 15%;
+    margin-right: 15%;
+    padding: 5%;
+    background: rgba(55,55,55, .4);
 }
 
 #login-form-submit {
     background-color: #9FC0DE;
     border: none;
+    text-align: right;
 }
 
 #login-form-submit:hover {
