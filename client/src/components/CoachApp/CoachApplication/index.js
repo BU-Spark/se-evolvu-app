@@ -131,6 +131,23 @@ const CoachApplication = () => {
         setConfirmPasswordError(!e.target.value || e.target.value !== password)
     }
 
+    
+    const [facebookLink, setFacebookLink] = useState("");
+    const onChangeFacebook = (e) => {
+        setFacebookLink(e.target.value);
+    }
+
+    const [instagramLink, setInstagramLink] = useState("");
+    const onChangeInstagram = (e) => {
+        setInstagramLink(e.target.value);
+    }
+
+    const [twitterLink, setTwitterLink] = useState("");
+    const onChangeTwitter = (e) => {
+        setTwitterLink(e.target.value);
+    }
+
+
     const [birthdayError, setBirthdayError] = useState(true)
     const [DateOfBirth, setDateOfBirth] = useState("");
     const onChangeDateOfBirth = (e) => {
@@ -307,6 +324,9 @@ const CoachApplication = () => {
                 "username": firstName + lastName + Math.ceil(Math.random() * 10),
                 "password": password,
                 "password2": confirmPassword,
+                "facebook": facebookLink,
+                "instagram": instagramLink,
+                "twitter": twitterLink,
                 "dob": DateOfBirth,
                 "focus": focus,
                 "gender": gender,
@@ -405,6 +425,9 @@ const CoachApplication = () => {
                                             onChangeEmail={onChangeEmail}
                                             onChangePassword={onChangePassword}
                                             onChangeConfirmPassword={onChangeConfirmPassword}
+                                            onChangeFacebook={onChangeFacebook}
+                                            onChangeInstagram={onChangeInstagram}
+                                            onChangeTwitter={onChangeTwitter}
                                             firstNameError={firstNameError}
                                             lastNameError={lastNameError}
                                             emailError={emailError}

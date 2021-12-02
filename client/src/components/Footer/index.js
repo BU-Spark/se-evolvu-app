@@ -50,9 +50,7 @@ const Footer = () => {
                             <ul className="list-unstyled">
                                 <li>
                                     <img src={Instagram} alt="Instagram icon" className="social-media-btn" />
-                                    <img src={Facebook} alt="Instagram icon" className="social-media-btn"/>
-                                    <img src={Google} alt="Instagram icon" className="social-media-btn"/>
-                                    <img src={LinkedIn} alt="Instagram icon" className="social-media-btn"/>
+                                    <img src={Facebook} alt="Facebook icon" className="social-media-btn"/>
                                 </li>
                             </ul>
                         </div>

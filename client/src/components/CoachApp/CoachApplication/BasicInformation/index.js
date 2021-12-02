@@ -16,7 +16,10 @@ const BasicInformation = (
         onChangeLastName, 
         onChangeEmail,
         onChangePassword, 
-        onChangeConfirmPassword,  
+        onChangeConfirmPassword,
+        onChangeFacebook,
+        onChangeInstagram,
+        onChangeTwitter,  
         firstNameError,
         lastNameError, 
         emailError, 
@@ -158,6 +161,44 @@ const BasicInformation = (
                     </ul>
 
                     <br/>
+                    
+                    <ul className="list-unstyled">
+                        <li id = "information">Facebook Link </li>
+
+                        <li>
+                        <Form.Group id="input" onChange={(e) => { onChangeFacebook(e)}}>
+                            <Form.Control type = "url" placeholder= "https://www.facebook.com/johndoe"/>
+                        </Form.Group>
+
+                        </li>
+                    </ul>
+
+                    <br/>
+
+                    <ul className="list-unstyled">
+                        <li id = "information">Instagram Link </li>
+
+                        <li>
+                        <Form.Group id="input" onChange={(e) => { onChangeInstagram(e)}}>
+                            <Form.Control type = "url" placeholder= "https://www.instagram.com/johndoe"/>
+                        </Form.Group>
+
+                        </li>
+                    </ul>
+
+                    <br/>
+
+                    <ul className="list-unstyled">
+                        <li id = "information">Twitter Link </li>
+
+                        <li>
+                        <Form.Group id="input" onChange={(e) => { onChangeTwitter(e)}}>
+                            <Form.Control type="url" placeholder= "https://www.twitter.com/johndoe"/>
+                        </Form.Group>
+
+                        </li>
+                    </ul>
+
                     <br/>
                     <br/>
                 {/*END SECOND COLUMN BELOW*/}
