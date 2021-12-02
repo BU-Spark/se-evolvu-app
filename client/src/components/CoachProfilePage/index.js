@@ -70,7 +70,6 @@ const CoachProfilePage = (props) => {
                     "name": "twitter"}
                 )
             }
-            console.log('please', socialMediaLinks);
             return socialMediaLinks;
         }
     }
