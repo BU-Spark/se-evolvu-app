@@ -105,50 +105,85 @@ def complete_appointment(request):
     except Appointment.DoesNotExist:
         return Response({"message": "Unable to find the requested appointment"}, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET', ])
+def fetch_appointments_on_date(request):
 
-class FetchAppointmentsOnDate(ListAPIView):
-    serializer_class = AppointmentSerializer
-    def get_queryset(self, *args, **kwargs):
-        coach_slug = self.request.data['coach_slug']
-        session_completed = self.request.data['session_completed'] 
-        # date format is mm/dd/yyyy
-        date_to_check = convertDateToPythonDate(self.request.data['date'])
-        coach = Coach.objects.get(coach__slug=coach_slug)
-        queryset = Appointment.objects.filter(coach_id=coach.id)
+    coach_slug = request.query_params.get('coach_slug')
+    session_completed = request.query_params.get('session_completed')
+    date = request.query_params.get('date')
+    # date format is mm/dd/yyyy
+    date_to_check = convertDateToPythonDate(date)
+    coach = Coach.objects.get(coach__slug=coach_slug)
+    queryset = Appointment.objects.filter(coach_id=coach.id)
 
-        if date_to_check:
-            date_query = Q(date=date_to_check)
-            queryset = queryset.filter(date_query)
-        
-        if session_completed:
-            bool_to_check = True if session_completed == 'True' else False 
-            session_query = Q(session_completed=bool_to_check)
-            queryset = queryset.filter(session_query)
+    if date_to_check:
+        date_query = Q(date=date_to_check)
+        queryset = queryset.filter(date_query)
+    
+    if session_completed:
+        bool_to_check = True if session_completed == 'True' else False 
+        session_query = Q(session_completed=bool_to_check)
+        queryset = queryset.filter(session_query)
+    
+    # Iterate through queryset 
+    ret = []
+    for appointment in queryset.values():
+        # Convert User_Profile_ID to first_name and last_name
+        user_profile = UserProfile.objects.get(id=appointment['user_profile_id'])
+        user = Account.objects.get(id=user_profile.user_id)
+        first_name = user.first_name
+        last_name = user.last_name
+        ret.append({
+            "appointment_id": appointment["appointment_id"],
+            "coach_id": appointment["coach_id"],
+            "client_first_name": first_name,
+            "client_last_name": last_name,
+            "date": appointment["date"],
+            "start_time": appointment['start_time'],
+            "end_time": appointment['end_time']
+        })
+    return Response(ret)
 
-        return queryset
 
-class FetchAppointmentsInNextWeek(ListAPIView):
-    serializer_class = AppointmentSerializer
-    def get_queryset(self, *args, **kwargs):
-        coach_slug = self.request.data['coach_slug']
-        session_completed = self.request.data['session_completed'] 
-        # date format is mm/dd/yyyy
-        date_to_check = convertDateToPythonDate(self.request.data['date'])
-        next_week_date = date_to_check + datetime.timedelta(days=7)
-        coach = Coach.objects.get(coach__slug=coach_slug)
-        queryset = Appointment.objects.filter(coach_id=coach.id)
+@api_view(['GET', ])
+def fetch_appointments_in_next_week(request):
 
-        if date_to_check and next_week_date:
-            greater_than_current_date = Q(date__gte=date_to_check)
-            less_than_end_of_week = Q(date__lte=next_week_date)
-            queryset = queryset.filter(greater_than_current_date & less_than_end_of_week)
-        if session_completed:
-            bool_to_check = True if session_completed == 'True' else False 
-            session_query = Q(session_completed=bool_to_check)
-            queryset = queryset.filter(session_query)
+    coach_slug = request.query_params.get('coach_slug')
+    session_completed = request.query_params.get('session_completed')
+    date = request.query_params.get('date')
+    # date format is mm/dd/yyyy
+    date_to_check = convertDateToPythonDate(date)
+    next_week_date = date_to_check + datetime.timedelta(days=7)
+    coach = Coach.objects.get(coach__slug=coach_slug)
+    queryset = Appointment.objects.filter(coach_id=coach.id)
 
-        return queryset
-
+    if date_to_check and next_week_date:
+        greater_than_current_date = Q(date__gte=date_to_check)
+        less_than_end_of_week = Q(date__lte=next_week_date)
+        queryset = queryset.filter(greater_than_current_date & less_than_end_of_week)
+    if session_completed:
+        bool_to_check = True if session_completed == 'True' else False 
+        session_query = Q(session_completed=bool_to_check)
+        queryset = queryset.filter(session_query)
+    
+    # Iterate through queryset 
+    ret = []
+    for appointment in queryset.values():
+        # Convert User_Profile_ID to first_name and last_name
+        user_profile = UserProfile.objects.get(id=appointment['user_profile_id'])
+        user = Account.objects.get(id=user_profile.user_id)
+        first_name = user.first_name
+        last_name = user.last_name
+        ret.append({
+            "appointment_id": appointment["appointment_id"],
+            "coach_id": appointment["coach_id"],
+            "client_first_name": first_name,
+            "client_last_name": last_name,
+            "date": appointment["date"],
+            "start_time": appointment['start_time'],
+            "end_time": appointment['end_time']
+        })
+    return Response(ret)
 
 def convertDateToPythonDate(date):
     # parameter date in the format of mm/dd/yyyy
