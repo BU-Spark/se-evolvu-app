@@ -89,6 +89,24 @@ const formatCalendarForUpload = (availabilities) => {
 }
 
 
+const fetchAppointmentsOnDate = (date, slug) => {
+    return new Promise((resolve, reject) => {
+        axios({
+            url: "/api/appointments/get_appointments_on_date/",
+            method: "get",
+            params: {
+                "date": date,
+                "coach_slug": slug,
+                "session_completed": "False"
+            }
+        }).then(res => {
+            resolve(res.data);
+        }).catch(err => {
+            reject(err.message)
+        })
+    })
+}
+
 const getCoachCalendar = (slug) => {
     return axios({
         url: "/api/calendars/get_calendar/" + slug + "/",
@@ -117,7 +135,8 @@ const coachServices = {
     getCoachCalendar,
     updateCoachCalendar,
     parseCalendarForScheduler,
-    formatCalendarForUpload
+    formatCalendarForUpload,
+    fetchAppointmentsOnDate
 };
 
 export default coachServices;

@@ -7,59 +7,44 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import DashCarousel from './Carousel/index.js';
 import { useSelector } from 'react-redux';
-
+import coachServices from '../../../../services/coachServices.js';
+import CalendarComponent from '../../../BaseCalendar/index.js';
 import SidebarWrapper from '../../Sidebar/SidebarWrapper/index.js';
 
 const CoachDash = () => {
 
+    const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
+    const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString('en-US', { hour12: true, hour: "numeric", minute: "numeric"}));
+    const [appointments, setAppointments] = useState([]);
+    const name = useSelector(state => state.userReducer.first_name);
+    const coachSlug = useSelector(state => state.authReducer.slug);
 
-    const [currentDate, setCurrentDate] = useState("");
-    const [currentTime, setCurrentTime] = useState("");
-    let times = [("12:00 PM", 1), ("3:00 PM", 2), ("5:00 PM",3), ("6:00 PM",4)]
-    const name = useSelector(state => state.userReducer.first_name)
-
-    // Sets current date to format mm/dd/yyyy
-    const getCurrentDate = () => {
-        const current = new Date().toLocaleDateString();
-        setCurrentDate(current)
+    const getCoachAppointments = async (date) => {
+        try {
+            const appointments = await coachServices.fetchAppointmentsOnDate(date, coachSlug);
+            setAppointments(appointments);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    const getCurrentTime = () => {
-        const currentTime = new Date().toLocaleTimeString('en-US', { hour12: true, 
-            hour: "numeric", 
-            minute: "numeric"});
-        setCurrentTime(currentTime);
+    const handleCalendarNavigate = (date) => {
+        getCoachAppointments(date.toLocaleDateString());
     }
 
     useEffect(() => {
-        getCurrentTime();
-    })
-
-    useEffect( () => {
-        // Set Date and Time
-        getCurrentDate();
+        getCoachAppointments(currentDate);
     }, [])
 
-    return (
+    return (    
         <SidebarWrapper>
-            <Alert style={{ marginTop: "30px"}} variant="danger">Note: Not much functionality has been added to the dashboards. Only the frontend has been worked on.</Alert>
             <div style={{ textAlign: "left", paddingTop: "1rem"}}>
                 <h2>Your Dashboard</h2>
             </div>
             <Row>
-                <Col sm={4}>
-                    <ListGroup>
-                        <ListGroup.Item style={{ background: "#373737", color: "white", textAlign: "left"}}>Today's Timetable</ListGroup.Item>
-                        {times.map( (val, idx) => (
-                            <ListGroup.Item key={idx} style={{ marginTop: "1rem", border: "none", background: "#F2F2F2", color: "#779ECC"}}>Session {val}</ListGroup.Item>
-                        ))}
-                    </ListGroup>
-                    <hr/>
-                    <div style={{ display: "flex", justifyContent: "space-between"}}>
-                        <Button variant="dark"> Edit Events </Button>
-                        <Button variant="dark"> Set Reminder </Button>
-                    </div>
-                    
+                <Col sm={6}>
+                    <p style={{ textAlign: "center", padding: "0.5rem", margin: "0", fontWeight: 'bold'}}>Today's Sessions</p>  
+                    <CalendarComponent appointments={appointments} handleNavigate={handleCalendarNavigate} />
                 </Col>
                 <Col>
                     <Row>

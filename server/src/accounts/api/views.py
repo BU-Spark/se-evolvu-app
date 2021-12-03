@@ -94,7 +94,7 @@ def coach_registration_view(request):
             # Convert location to lat and lon values using MapQuest API
             [lat, lon] = convertLocationToLatLon(location)
         except:
-            Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         # Create Coach
         coachSerializer = CoachSerializer(data=request.data)
         if coachSerializer.is_valid():
