@@ -46,6 +46,33 @@ const CoachProfilePage = (props) => {
         })
     }
 
+    const getSocialMedia = () => {
+        // console.log("profile" , profile); 
+        var socialMediaLinks = [
+            {"gmail": "mailto:" + profile['email'], "name": "gmail"}
+        ]
+        if (profile !== {}) {    
+            if (profile['facebook'] !== ""){
+                socialMediaLinks.push(
+                    {"facebook": profile['facebook'],
+                    "name": "facebook"}
+                )
+            }
+            if (profile['instagram'] !== ""){
+                socialMediaLinks.push(
+                    {"instagram": profile['instagram'],
+                    "name": "instagram"}
+                )
+            }
+            if (profile['twitter'] !== "") {
+                socialMediaLinks.push(
+                    {"twitter": profile['twitter'],
+                    "name": "twitter"}
+                )
+            }
+            return socialMediaLinks;
+        }
+    }
 
     if (props.location.state === undefined) {
         return <Redirect to="/error"/>
@@ -90,16 +117,14 @@ const CoachProfilePage = (props) => {
                             </p>
                             Response Rate: {profile.id ? profile.id : "N/A"}
                             <br/><br/>
-                            <p className="social-media-icons">
-                                <dile-social-icon icon="facebook"></dile-social-icon>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <dile-social-icon icon="twitter"></dile-social-icon>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <dile-social-icon icon="instagram"></dile-social-icon>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <dile-social-icon icon="linkedin"></dile-social-icon>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <dile-social-icon icon="gmail"></dile-social-icon>
+                            <p className="social-media-icons"> {
+                                getSocialMedia().map(item => (
+                                    <div>
+                                    <a href={item[item.name]}>
+                                        <dile-social-icon icon={item.name}></dile-social-icon>
+                                    </a>
+                                     &nbsp; </div>
+                                ))}
                             </p> 
                             </Media.Body>
                         </Media>

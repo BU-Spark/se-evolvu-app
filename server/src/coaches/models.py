@@ -43,7 +43,9 @@ class Coach(models.Model):
     travel = models.BooleanField(default=False)
     description = models.TextField(default="")
     approved = models.BooleanField(default=False)
-    
+    facebook = models.TextField(default="")
+    instagram = models.TextField(default="")
+    twitter = models.TextField(default="")
 
     def distanceFromLatLong(self, lat, long):
         # approximate radius of earth in km

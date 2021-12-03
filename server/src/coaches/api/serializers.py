@@ -36,7 +36,10 @@ class CoachSerializer(serializers.ModelSerializer):
                 'focus_business',
                 'travel',
                 'description',
-                'image']
+                'image',
+                'facebook',
+                'instagram',
+                'twitter']
 
     def save(self, account, lat, lon, focus):
         # Find which focuses that user specified and set them to be true
@@ -73,6 +76,9 @@ class CoachSerializer(serializers.ModelSerializer):
             maxPrice=self.validated_data['maxPrice'],
             remotePlatform=self.validated_data['remotePlatform'],
             remote = self.validated_data['remote'],
+            facebook = self.validated_data['facebook'],
+            instagram = self.validated_data['instagram'],
+            twitter = self.validated_data['twitter'],
             inPerson = self.validated_data['inPerson'],
             focus_life = is_focus_life,
             focus_behavioral_wellness = is_focus_behavioral_wellness,
