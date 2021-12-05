@@ -3,6 +3,50 @@
 import { Types } from './actionTypes.js';
 import AuthService from '../../services/authServices.js';
 
+export const setRegisterSuccess = (data) => (dispatch) => {
+    dispatch({
+        type: Types.REGISTER_SUCCESS,
+        payload: data
+    })
+    dispatch({
+        type: Types.SET_MESSAGE,
+        payload: "",
+    });
+}
+
+
+export const setRegisterError = (message) => (dispatch) => {
+    dispatch({
+        type: Types.REGISTER_FAILED
+    });
+    dispatch({
+        type: Types.SET_MESSAGE,
+        payload: message,
+    });
+}
+
+
+export const setLoginSuccess = (data) => (dispatch) => {
+    dispatch({
+        type: Types.LOGIN_SUCCESS,
+        payload: data
+    });
+    dispatch({
+        type: Types.SET_MESSAGE,
+        payload: "",
+    });
+}
+
+export const setLoginFailure = () => (dispatch) => {
+    dispatch({
+        type: Types.LOGIN_FAILED
+    })
+    dispatch({
+        type: Types.SET_MESSAGE,
+        payload: "Unable to login with provided credentials. Please try again.",
+    });
+}
+
 export const register = (registrationInfo) => (dispatch) => {
     return AuthService.register(registrationInfo).then( (data) => {
 

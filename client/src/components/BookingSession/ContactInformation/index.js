@@ -1,9 +1,12 @@
 
 import React, {useState, useEffect} from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { Alert } from 'react-bootstrap';
 import  { isEmail } from 'validator';
+import authServices from "../../../services/authServices"
 import { login, register} from '../../../redux/actions/authAction';
+import {setMessage, clearMessage} from "../../../redux/actions/messageAction";
+import {setRegisterError, setRegisterSuccess, setLoginSuccess, setLoginFailure} from '../../../redux/actions/authAction';
 
 
 import "../index.css";
@@ -45,10 +48,12 @@ const ContactInformation = (
     const handleLogin = async () => {
         try {
             if (!loginEmailError && !loginPasswordError) {
-                dispatch(login(loginEmail, loginPassword));
+                const data = await authServices.login(loginEmail, loginPassword);
+                dispatch(setLoginSuccess(data));
             }
         } catch (error) {
-            console.log(error);   
+            console.log(error);
+            dispatch(setLoginFailure(error.message));  
         }
     }
 
@@ -122,10 +127,12 @@ const ContactInformation = (
                     'state': '',
                     'country': ''
                 };
-                const response = await dispatch(register(params));
+                const data = await authServices.register(params);
+                dispatch(setRegisterSuccess(data));
             }
         } catch (error) {
             console.log(error);
+            dispatch(setRegisterError(error.message)); 
         }
     }
         return (

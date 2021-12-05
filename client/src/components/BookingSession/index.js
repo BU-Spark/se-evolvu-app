@@ -6,7 +6,6 @@ import userServices from '../../services/userServices';
 import queryString from 'query-string';
 import {setMessage, clearMessage} from '../../redux/actions/messageAction';
 
-
 import "./index.css";
 
 // Import Form Components
@@ -107,6 +106,7 @@ const BookingSession = (props) => {
                 "description": ""
             }
             const response = await userServices.bookAppointment(params);
+            dispatch(clearMessage());
             setShowConfirmation(true);
         } catch (error) {
             dispatch(setMessage(error.response.data.message ? error.response.data.message : "Unable to create an appointment at this time"));

@@ -32,10 +32,10 @@ const Confirmation = () => {
         <div style={{ borderTop: "2px solid #cacaca"}}></div>
 
         <div style={{marginTop: "5%"}}>
-            <Button variant = "dark"  onClick={() => history.push("/")}
+            <Button variant = "dark"  onClick={() => history.push("/dashboard")}
 
                 style = {{float: "right"}}>
-                Home
+                Dashboard
             </Button>    
         </div>          
     </div>
