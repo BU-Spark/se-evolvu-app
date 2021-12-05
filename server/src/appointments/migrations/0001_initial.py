@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('date', models.DateField()),
                 ('start_time', models.TimeField()),
                 ('end_time', models.TimeField()),
-                ('description', models.CharField(default='', max_length=180)),
+                ('description', models.TextField(default='', max_length=180, blank=True)),
                 ('session_completed', models.BooleanField(default=False)),
                 ('has_coach_accepted', models.BooleanField(default=False)),
                 ('has_client_accepted', models.BooleanField(default=False)),

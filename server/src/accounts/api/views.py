@@ -99,7 +99,7 @@ def coach_registration_view(request):
         coachSerializer = CoachSerializer(data=request.data)
         if coachSerializer.is_valid():
             coach_profile = coachSerializer.save(account, lat, lon, focus)
-            calendarObj = request.data['schedule'];
+            calendarObj = request.data['schedule']
             # Create Calendar with Coach profile 
             calendarSerializer = CalendarSerializer(data=calendarObj)
             # If invalid, exception will be raised
@@ -115,10 +115,13 @@ def coach_registration_view(request):
                 data['slug'] = account.slug
             else:
                 data = calendarSerializer.errors
+                return Response(data, status=status.HTTP_400_BAD_REQUEST)
         else:
             data = coachSerializer.errors
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
     else:
         data = serializer.errors
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
     return Response(data)
 
 

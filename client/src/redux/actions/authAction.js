@@ -72,8 +72,9 @@ export const login = (email, password) => (dispatch) => {
             type: Types.LOGIN_SUCCESS,
             payload: data
         });
-
-        return Promise.resolve();
+        return Promise.resolve({
+            "message": "Successfully logged in"
+        });
     },
     (error) => {
         dispatch({
