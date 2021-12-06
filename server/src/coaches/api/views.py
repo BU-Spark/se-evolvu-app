@@ -14,7 +14,9 @@ from rest_framework.permissions import IsAuthenticated
 
 from coaches.models import Coach
 from accounts.models import Account
+from calendars.models import Calendar
 from coaches.api.serializers import CoachSerializer, CoachListSerializer#, CoachSearchSerializer
+from calendars.api.serializers import CalendarSerializer
 from rest_framework.filters import SearchFilter, OrderingFilter
 import logging
 logger = logging.getLogger("mylogger")
@@ -27,10 +29,18 @@ def api_detail_coach_view(request, slug):
         coach_profile = Coach.objects.get(coach__slug=slug)
     except Coach.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-
+    
     if request.method == "GET":
         serializer = CoachSerializer(coach_profile)
-        return Response(serializer.data)
+
+    data = serializer.data
+    # Attempt to fetch calendar 
+    if Calendar.objects.filter(coach_id=coach_profile.id).exists():
+        calendar = Calendar.objects.get(coach_id=coach_profile.id)
+        serializer_calendar = CalendarSerializer(calendar)
+        data.update({"availability": serializer_calendar.data})
+    return Response(data)
+    
 
 @api_view(['PUT', ])
 def api_update_coach_view(request, slug):
@@ -178,7 +188,6 @@ class SearchCoaches(ListAPIView):
             query |= q
         
         queryset = queryset.filter(query)
-        
         remoteQuery = Q()
         if remote == "true":
             q = Q(remote = True)
@@ -186,19 +195,20 @@ class SearchCoaches(ListAPIView):
         else:
             q = Q(inPerson = True)
             remoteQuery = q
-
         queryset = queryset.filter(remoteQuery)
 
         # Price queries 
         priceQueries = Q()
-        if price: 
-            # Max that coach is requesting is less than what user is willing to offer
-            maxPriceLessThanPrice = Q(maxPrice__lte = price)
-            priceQueries |= maxPriceLessThanPrice
-            # Or price user is willing to pay is greater than minPrice
-            priceGreaterThanMin = Q(minPrice__lte = price)
-            priceQueries |= priceGreaterThanMin
-        queryset = queryset.filter(priceQueries)
+        price = int(price)
+        if price:
+            if price is not 100:
+                # Max that coach is requesting is less than what user is willing to offer
+                maxPriceLessThanPrice = Q(maxPrice__lte = price)
+                priceQueries |= maxPriceLessThanPrice
+                # Or price user is willing to pay is greater than minPrice
+                priceGreaterThanMin = Q(minPrice__lte = price)
+                priceQueries |= priceGreaterThanMin
+                queryset = queryset.filter(priceQueries)
         
         # remove values that are not within distance
         for coach in queryset: 

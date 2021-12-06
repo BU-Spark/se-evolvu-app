@@ -7,7 +7,11 @@ import Button from 'react-bootstrap/Button';
 import { RiComputerLine } from 'react-icons/ri';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 
-const CoachProfileTabs = () => {
+const CoachProfileTabs = ({
+    careerExperience,
+    credentials,
+    sessionDescription
+}) => {
 
     const [key, setKey] = useState('experience');
 
@@ -21,24 +25,15 @@ const CoachProfileTabs = () => {
             <Tab eventKey="experience" title="Experience">
                 <div className="coach-profile-experience-desc">
                     <h4 style={{ color: '#FFB347'}}>Career Experience</h4>
-                    <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. </p>
+                    <p>{careerExperience}</p>
                 </div>
                 <div className="coach-profile-experience-desc">
                     <h4 style={{ color: '#FFB347'}}>Credentials</h4>
-                    <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. </p>
+                    <p>{credentials}</p>
                 </div>
                 <div className="coach-profile-experience-desc">
                     <h4 style={{ color: '#FFB347'}}>Specialities/Focus</h4>
-                    <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. </p>
+                    <p>{sessionDescription}</p>
                                 
                 </div>
             </Tab>

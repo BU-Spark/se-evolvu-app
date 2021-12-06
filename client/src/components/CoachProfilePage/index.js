@@ -54,8 +54,30 @@ const CoachProfilePage = (props) => {
         })
     }
 
+    const parseFocuses = () => {
+       let focusString = "";
+       if (profile.focus_behavioral_wellness) {
+            focusString += "Behavioral Wellness Coaching, ";
+       }
+       if (profile.focus_business) {
+            focusString += "Business Coaching, ";
+       }
+       if (profile.focus_health_wellness) {
+           focusString += "Health Wellness Coaching, ";
+       }
+       if (profile.focus_health_wellness) {
+        focusString += "Health & Wellness Coaching, ";
+       }
+       if (profile.focus_holistic) {
+         focusString += "Holistic Health & Wellness Coaching, ";
+      }
+      if (profile.focus_life) {
+        focusString += "Life Coaching, ";
+      }
+      return focusString.slice(0, -2);
+    }
+
     const getSocialMedia = () => {
-        // console.log("profile" , profile); 
         var socialMediaLinks = [
             {"gmail": "mailto:" + profile['email'], "name": "gmail"}
         ]
@@ -137,7 +159,13 @@ const CoachProfilePage = (props) => {
                             </Media.Body>
                         </Media>
                         <div style={{ background: '#F2F2F2', marginTop: '1rem'}}>
-                            <CoachProfileTabs />
+                            <CoachProfileTabs 
+                                careerExperience={profile.experienceDescription ? profile.experienceDescription : "N/A"} 
+                                credentials={profile.credentialDescription ? profile.credentialDescription : "N/A"}
+                                sessionDescription={profile.sessionDescription ? profile.sessionDescription : "N/A"}
+                                
+
+                            />
                         </div>
                     </Col>
                     <Col sm={4} style={{ display: 'inline-block'}}>
@@ -173,12 +201,12 @@ const CoachProfilePage = (props) => {
                                 <hr></hr>
                                 <p className="font-weight-bold">General Availability</p>
                                 <p>Days and Times: </p>
-                                <p>Focus: </p>
+                                <p>Focus: {parseFocuses()}</p>
                                 <hr></hr>
                                 <p className="font-weight-bold">Session Location</p>
                                 <p>In Person Session: </p>
                                 <ul>
-                                    <li>Medford</li>
+                                    <li>{profile.trainingAddress ? profile.trainingAddress : "No in person location specified"}</li>
                                 </ul>
                                 <hr></hr>
                                 <p className="font-weight-bold">Languages</p>
