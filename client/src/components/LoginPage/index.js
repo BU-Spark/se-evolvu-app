@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom';
 
 import  { isEmail } from 'validator';
 
-import { login } from '../../redux/actions/authAction.js';
+import { setLoginSuccess, setLoginFailure } from '../../redux/actions/authAction.js';
+import authServices from '../../services/authServices.js';
 import "./index.css";
 
 const LoginPage = () => {
@@ -46,18 +47,16 @@ const LoginPage = () => {
         setPassword(e.target.value);
     }
 
-    const onLogin = (e) => {
-        e.preventDefault();
+    const onLogin = async (e) => {
+        try {
+            e.preventDefault();
 
-        if (validate()) {
-            dispatch( login(email, password) )
-                    .then( () => {
-                        // Redirect to homepage                        
-                    })
-                    .catch( () => {
-                        
-                    })
-            
+            if (validate()) {
+                const data = await authServices.login(email, password);
+                dispatch(setLoginSuccess(data));                
+            }   
+        } catch (error) {
+            dispatch(setLoginFailure(error.message ? error.message : "Unable to login with provided credentials"));
         }
     }
 
