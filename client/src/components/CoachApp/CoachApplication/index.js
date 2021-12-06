@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import  { isEmail } from 'validator';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { Types } from '../../../redux/actions/actionTypes';
-import { register_coach } from '../../../redux/actions/authAction.js';
+import { setRegisterError, setRegisterSuccess } from '../../../redux/actions/authAction.js';
+import authServices from '../../../services/authServices';
 import coachServices from '../../../services/coachServices';
 import "./index.css";
 
@@ -37,7 +38,14 @@ const CoachApplication = () => {
     const [subtitle, setSubtitle] = useState(subtitles[0]);
 
     const dispatch = useDispatch();
+    const isLoggedIn = useSelector(state => state.authReducer.isLoggedin);
     const history = useHistory();
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            history.push("/dashboard");
+        }
+    }, [isLoggedIn])
 
 
     const nextStep = () => {
@@ -353,15 +361,11 @@ const CoachApplication = () => {
                 'is_coach': true,
                 'is_active': true
             }
-            const response = await dispatch(register_coach(params));
-            // Navigate to dashboard
-            history.push("/dashboard");
+            const data = await authServices.register_coach(params);
+            dispatch(setRegisterSuccess(data));
         } catch (error) {
             console.log(error);
-            dispatch({
-                type: Types.REGISTER_FAILED,
-                payload: "Unable to register for a coach account at this time.",
-            });
+            dispatch(setRegisterError("Unable to register for a coach account at this time."));
         }
     }
 

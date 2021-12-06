@@ -16,6 +16,7 @@ import RegisterPage from '../components/RegisterPage/index.js';
 import CoachApplyLanding from "../components/CoachApp/CoachApplyLanding";
 import CoachEligibility from "../components/CoachApp/CoachEligibility/index.js";
 import CoachApplication from "../components/CoachApp/CoachApplication/index.js";
+import BookingSession from '../components/BookingSession/index.js';
 import About from "../components/FooterPages/About";
 import Contact from "../components/FooterPages/Contact";
 import Privacy from "../components/FooterPages/Privacy";
@@ -71,6 +72,10 @@ const unprotectedRoutes = [
     {
         path: "/application",
         component: CoachApplication
+    },
+    {
+        path: "/book-appointment",
+        component: BookingSession
     },
     {
         path: "/coach/profile",

@@ -7,9 +7,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Col from 'react-bootstrap/Col';
-
-import { register } from '../../redux/actions/authAction.js';
-import { clearMessage } from '../../redux/actions/messageAction.js';
+import authServices from '../../services/authServices.js';
+import { register, setRegisterError, setRegisterSuccess } from '../../redux/actions/authAction.js';
+import { clearMessage, setMessage } from '../../redux/actions/messageAction.js';
 import { Types } from '../../redux/actions/actionTypes.js';
 
 import './index.css';
@@ -87,39 +87,40 @@ const RegisterPage = () => {
         return valid; 
     }
 
-    const onRegister = (e) => {
-        e.preventDefault();
-        let valid = validate();
-        if (valid) {
-            const params = {
-                "first_name": firstName,
-                "last_name": lastName,
-                "username": firstName + lastName + Math.ceil(Math.random() * 10),
-                "email": email,
-                "password": password,
-                "password2": confirmPassword,
-                "is_coach": false,
-                "is_customer": true,
-                "is_active": true,
-                "zip_code": '',
-                'dob': '',
-                'street': '',
-                'city': '',
-                'state': '',
-                'country': ''
-            };
-            dispatch(register(params))
-                .then( () => {
-                    setSuccessfullyRegistered(true);
-                })
-                .catch( () => {
-                    setSuccessfullyRegistered(false);
+    const onRegister = async (e) => {
+        try {
+            e.preventDefault();
+            let valid = validate();
+            if (valid) {
+                const params = {
+                    "first_name": firstName,
+                    "last_name": lastName,
+                    "username": firstName + lastName + Math.ceil(Math.random() * 10),
+                    "email": email,
+                    "password": password,
+                    "password2": confirmPassword,
+                    "is_coach": false,
+                    "is_customer": true,
+                    "is_active": true,
+                    "zip_code": '',
+                    'dob': '',
+                    'street': '',
+                    'city': '',
+                    'state': '',
+                    'country': ''
+                };
+                const data = await authServices.register(params);
+                dispatch(setRegisterSuccess(data));
+                setSuccessfullyRegistered(true);
+            } else {
+                dispatch({
+                    type: Types.SET_MESSAGE,
+                    payload: "One or more of the fields below are invalid.",
                 });
-        } else {
-            dispatch({
-                type: Types.SET_MESSAGE,
-                payload: "One or more of the fields below are invalid.",
-            });
+            }   
+        } catch (error) {
+            setSuccessfullyRegistered(false);
+            dispatch(setRegisterError(error.message ? error.message : "Unable to register for an account at this time"))
         }
     }
 

@@ -46,6 +46,14 @@ const CoachProfilePage = (props) => {
         })
     }
 
+    const handleBookNow = (e) => {
+        e.preventDefault();
+        history.push({
+            pathname: '/book-appointment',
+            search: `?coach_slug=${profile.slug}&first_name=${profile.first_name}&last_name=${profile.last_name}&minPrice=${profile.minPrice}&maxPrice=${profile.maxPrice}`
+        })
+    }
+
     const getSocialMedia = () => {
         // console.log("profile" , profile); 
         var socialMediaLinks = [
@@ -139,6 +147,7 @@ const CoachProfilePage = (props) => {
                                 <Button
                                     bsPrefix="coach-profile-book-btn"
                                     disable
+                                    onClick={handleBookNow}
                                 >
                                     Book Now
                                 </Button>

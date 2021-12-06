@@ -32,6 +32,14 @@ const getCoach = (params) => {
     });
 };
 
+const bookAppointment = (data) => {
+    return axios({
+        url: "/api/appointments/create_appointment/",
+        method: "post",
+        data: data
+    })
+}
+
 const createReview = (params) => {
     return axios({
         url: "/api/reviews/create/" + params.slug,
@@ -45,7 +53,8 @@ const userServices = {
     searchCoaches,
     getUser,
     getCoach,
-    createReview
+    createReview,
+    bookAppointment
 };
 
 export default userServices;
