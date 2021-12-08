@@ -6,12 +6,10 @@ import "./index.css"
 
 const AvailabilitySelector = ({title, schedule, onChangeSchedule}) => {
     const [initialSchedule, setInitialSchedule] = useState(schedule.length > 0 ? schedule : []);
+    
     const changeInitialSchedule = (newSchedule) => {
         setInitialSchedule(newSchedule);
-    }
-
-    const handleSave = () => {
-        onChangeSchedule(initialSchedule);
+        onChangeSchedule(newSchedule);
     }
 
     return (
@@ -28,9 +26,6 @@ const AvailabilitySelector = ({title, schedule, onChangeSchedule}) => {
                     hourlyChunks={1}
                     onChange={changeInitialSchedule}
         />
-        <div id="submit-container">
-            <Button onClick={handleSave}>Save</Button>
-        </div>
         </div>
     )
 }

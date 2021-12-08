@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import DashCarousel from './Carousel/index.js';
 import { useSelector } from 'react-redux';
 import coachServices from '../../../../services/coachServices.js';
-import CalendarComponent from '../../../BaseCalendar/index.js';
+import BaseCalendar from '../../../BaseCalendar/index.js';
 import SidebarWrapper from '../../Sidebar/SidebarWrapper/index.js';
 
 const CoachDash = () => {
@@ -44,7 +44,13 @@ const CoachDash = () => {
             <Row>
                 <Col sm={6}>
                     <p style={{ textAlign: "center", padding: "0.5rem", margin: "0", fontWeight: 'bold'}}>Today's Sessions</p>  
-                    <CalendarComponent appointments={appointments} handleNavigate={handleCalendarNavigate} />
+                    <BaseCalendar 
+                        appointments={appointments} 
+                        handleNavigate={handleCalendarNavigate} 
+                        views={["day"]} 
+                        defaultView={"day"}
+                        height={"50vh"}
+                        />
                 </Col>
                 <Col>
                     <Row>

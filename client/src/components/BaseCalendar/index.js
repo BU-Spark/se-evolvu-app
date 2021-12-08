@@ -7,14 +7,6 @@ import enUS from 'date-fns/locale/en-US';
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
-// const events = [{
-//   id: 0,
-//   title: 'Session with Gagandeep',
-//   start: new Date(2021, 11, 2, 10),
-//   end: new Date(2021, 11, 2, 11),
-// },
-// ]
-
 const locales = {
     'en-US': enUS,
 }
@@ -28,13 +20,32 @@ const localizer = dateFnsLocalizer({
 });
 
 
-const CalendarComponent = ({appointments, handleNavigate}) => {
+const CalendarComponent = ({appointments, handleNavigate, views, defaultView, height}) => {
   const formatStringIntoDate = (date, time) => {
     const [year, month, day] = date.split("-");
     const [hours, minutes] = time.split(":");
     const formatted_date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day), parseInt(hours), parseInt(minutes));
     return formatted_date
   
+  }
+
+  const processDefaultView = () => {
+    if (defaultView) {
+      switch(defaultView) {
+        case "day":
+          return Views.DAY
+        case "week":
+          return Views.MONTH
+        case "month":
+          return Views.MONTH
+        case "agenda":
+          return Views.AGENDA
+        case "work-week":
+          return Views.WORK_WEEK
+        default:
+          return ""
+      }
+    }
   }
 
   const formatAppointmentsIntoEvents = (appointments) => {
@@ -56,11 +67,11 @@ const CalendarComponent = ({appointments, handleNavigate}) => {
     return (
         <Calendar
           localizer={localizer}
-          views={["day"]}
-          defaultView={Views.DAY}
+          views={views}
+          defaultView={processDefaultView()}
           events={formatAppointmentsIntoEvents(appointments)}
           onNavigate={(date) => handleNavigate(date)}
-          style={{ height: "50vh" }}
+          style={{ height: height }}
         />
     )
 }

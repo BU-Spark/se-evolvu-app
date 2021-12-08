@@ -4,12 +4,16 @@ import SidebarWrapper from '../../Sidebar/SidebarWrapper/index.js';
 import AvailabilitySelector from '../../../AvailabilitySelector/index.js';
 import coachServices from '../../../../services/coachServices.js';
 import { useSelector, useDispatch } from 'react-redux';
+import { Tabs, Tab } from 'react-bootstrap';
+import BaseCalendar from '../../../BaseCalendar'
 import './index.css'
-
+                         
 const CoachCalendar = () => {
     const coachSlug = useSelector(state => state.authReducer.slug);
 
     const [initialSchedule, setInitialSchedule] = useState([]);
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const [appointments, setAppointments] = useState([]);
 
     const handleSave = async (newSchedule) => {
         try {
@@ -28,10 +32,22 @@ const CoachCalendar = () => {
         } catch (error) {
             console.log(error);
         }
+    }   
+
+    const getCoachAppointments = async (date=currentDate) => {
+        try {
+            const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).toLocaleDateString();
+            const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).toLocaleDateString();
+            const appointments = await coachServices.fetchAppointmentsBetweenDates(firstDay, lastDay, coachSlug);
+            setAppointments(appointments)
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
         getCoachAvailability();
+        getCoachAppointments();
     }, [])
 
     return (
@@ -47,14 +63,24 @@ const CoachCalendar = () => {
                 </div>
             </div>
             <div id="options-container">
-                <Button variant="link">Edit Availability</Button>
-            </div>
-            <div id="calendar-container">
-                {initialSchedule.length > 0 ? <AvailabilitySelector 
-                    schedule={initialSchedule} 
-                    onChangeSchedule={handleSave} 
-                    title={"Edit your general availability"}
-                /> : <div></div> }
+            <Tabs defaultActiveKey="availability" id="uncontrolled-tab-example" className="mb-3">
+                <Tab eventKey="availability" title="Edit availability">
+                    {initialSchedule.length > 0 ? <AvailabilitySelector 
+                        schedule={initialSchedule} 
+                        onChangeSchedule={handleSave} 
+                        title={"Edit your general availability"}
+                    /> : <div></div> }
+                </Tab>
+                <Tab eventKey="calendar" title="View your calendar">
+                    <BaseCalendar 
+                        appointments={appointments}
+                        handleNavigate={getCoachAppointments}
+                        views={["month", "week", "day"]}
+                        defaultView={"month"}
+                        height={"100vh"}
+                    />
+                </Tab>
+            </Tabs>
             </div>
         </SidebarWrapper>
     )

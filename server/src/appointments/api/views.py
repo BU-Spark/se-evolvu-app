@@ -185,6 +185,45 @@ def fetch_appointments_in_next_week(request):
         })
     return Response(ret)
 
+
+
+@api_view(['GET', ])
+def fetch_appointments_between_two_dates(request):
+    coach_slug = request.query_params.get('coach_slug')
+    session_completed = request.query_params.get('session_completed')
+    start_date = convertDateToPythonDate(request.query_params.get('start_date'))
+    end_date = convertDateToPythonDate(request.query_params.get('end_date'))
+    coach = Coach.objects.get(coach__slug=coach_slug)
+    queryset = Appointment.objects.filter(coach_id=coach.id)
+
+    if start_date and end_date:
+        greater_than_current_date = Q(date__gte=start_date)
+        less_than_end_of_week = Q(date__lte=end_date)
+        queryset = queryset.filter(greater_than_current_date & less_than_end_of_week)
+    if session_completed:
+        bool_to_check = True if session_completed == 'True' else False 
+        session_query = Q(session_completed=bool_to_check)
+        queryset = queryset.filter(session_query)
+    
+    # Iterate through queryset 
+    ret = []
+    for appointment in queryset.values():
+        # Convert User_Profile_ID to first_name and last_name
+        user_profile = UserProfile.objects.get(id=appointment['user_profile_id'])
+        user = Account.objects.get(id=user_profile.user_id)
+        first_name = user.first_name
+        last_name = user.last_name
+        ret.append({
+            "appointment_id": appointment["appointment_id"],
+            "coach_id": appointment["coach_id"],
+            "client_first_name": first_name,
+            "client_last_name": last_name,
+            "date": appointment["date"],
+            "start_time": appointment['start_time'],
+            "end_time": appointment['end_time']
+        })
+    return Response(ret)
+
 def convertDateToPythonDate(date):
     # parameter date in the format of mm/dd/yyyy
     # returns python datetime
