@@ -107,6 +107,25 @@ const fetchAppointmentsOnDate = (date, slug) => {
     })
 }
 
+const fetchAppointmentsBetweenDates = (start_date, end_date, slug) => {
+    return new Promise((resolve, reject) => {
+        axios({
+            url: "/api/appointments/get_appointments_between_two_dates/",
+            method: "get",
+            params: {
+                "start_date": start_date,
+                "end_date": end_date,
+                "coach_slug": slug,
+                "session_completed": "False"
+            }
+        }).then(res => {
+            resolve(res.data);
+        }).catch(err => {
+            reject(err.message)
+        })
+    })
+}
+
 const getCoachCalendar = (slug) => {
     return axios({
         url: "/api/calendars/get_calendar/" + slug + "/",
@@ -136,7 +155,8 @@ const coachServices = {
     updateCoachCalendar,
     parseCalendarForScheduler,
     formatCalendarForUpload,
-    fetchAppointmentsOnDate
+    fetchAppointmentsOnDate,
+    fetchAppointmentsBetweenDates
 };
 
 export default coachServices;
