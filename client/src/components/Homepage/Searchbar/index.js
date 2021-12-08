@@ -61,6 +61,7 @@ const SearchBar = () => {
                         {areaLabel}
                     </Dropdown.Toggle>
                     <Dropdown.Menu
+                        id="dropdown-basic"
                         
                     >
                         {
@@ -75,7 +76,7 @@ const SearchBar = () => {
                         ))}
                     </Dropdown.Menu>
                 </Dropdown>
-                <InputGroup className="mb-3" id="location-input">
+                <InputGroup className="mb-3">
                     <Form.Control
                         id="location-input"
                         placeholder="Enter location"
@@ -83,17 +84,17 @@ const SearchBar = () => {
                         aria-describedby="basic-addon1"
                         onChange={e => handleLocationChange(e)}
                     />
-                </InputGroup>
                 <Button 
-                variant="secondary"
-                id="search-submit" 
-                onClick={e => {
-                    onClickHandle()
-                    onSubmit(e)
-                }}
+                    variant="secondary"
+                    id="search-submit"
+                    onClick={e => {
+                        onClickHandle()
+                        onSubmit(e)
+                    }}
             >
                 Find Your Coach
             </Button>
+                </InputGroup>
             </div>
             <div id="location-error-alert">
                 { invalidLocationError ? <Alert  variant="danger">Please enter a valid location.</Alert> : null }

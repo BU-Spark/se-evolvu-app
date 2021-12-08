@@ -23,7 +23,6 @@
 }
 
 #location-input {
-    width: 20rem;
     background-color: #373737;
     color: #F6F6F6;
 }
@@ -37,9 +36,7 @@
 #search-submit {
     margin-left: 5%;
     background-color: #373737;
-    font-weight: bold;
-    height: 3rem;
-    border-radius:5%;
+
 }
 
 /* Mobile Media Queries */
