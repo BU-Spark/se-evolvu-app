@@ -55,11 +55,10 @@ const CalendarComponent = ({appointments, handleNavigate, views, defaultView, he
       const eventObject = {};
       const start = formatStringIntoDate(obj['date'], obj['start_time']);
       const end = formatStringIntoDate(obj['date'], obj['end_time']);
-      const first_name = obj['client_first_name'];
-      const last_name = obj['client_last_name'];
+      const name = obj['client'];
       eventObject["start"] = start;
       eventObject["end"] = end;
-      eventObject["title"] = `Session with ${first_name} ${last_name}`;
+      eventObject["title"] = `Session with ${name}`;
       events.push(eventObject);
     });
     return events;

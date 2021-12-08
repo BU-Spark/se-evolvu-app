@@ -67,7 +67,6 @@ def create_appointment(request):
                     serializer.save(coach, user)
                     return Response({"message": "Successfully booked an appointment"})
                 else:
-                    print(serializer.errors)
                     return Response(serializer.errors)
             else:
                 return Response({"message": "Unable to find an available time"}, status=status.HTTP_400_BAD_REQUEST)
@@ -77,33 +76,65 @@ def create_appointment(request):
             return Response({"message": "Bad request! Please try again later"}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST', ])
-def complete_appointment(request):
-    # Date: mm/dd/yyyy
-    # Day: day of the week in lowercase
-    # Start Time: hh:mm
-    # End Time: hh:mm
-    coach_slug = request.data['coach_slug']
-    date = request.data['date']
-    start_time = request.data['start_time']
-    end_time = request.data['end_time']
-
-    date = convertDateToPythonDate(request.data['date'])
-    start_time = convertTimeToPythonTime(request.data['start_time'])
-    end_time = convertTimeToPythonTime(request.data['end_time'])
-
-    # Find coach
+def edit_session_completion(request):
+    appointment_id = request.data['appointment_id']
+    session_completion_status = request.data['session_completion_status']
+    # Find Appointment and set proper completion status
     try:
-        coach = Coach.objects.get(coach__slug = coach_slug)
-    except:
-        return Response({"message": "Unable to find coach"}, status=status.HTTP_400_BAD_REQUEST)
-
-    # Find Appointment and set completion to true
-    try:
-        appointment = Appointment.objects.get(coach_id=coach.id, start_time=start_time, end_time=end_time, date=date)
-        appointment.completeSession()
-        return Response({"message": "Completed session"}, status=status.HTTP_200_OK)
+        appointment = Appointment.objects.get(appointment_id=appointment_id)
+        appointment.editSessionCompletion(session_completion_status)
+        return Response({"message": "Edited completion status"}, status=status.HTTP_200_OK)
     except Appointment.DoesNotExist:
         return Response({"message": "Unable to find the requested appointment"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST', ])
+def cancel_session(request):
+    appointment_id = request.data['appointment_id']
+    # Find Appointment and set proper completion status
+    try:
+        Appointment.objects.filter(appointment_id=appointment_id).delete()
+        return Response({"message": "Cancelled appointment"}, status=status.HTTP_200_OK)
+    except Appointment.DoesNotExist:
+        return Response({"message": "Unable to cancel the requested appointment"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', ])
+def fetch_upcoming_sessions(request):
+
+    coach_slug = request.query_params.get('coach_slug')
+    # date format is mm/dd/yyyy
+    today = datetime.date.today()
+    time  = datetime.datetime.now()
+    coach = Coach.objects.get(coach__slug=coach_slug)
+    queryset = Appointment.objects.filter(coach_id=coach.id)
+
+    if today:
+        filter_date = Q(date__gte=today)
+        filter_non_completed_sessions = Q(session_completed=False)
+        queryset = queryset.filter(filter_date & filter_non_completed_sessions)
+    
+    # Iterate through queryset 
+    ret_appointments = parseAppointments(queryset)
+    return Response(ret_appointments)      
+
+@api_view(['GET', ])
+def fetch_past_sessions(request):
+
+    coach_slug = request.query_params.get('coach_slug')
+    # date format is mm/dd/yyyy
+    today = datetime.date.today()
+    coach = Coach.objects.get(coach__slug=coach_slug)
+    queryset = Appointment.objects.filter(coach_id=coach.id)
+
+    if today:
+        filter_date = Q(date__lt=today)
+        completed_sessions = Q(session_completed=True)
+        queryset = queryset.filter(filter_date | completed_sessions)
+    
+    # Iterate through queryset 
+    ret_appointments = parseAppointments(queryset)
+    return Response(ret_appointments)
+
 
 @api_view(['GET', ])
 def fetch_appointments_on_date(request):
@@ -125,24 +156,8 @@ def fetch_appointments_on_date(request):
         session_query = Q(session_completed=bool_to_check)
         queryset = queryset.filter(session_query)
     
-    # Iterate through queryset 
-    ret = []
-    for appointment in queryset.values():
-        # Convert User_Profile_ID to first_name and last_name
-        user_profile = UserProfile.objects.get(id=appointment['user_profile_id'])
-        user = Account.objects.get(id=user_profile.user_id)
-        first_name = user.first_name
-        last_name = user.last_name
-        ret.append({
-            "appointment_id": appointment["appointment_id"],
-            "coach_id": appointment["coach_id"],
-            "client_first_name": first_name,
-            "client_last_name": last_name,
-            "date": appointment["date"],
-            "start_time": appointment['start_time'],
-            "end_time": appointment['end_time']
-        })
-    return Response(ret)
+    ret_appointments = parseAppointments(queryset)
+    return Response(ret_appointments)
 
 
 @api_view(['GET', ])
@@ -166,24 +181,8 @@ def fetch_appointments_in_next_week(request):
         session_query = Q(session_completed=bool_to_check)
         queryset = queryset.filter(session_query)
     
-    # Iterate through queryset 
-    ret = []
-    for appointment in queryset.values():
-        # Convert User_Profile_ID to first_name and last_name
-        user_profile = UserProfile.objects.get(id=appointment['user_profile_id'])
-        user = Account.objects.get(id=user_profile.user_id)
-        first_name = user.first_name
-        last_name = user.last_name
-        ret.append({
-            "appointment_id": appointment["appointment_id"],
-            "coach_id": appointment["coach_id"],
-            "client_first_name": first_name,
-            "client_last_name": last_name,
-            "date": appointment["date"],
-            "start_time": appointment['start_time'],
-            "end_time": appointment['end_time']
-        })
-    return Response(ret)
+    ret_appointments = parseAppointments(queryset)
+    return Response(ret_appointments)
 
 
 
@@ -205,24 +204,8 @@ def fetch_appointments_between_two_dates(request):
         session_query = Q(session_completed=bool_to_check)
         queryset = queryset.filter(session_query)
     
-    # Iterate through queryset 
-    ret = []
-    for appointment in queryset.values():
-        # Convert User_Profile_ID to first_name and last_name
-        user_profile = UserProfile.objects.get(id=appointment['user_profile_id'])
-        user = Account.objects.get(id=user_profile.user_id)
-        first_name = user.first_name
-        last_name = user.last_name
-        ret.append({
-            "appointment_id": appointment["appointment_id"],
-            "coach_id": appointment["coach_id"],
-            "client_first_name": first_name,
-            "client_last_name": last_name,
-            "date": appointment["date"],
-            "start_time": appointment['start_time'],
-            "end_time": appointment['end_time']
-        })
-    return Response(ret)
+    ret_appointments = parseAppointments(queryset)
+    return Response(ret_appointments)
 
 def convertDateToPythonDate(date):
     # parameter date in the format of mm/dd/yyyy
@@ -242,3 +225,25 @@ def convertTimeToPythonTime(time):
         return time 
     except:
         return None
+
+def parseAppointments(queryset_appointments):
+        # Iterate through queryset 
+    ret = []
+    for appointment in queryset_appointments.values():
+        # Convert User_Profile_ID to first_name and last_name
+        user_profile = UserProfile.objects.get(id=appointment['user_profile_id'])
+        user = Account.objects.get(id=user_profile.user_id)
+        first_name = user.first_name
+        last_name = user.last_name
+        email = user.email
+        ret.append({
+            "appointment_id": appointment["appointment_id"],
+            "coach_id": appointment["coach_id"],
+            "client": first_name + " " + last_name,
+            "client_email": email,
+            "session_completed": appointment['session_completed'],
+            "date": appointment["date"],
+            "start_time": appointment['start_time'],
+            "end_time": appointment['end_time']
+        })
+    return ret

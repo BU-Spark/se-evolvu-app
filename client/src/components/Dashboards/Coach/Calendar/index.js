@@ -63,24 +63,24 @@ const CoachCalendar = () => {
                 </div>
             </div>
             <div id="options-container">
-            <Tabs defaultActiveKey="availability" id="uncontrolled-tab-example" className="mb-3">
-                <Tab eventKey="availability" title="Edit availability">
-                    {initialSchedule.length > 0 ? <AvailabilitySelector 
-                        schedule={initialSchedule} 
-                        onChangeSchedule={handleSave} 
-                        title={"Edit your general availability"}
-                    /> : <div></div> }
-                </Tab>
-                <Tab eventKey="calendar" title="View your calendar">
-                    <BaseCalendar 
-                        appointments={appointments}
-                        handleNavigate={getCoachAppointments}
-                        views={["month", "week", "day"]}
-                        defaultView={"month"}
-                        height={"100vh"}
-                    />
-                </Tab>
-            </Tabs>
+                <Tabs defaultActiveKey="availability" id="uncontrolled-tab-example" className="mb-3">
+                    <Tab eventKey="availability" title="Edit availability">
+                        {initialSchedule.length > 0 ? <AvailabilitySelector 
+                            schedule={initialSchedule} 
+                            onChangeSchedule={handleSave} 
+                            title={"Edit your general availability"}
+                        /> : <div></div> }
+                    </Tab>
+                    <Tab eventKey="calendar" title="View your calendar">
+                        <BaseCalendar 
+                            appointments={appointments}
+                            handleNavigate={getCoachAppointments}
+                            views={["month", "week", "day"]}
+                            defaultView={"month"}
+                            height={"100vh"}
+                        />
+                    </Tab>
+                </Tabs>
             </div>
         </SidebarWrapper>
     )
