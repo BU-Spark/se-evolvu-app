@@ -126,6 +126,34 @@ const fetchAppointmentsBetweenDates = (start_date, end_date, slug) => {
     })
 }
 
+const fetchUpcomingSessions = (slug) => {
+    return axios({
+        url: "/api/appointments/get_upcoming_sessions/",
+        method: "get",
+        params: {
+            "coach_slug": slug,
+        }
+    }).then((res) => {
+        return res.data;
+    }).catch(err => {
+        throw new Error(err.message);
+    })
+}
+
+const fetchPastSessions = (slug) => {
+    return axios({
+        url: "/api/appointments/get_past_sessions/",
+        method: "get",
+        params: {
+            "coach_slug": slug,
+        }
+    }).then((res) => {
+        return res.data;
+    }).catch(err => {
+        throw new Error(err.message);
+    })
+}
+
 const getCoachCalendar = (slug) => {
     return axios({
         url: "/api/calendars/get_calendar/" + slug + "/",
@@ -150,13 +178,48 @@ const updateCoachCalendar = (newSchedule, slug) => {
     })
 }
 
+const editSessionCompletion = (appointment_id, status) => {
+    return axios({
+        url: "/api/appointments/edit_session_completion/",
+        method: "post",
+        data: {
+            appointment_id: appointment_id, 
+            session_completion_status: status
+        }
+    }).then(res => {
+        return res.data;
+    }).catch(err => {
+        console.log(err);
+        throw new Error(err.message);
+    })
+}
+
+const cancelSession = (appointment_id) => {
+    return axios({
+        url: "/api/appointments/cancel_session/",
+        method: "post",
+        data: {
+            appointment_id: appointment_id, 
+        }
+    }).then(res => {
+        return res.data;
+    }).catch(err => {
+        console.log(err);
+        throw new Error(err.message);
+    })
+}
+
 const coachServices = {
     getCoachCalendar,
     updateCoachCalendar,
+    cancelSession,
     parseCalendarForScheduler,
     formatCalendarForUpload,
     fetchAppointmentsOnDate,
-    fetchAppointmentsBetweenDates
+    fetchAppointmentsBetweenDates,
+    fetchUpcomingSessions,
+    fetchPastSessions,
+    editSessionCompletion
 };
 
 export default coachServices;

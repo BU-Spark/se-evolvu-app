@@ -16,5 +16,7 @@ class Appointment(models.Model):
     has_client_accepted = models.BooleanField(default=False)
 
     
-    def completeSession(self):
-        self.session_completed = True
+    def editSessionCompletion(self, status):
+        # status will either be boolean true or false
+        self.session_completed = status
+        self.save()

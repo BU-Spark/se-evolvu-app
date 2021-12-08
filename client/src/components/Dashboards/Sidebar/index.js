@@ -29,30 +29,25 @@ const DashSidebar = () => {
             component: <RiCalendarCheckFill size={40}/>
         },
         {
-            path: "/coach/forms",
-            name: "Profile",
-            component: <BsFillPersonFill size={40}/>
-        },
-        {
             path: "/coach/history",
-            name: "Session History",
+            name: "Client & Session History",
             component: <FaHistory size={40}/>
         },
         {
-            path: "/coach/payment",
-            name: "Payments",
+            path: "/coach/packages",
+            name: "Packages",
             component: <FiCreditCard size={40}/>
-        },
-        {
-            path: "/coach/error",
-            name: "Forms",
-            component: <BsTextCenter size={40}/>
         },
         {
             path: "/coach/settings",
             name: "Settings",
             component: <IoSettingsSharp size={40}/>
-        }
+        },
+        {
+            path: "/coach/inbox",
+            name: "Inbox",
+            component: <BsTextCenter size={40}/>
+        },
     ]
 
     return(
@@ -73,9 +68,6 @@ const DashSidebar = () => {
                         </Nav.Item>
                     ))
                 }
-                <Nav.Item id="dashboard-coach-item">
-                    <Nav.Link id="dashboard-nav-link">Coach James</Nav.Link>
-                </Nav.Item>
                 <Button id="dashboard-coach-item">Logout</Button> 
             </Nav>
         </div>
