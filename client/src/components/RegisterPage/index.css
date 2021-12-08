@@ -3,7 +3,8 @@
     text-align: left;
     padding: 5%;
     height: 100vh;
-    background-image: url("../../images/homepage-background.png");   
+    background-image: url("../../images/homepage-background.png");
+    background-size: cover;   
 }
 
 .register-form {

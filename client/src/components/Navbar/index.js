@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import useWindowDimensions from '../../hooks/useWindowDimensions.js'
 import EvolvULogo from '../../images/EvolvULogo.png'
+import { useHistory } from 'react-router';
 
 
 import "./index.css"
@@ -13,7 +14,8 @@ const CustomNavbar = () => {
 
     // eslint-disable-next-line
     const { width, height } = useWindowDimensions()
-    const [toggleMenu, setToggleMenu] = useState(false)
+    const [toggleMenu, setToggleMenu] = useState(false);
+    const history = useHistory();
 
     useEffect( () => {
         if (width < 800) {
@@ -38,7 +40,7 @@ const CustomNavbar = () => {
                         </li>
                     </ul>
                     <div className="nav-logo">
-                        <img class="navbar-brand" src={EvolvULogo} alt="EvolvU logo" width={"35%"}/>
+                        <img id="navbar-logo" src={EvolvULogo} alt="EvolvU logo" width={"35%"} onClick={() => history.push("/")}/>
                     </div>
                     <ul className="navbar-linklist">
                         <li className="navbar-link" >

@@ -67,3 +67,7 @@
     margin: 0;
     color: #9fc0de;
 }
+
+#navbar-logo {
+    cursor: pointer;
+}

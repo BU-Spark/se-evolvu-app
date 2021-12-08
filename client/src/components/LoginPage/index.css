@@ -5,6 +5,7 @@
     padding-right: 20%;
     height: 100vh;
     background-image: url("../../images/homepage-background.png");
+    background-size: cover;
 }
 
 .login-header{

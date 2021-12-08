@@ -9,6 +9,7 @@ import useWindowDimensions from '../../../hooks/useWindowDimensions.js';
 import { logout } from '../../../redux/actions/authAction.js';
 import { removeUser } from '../../../redux/actions/userAction.js';
 import EvolvULogo from '../../../images/EvolvULogo.png';
+import { useHistory } from 'react-router';
 
 
 import "./index.css"
@@ -23,6 +24,7 @@ const UserNavbar = () => {
     const firstName = useSelector(state => state.userReducer.first_name);
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect( () => {
         if (width < 800) {
@@ -45,7 +47,7 @@ const UserNavbar = () => {
                 <div id="nav-wrapper">
                     <div id="coach-navbar">
                         <div className="nav-logo">
-                            <img className="navbar-brand" src={EvolvULogo} alt="EvolvU logo" width={"35%"} />
+                            <img id="navbar-logo" src={EvolvULogo} alt="EvolvU logo" width={"35%"} onClick={() => history.push("/")}/>
                         </div>
                         <ul className="coach-nav-linklist">
                             <li className="navbar-link" >
@@ -71,7 +73,7 @@ const UserNavbar = () => {
             <div id="nav-wrapper">
                 <div id="navbar">
                         <div className="nav-logo">
-                            <img className="navbar-brand" src={EvolvULogo} alt="EvolvU logo" width={"35%"} />
+                            <img id="navbar-logo" src={EvolvULogo} alt="EvolvU logo" width={"35%"} onClick={() => history.push("/")} />
                         </div>
                         <ul className="coach-nav-linklist">
                             <li className="navbar-link" >
