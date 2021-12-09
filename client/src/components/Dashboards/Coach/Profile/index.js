@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import SidebarWrapper from '../../Sidebar/SidebarWrapper/index.js';
+import SidebarWrapper from '../../Sidebar/CoachSidebar/SidebarWrapper/index';
 
 
 const CoachProfileForm = () => {

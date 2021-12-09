@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Table from 'react-bootstrap/Table';
-import SidebarWrapper from '../../Sidebar/SidebarWrapper/index.js';
+import SidebarWrapper from '../../Sidebar/CoachSidebar/SidebarWrapper/index';
 
 import './index.css';
 

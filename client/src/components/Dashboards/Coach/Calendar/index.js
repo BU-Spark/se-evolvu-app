@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Button from 'react-bootstrap/esm/Button';
-import SidebarWrapper from '../../Sidebar/SidebarWrapper/index.js';
+import SidebarWrapper from '../../Sidebar/CoachSidebar/SidebarWrapper/index';
 import AvailabilitySelector from '../../../AvailabilitySelector/index.js';
 import coachServices from '../../../../services/coachServices.js';
 import { useSelector, useDispatch } from 'react-redux';

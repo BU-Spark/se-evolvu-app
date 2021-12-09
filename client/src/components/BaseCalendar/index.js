@@ -20,7 +20,15 @@ const localizer = dateFnsLocalizer({
 });
 
 
-const CalendarComponent = ({appointments, handleNavigate, views, defaultView, height}) => {
+const CalendarComponent = (
+  {
+    appointments, 
+    handleNavigate, 
+    views, 
+    defaultView, 
+    height,
+    showCoach
+  }) => {
   const formatStringIntoDate = (date, time) => {
     const [year, month, day] = date.split("-");
     const [hours, minutes] = time.split(":");
@@ -55,7 +63,7 @@ const CalendarComponent = ({appointments, handleNavigate, views, defaultView, he
       const eventObject = {};
       const start = formatStringIntoDate(obj['date'], obj['start_time']);
       const end = formatStringIntoDate(obj['date'], obj['end_time']);
-      const name = obj['client'];
+      const name = showCoach ? obj['coach'] : obj['client'];
       eventObject["start"] = start;
       eventObject["end"] = end;
       eventObject["title"] = `Session with ${name}`;

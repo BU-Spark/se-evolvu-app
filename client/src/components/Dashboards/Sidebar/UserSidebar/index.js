@@ -19,32 +19,22 @@ const DashSidebar = () => {
 
     const sidebarRoutes = [
         {
-            path: "/coach/dashboard",
+            path: "/user/dashboard",
             name: "Dashboard",
             component: <IoNewspaperOutline size={40}/>
         },
         {
-            path: "/coach/calendar",
-            name: "Calendar",
-            component: <RiCalendarCheckFill size={40}/>
-        },
-        {
-            path: "/coach/history",
-            name: "Client & Session History",
+            path: "/user/history",
+            name: "Session History",
             component: <FaHistory size={40}/>
         },
         {
-            path: "/coach/packages",
-            name: "Packages",
-            component: <FiCreditCard size={40}/>
-        },
-        {
-            path: "/coach/settings",
+            path: "/user/settings",
             name: "Settings",
             component: <IoSettingsSharp size={40}/>
         },
         {
-            path: "/coach/inbox",
+            path: "/user/inbox",
             name: "Inbox",
             component: <BsTextCenter size={40}/>
         },
@@ -68,7 +58,6 @@ const DashSidebar = () => {
                         </Nav.Item>
                     ))
                 }
-                <Button id="dashboard-coach-item">Logout</Button> 
             </Nav>
         </div>
     )

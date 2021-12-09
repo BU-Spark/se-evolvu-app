@@ -5,23 +5,27 @@ import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
-import DashCarousel from './Carousel/index.js';
 import { useSelector } from 'react-redux';
-import coachServices from '../../../../services/coachServices.js';
+import userServices from '../../../../services/userServices.js';
 import BaseCalendar from '../../../BaseCalendar/index.js';
-import SidebarWrapper from '../../Sidebar/CoachSidebar/SidebarWrapper/index';
+import SidebarWrapper from '../../Sidebar/UserSidebar/SidebarWrapper/index';
+import { Redirect } from 'react-router-dom';
+import './index.css';
 
-const CoachDash = () => {
+const UserDashboard = () => {
+
+    const name = useSelector(state => state.userReducer.first_name);
+    const coach = useSelector(state => state.userReducer.coach);
+    const admin = useSelector(state => state.userReducer.admin);
+    const slug = useSelector(state => state.authReducer.slug);
 
     const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
     const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString('en-US', { hour12: true, hour: "numeric", minute: "numeric"}));
     const [appointments, setAppointments] = useState([]);
-    const name = useSelector(state => state.userReducer.first_name);
-    const coachSlug = useSelector(state => state.authReducer.slug);
 
-    const getCoachAppointments = async (date) => {
+    const getUserAppointments = async (date) => {
         try {
-            const appointments = await coachServices.fetchAppointmentsOnDate(date, coachSlug);
+            const appointments = await userServices.fetchAppointmentsOnDate(date, slug);
             setAppointments(appointments);
         } catch (error) {
             console.log(error);
@@ -29,12 +33,22 @@ const CoachDash = () => {
     }
 
     const handleCalendarNavigate = (date) => {
-        getCoachAppointments(date.toLocaleDateString());
+        getUserAppointments(date.toLocaleDateString());
     }
 
     useEffect(() => {
-        getCoachAppointments(currentDate);
-    }, [])
+        getUserAppointments(currentDate);
+    }, []);
+
+    if (coach) {
+        return <Redirect to="/coach/dashboard"/>
+    } 
+
+    if (admin) {
+        return (
+            <Redirect to="/admin/dashboard"/>
+        )
+    }
 
     return (    
         <SidebarWrapper>
@@ -50,7 +64,7 @@ const CoachDash = () => {
                         views={["day"]} 
                         defaultView={"day"}
                         height={"50vh"}
-                        showCoach={false}
+                        showCoach={true}
                         />
                 </Col>
                 <Col>
@@ -67,17 +81,11 @@ const CoachDash = () => {
                         <Col>
                             <div style={{ textAlign: "left", background:"#E1ECF7" }}>
                                 <div style={{ padding: '1rem'}}>
-                                    <h5>Hello, Coach {name}!</h5>
+                                    <h5>Hello, {name}!</h5>
                                     <p>Don't forget to check your inbox!</p>
                                     <p>Make sure you have reviewed the <a href="blank">CDC safety guidelines</a> for COVID-19</p>
                                 </div>
                             </div>
-                        </Col>
-                    </Row>
-                    <Row style={{ marginTop: "2rem"}}>
-                        <Col>
-                            <p style={{ background: "#E1ECF7", textAlign: "left", padding: "0.5rem", margin: "0"}}>Today's Session</p>
-                            <DashCarousel/>
                         </Col>
                     </Row>
                 </Col>
@@ -114,4 +122,5 @@ const CoachDash = () => {
     )
 }
 
-export default CoachDash;
+export default UserDashboard;
+
