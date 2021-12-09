@@ -113,7 +113,7 @@ def fetch_upcoming_sessions(request):
         queryset = queryset.filter(filter_date & filter_non_completed_sessions)
     
     # Iterate through queryset 
-    ret_appointments = parseAppointments(queryset)
+    ret_appointments = parseCoachAppointments(queryset)
     return Response(ret_appointments)      
 
 @api_view(['GET', ])
@@ -131,7 +131,59 @@ def fetch_past_sessions(request):
         queryset = queryset.filter(filter_date | completed_sessions)
     
     # Iterate through queryset 
-    ret_appointments = parseAppointments(queryset)
+    ret_appointments = parseCoachAppointments(queryset)
+    return Response(ret_appointments)
+
+@api_view(['GET', ])
+def fetch_client_appointments_on_date(request):
+
+    slug = request.query_params.get('client_slug')
+    date = request.query_params.get('date')
+    # date format is mm/dd/yyyy
+    date_to_check = convertDateToPythonDate(date)
+    user_profile = UserProfile.objects.get(user__slug=slug)
+    queryset = Appointment.objects.filter(user_profile_id=user_profile.id)
+
+    if date_to_check:
+        date_query = Q(date=date_to_check)
+        queryset = queryset.filter(date_query)
+    
+    ret_appointments = parseClientAppointments(queryset)
+    return Response(ret_appointments)
+
+
+@api_view(['GET', ])
+def fetch_upcoming_client_sessions(request):
+
+    slug = request.query_params.get('client_slug')
+    date = request.query_params.get('date')
+    # date format is mm/dd/yyyy
+    date_to_check = convertDateToPythonDate(date)
+    user_profile = UserProfile.objects.get(user__slug=slug)
+    queryset = Appointment.objects.filter(user_profile_id=user_profile.id)
+
+    if date_to_check:
+        date_query = Q(date__gte=date_to_check)
+        queryset = queryset.filter(date_query)
+    
+    ret_appointments = parseClientAppointments(queryset)
+    return Response(ret_appointments)
+
+@api_view(['GET', ])
+def fetch_previous_client_sessions(request):
+
+    slug = request.query_params.get('client_slug')
+    date = request.query_params.get('date')
+    # date format is mm/dd/yyyy
+    date_to_check = convertDateToPythonDate(date)
+    user_profile = UserProfile.objects.get(user__slug=slug)
+    queryset = Appointment.objects.filter(user_profile_id=user_profile.id)
+
+    if date_to_check:
+        date_query = Q(date__lt=date_to_check)
+        queryset = queryset.filter(date_query)
+    
+    ret_appointments = parseClientAppointments(queryset)
     return Response(ret_appointments)
 
 
@@ -155,7 +207,7 @@ def fetch_appointments_on_date(request):
         session_query = Q(session_completed=bool_to_check)
         queryset = queryset.filter(session_query)
     
-    ret_appointments = parseAppointments(queryset)
+    ret_appointments = parseCoachAppointments(queryset)
     return Response(ret_appointments)
 
 
@@ -180,7 +232,7 @@ def fetch_appointments_in_next_week(request):
         session_query = Q(session_completed=bool_to_check)
         queryset = queryset.filter(session_query)
     
-    ret_appointments = parseAppointments(queryset)
+    ret_appointments = parseCoachAppointments(queryset)
     return Response(ret_appointments)
 
 
@@ -203,7 +255,7 @@ def fetch_appointments_between_two_dates(request):
         session_query = Q(session_completed=bool_to_check)
         queryset = queryset.filter(session_query)
     
-    ret_appointments = parseAppointments(queryset)
+    ret_appointments = parseCoachAppointments(queryset)
     return Response(ret_appointments)
 
 def convertDateToPythonDate(date):
@@ -225,8 +277,31 @@ def convertTimeToPythonTime(time):
     except:
         return None
 
-def parseAppointments(queryset_appointments):
-        # Iterate through queryset 
+
+def parseClientAppointments(queryset_appointments):
+    # Iterate through queryset 
+    ret = []
+    for appointment in queryset_appointments.values():
+        # Convert User_Profile_ID to first_name and last_name
+        coach = Coach.objects.get(id=appointment['coach_id'])
+        coach_account = Account.objects.get(id=coach.coach_id)
+        first_name = coach_account.first_name
+        last_name = coach_account.last_name
+        email = coach_account.email
+        ret.append({
+            "appointment_id": appointment["appointment_id"],
+            "coach_id": appointment["coach_id"],
+            "coach": first_name + " " + last_name,
+            "coach_email": email,
+            "session_completed": appointment['session_completed'],
+            "date": appointment["date"],
+            "start_time": appointment['start_time'],
+            "end_time": appointment['end_time']
+        })
+    return ret
+
+def parseCoachAppointments(queryset_appointments):
+    # Iterate through queryset 
     ret = []
     for appointment in queryset_appointments.values():
         # Convert User_Profile_ID to first_name and last_name

@@ -1,5 +1,7 @@
 
-import UserDashboard from '../components/Dashboards/User/index.js';
+import UserDashboard from '../components/Dashboards/User/Dashboard/index.js';
+import UserHistory from '../components/Dashboards/User/History/index.js';
+import UserSettings from '../components/Dashboards/User/Settings/index'
 import Homepage from '../components/Homepage/index.js';
 
 import CoachDash from '../components/Dashboards/Coach/Dashboard/index.js';
@@ -91,6 +93,14 @@ const protectedRoutes = [
     {
         path: "/user/dashboard",
         component: UserDashboard
+    },
+    {
+        path: "/user/history",
+        component: UserHistory
+    },
+    {
+        path: "/user/settings",
+        component: UserSettings
     },
     {
         path: "/coach/dashboard",

@@ -2,46 +2,36 @@ import React, { useEffect, useState } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import { Alert } from 'react-bootstrap';
-import SidebarWrapper from '../../Sidebar/CoachSidebar/SidebarWrapper/index';
-import coachServices from '../../../../services/coachServices.js';
+import userServices from '../../../../services/userServices';
+import coachServices from '../../../../services/coachServices'
 import TableComponent from '../../../TableComponent/index.js';
 import { useDispatch, useSelector } from 'react-redux';
+import SidebarWrapper from '../../Sidebar/UserSidebar/SidebarWrapper';
 
 import './index.css';
 
 const SessionHistory = () => {
     const dispatch = useDispatch();
-    const coachSlug = useSelector(state => state.authReducer.slug);
+    const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
+    const slug = useSelector(state => state.authReducer.slug);
     const message = useSelector(state => state.messageReducer.message);
-    const [past, setPast] = useState([]);
     const [upcoming, setUpcoming] = useState([]);
+    const [past, setPast] = useState([]);
+    const [sessions, setSessions] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const fetchSessions = async () => {
         try {
-            const upcoming = await coachServices.fetchUpcomingSessions(coachSlug);
-            const past = await coachServices.fetchPastSessions(coachSlug);
-            setPast(past);
+            const upcoming = await userServices.fetchScheduledSessions(currentDate, slug);
+            const past = await userServices.fetchPreviousSessions(currentDate, slug);
+            console.log(upcoming, past)
             setUpcoming(upcoming);
-
+            setPast(past);
         } catch (error) {
             console.log(error);
 
         }
         setLoading(false);
-        
-    }
-
-    const handleSessionCompletedToggle = async (rowData) => {
-        try {
-            const appointment_id = rowData["appointment_id"];
-            const status = !rowData['session_completed'];
-            const response = await coachServices.editSessionCompletion(appointment_id, status);
-            fetchSessions();
-        } catch (error) {
-            console.log(error);
-        }
-
     }
 
     const handleSessionCancel = async (rowData) => {
@@ -72,19 +62,18 @@ const SessionHistory = () => {
                 <TableComponent 
                     data={upcoming}
                     loading={loading}
-                    attributes={['appointment_id', 'client', 'client_email', 'date', 'start_time', 'session_completed', 'cancel']}    
-                    handleSessionCompletedToggle={handleSessionCompletedToggle}
+                    attributes={['appointment_id', 'coach', 'date', 'start_time', 'cancel']}    
+                    cellWidth={200}
                     handleSessionCancel={handleSessionCancel}
-                    cellWidth={175}
                 />                    
                 <hr/>
                 <h3 className="history-header">Past Sessions</h3>
                 <TableComponent 
                     data={past}
                     loading={loading}
-                    attributes={['appointment_id', 'client', 'client_email', 'date', 'start_time']}    
-                    handleSessionCompletedToggle={handleSessionCompletedToggle}
+                    attributes={['appointment_id', 'coach', 'date', 'start_time']}    
                     cellWidth={300}
+                    handleSessionCancel={handleSessionCancel}
                 /> 
             </div>
 
