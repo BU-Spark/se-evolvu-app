@@ -10,7 +10,7 @@ import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'https://se-evolvu.buspark.io/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 const store = configureStore();
