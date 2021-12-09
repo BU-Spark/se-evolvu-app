@@ -104,7 +104,6 @@ def fetch_upcoming_sessions(request):
     coach_slug = request.query_params.get('coach_slug')
     # date format is mm/dd/yyyy
     today = datetime.date.today()
-    time  = datetime.datetime.now()
     coach = Coach.objects.get(coach__slug=coach_slug)
     queryset = Appointment.objects.filter(coach_id=coach.id)
 

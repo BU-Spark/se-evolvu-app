@@ -75,14 +75,16 @@ const SessionHistory = () => {
                     attributes={['appointment_id', 'client', 'client_email', 'date', 'start_time', 'session_completed', 'cancel']}    
                     handleSessionCompletedToggle={handleSessionCompletedToggle}
                     handleSessionCancel={handleSessionCancel}
+                    cellWidth={200}
                 />                    
                 <hr/>
                 <h3 className="history-header">Past Sessions</h3>
                 <TableComponent 
                     data={past}
                     loading={loading}
-                    attributes={['appointment_id', 'client', 'client_email', 'date', 'start_time', 'session_completed']}    
+                    attributes={['appointment_id', 'client', 'client_email', 'date', 'start_time']}    
                     handleSessionCompletedToggle={handleSessionCompletedToggle}
+                    cellWidth={300}
                 /> 
             </div>
 

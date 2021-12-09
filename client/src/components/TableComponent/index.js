@@ -10,7 +10,8 @@ const TableComponent = (
         loading,
         attributes,
         handleSessionCompletedToggle,
-        handleSessionCancel
+        handleSessionCancel, 
+        cellWidth
 }) => {
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
@@ -25,7 +26,7 @@ const TableComponent = (
         attributes.forEach(attribute => {
             let cell; 
             if (attribute === "session_completed") {
-                cell = <Table.Column width={200} align="left" fixed>
+                cell = <Table.Column width={cellWidth} align="left" fixed>
                         <Table.HeaderCell>{attribute}</Table.HeaderCell>
                         <Table.Cell dataKey={attribute}>
                             {rowData => {
@@ -45,7 +46,7 @@ const TableComponent = (
                     </Table.Column>
             }
             else if (attribute === "cancel") {
-                cell = <Table.Column width={200} align="left" fixed>
+                cell = <Table.Column width={cellWidth} align="left" fixed>
                 <Table.HeaderCell>{attribute}</Table.HeaderCell>
                 <Table.Cell dataKey={attribute}>
                     {rowData => {
@@ -57,7 +58,7 @@ const TableComponent = (
             </Table.Column>
             }
             else {
-                cell = (<Table.Column width={200} align="left" fixed>
+                cell = (<Table.Column width={cellWidth} align="left" fixed>
                 <Table.HeaderCell>{attribute}</Table.HeaderCell>
                 <Table.Cell dataKey={attribute} />
             </Table.Column>)
