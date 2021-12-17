@@ -36,7 +36,7 @@ class AccountManager(BaseUserManager):
             username = username,
             first_name = first_name,
             last_name = last_name,
-            password=password
+            password=password,
         )
         user.is_admin = True
         user.is_staff = True
@@ -50,6 +50,12 @@ class Account(AbstractBaseUser):
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     slug = models.SlugField(blank=True, unique=True)
+    dob = models.CharField(max_length=50, default="", blank=True)
+    street = models.CharField(max_length=100, default="", blank=True)
+    city = models.CharField(max_length=50, default="", blank=True)
+    state = models.CharField(max_length=50, default="", blank=True)
+    country = models.CharField(max_length=50, default="", blank=True)
+    zip_code = models.CharField(default="", blank=True, max_length=25)
     is_customer = models.BooleanField(default=False)
     is_coach = models.BooleanField(default=False)
     date_joined = models.DateTimeField(verbose_name='Date joined', auto_now_add=True)
@@ -66,8 +72,6 @@ class Account(AbstractBaseUser):
 
     def __str__(self):
         return self.last_name + ', ' + self.first_name
-        #self.email
-        #self.last_name, self.first_name
 
     def get_info(self):
         user = {
@@ -75,6 +79,12 @@ class Account(AbstractBaseUser):
             "last_name": self.last_name,
             "email": self.email,
             "username": self.username,
+            "dob": self.dob,
+            "street": self.street,
+            "city": self.city,
+            "state": self.state,
+            "country": self.country,
+            "zip_code": self.zip_code,
             "is_customer": self.is_customer,
             "is_coach": self.is_coach,
             "date_joined": self.date_joined,

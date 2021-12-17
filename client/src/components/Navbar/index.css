@@ -2,8 +2,9 @@
     z-index: 2;
 }
 
+
 #navbar {
-    background: #707070;
+    background-color: #373737;
     list-style: None;
     display: flex;
     justify-content: space-between;
@@ -28,7 +29,7 @@
 
 .navitem {
     text-decoration: None;
-    color: #99CCFF;
+    color: #9fc0de;
     transition: 0.3s;
 }
 
@@ -39,6 +40,9 @@
 
 .nav-brand {
     margin: 0;
-    padding: 0 3rem 0;
-    color: #99CCFF;
+    color: #9fc0de;
+}
+
+#navbar-logo {
+    cursor: pointer;
 }

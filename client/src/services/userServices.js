@@ -32,6 +32,59 @@ const getCoach = (params) => {
     });
 };
 
+const bookAppointment = (data) => {
+    return axios({
+        url: "/api/appointments/create_appointment/",
+        method: "post",
+        data: data
+    })
+}
+
+const fetchAppointmentsOnDate = (date, slug) => {
+    return axios({
+        url: "/api/appointments/get_client_appointments_on_date",
+        method: "get",
+        params: {
+            "date": date,
+            "client_slug": slug,
+        }
+    }).then(res => {
+        return res.data;
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
+const fetchScheduledSessions = (date, slug) => {
+    return axios({
+        url: "/api/appointments/get_upcoming_client_sessions/",
+        method: "get",
+        params: {
+            "date": date,
+            "client_slug": slug,
+        }
+    }).then(res => {
+        return res.data;
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
+const fetchPreviousSessions = (date, slug) => {
+    return axios({
+        url: "/api/appointments/get_previous_client_sessions/",
+        method: "get",
+        params: {
+            "date": date,
+            "client_slug": slug,
+        }
+    }).then(res => {
+        return res.data;
+    }).catch(err => {
+        console.log(err);
+    })
+}
+
 const createReview = (params) => {
     return axios({
         url: "/api/reviews/create/" + params.slug,
@@ -45,7 +98,11 @@ const userServices = {
     searchCoaches,
     getUser,
     getCoach,
-    createReview
+    createReview,
+    bookAppointment,
+    fetchAppointmentsOnDate, 
+    fetchScheduledSessions,
+    fetchPreviousSessions
 };
 
 export default userServices;

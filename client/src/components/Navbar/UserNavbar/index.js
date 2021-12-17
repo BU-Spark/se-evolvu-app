@@ -8,6 +8,8 @@ import useWindowDimensions from '../../../hooks/useWindowDimensions.js';
 
 import { logout } from '../../../redux/actions/authAction.js';
 import { removeUser } from '../../../redux/actions/userAction.js';
+import EvolvULogo from '../../../images/EvolvULogo.png';
+import { useHistory } from 'react-router';
 
 
 import "./index.css"
@@ -22,6 +24,7 @@ const UserNavbar = () => {
     const firstName = useSelector(state => state.userReducer.first_name);
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect( () => {
         if (width < 800) {
@@ -44,7 +47,7 @@ const UserNavbar = () => {
                 <div id="nav-wrapper">
                     <div id="coach-navbar">
                         <div className="nav-logo">
-                            <h2 className="nav-brand"> EvolvU </h2>
+                            <img id="navbar-logo" src={EvolvULogo} alt="EvolvU logo" width={"35%"} onClick={() => history.push("/")}/>
                         </div>
                         <ul className="coach-nav-linklist">
                             <li className="navbar-link" >
@@ -70,7 +73,7 @@ const UserNavbar = () => {
             <div id="nav-wrapper">
                 <div id="navbar">
                         <div className="nav-logo">
-                            <h2 className="nav-brand"> EvolvU </h2>
+                            <img id="navbar-logo" src={EvolvULogo} alt="EvolvU logo" width={"35%"} onClick={() => history.push("/")} />
                         </div>
                         <ul className="coach-nav-linklist">
                             <li className="navbar-link" >
@@ -96,7 +99,7 @@ const UserNavbar = () => {
     return (
         <div id="nav-wrapper">
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand><Link className="navitem" to="/"> EvolvU </Link></Navbar.Brand>
+            <Navbar.Brand><Link className="navitem" to="/"> <img className="navbar-brand" src={EvolvULogo} alt="EvolvU logo" width={"35%"}/> </Link></Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav" animation="false">
                 <Nav className="mr-auto">
@@ -104,7 +107,7 @@ const UserNavbar = () => {
                         <Link className="navitem" to="/"> Find a Coach </Link>
                     </Nav>
                     <Nav>
-                        <Link className="navitem" to="/apply"> Apply as Coach </Link>
+                        <Link className="navitem" to="/apply"> Become a Coach </Link>
                     </Nav>
                     <Nav>
                         <Link className="navitem" to="/sign-in"> Sign In </Link>

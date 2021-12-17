@@ -1,11 +1,18 @@
 
 #register-container {
     text-align: left;
+    padding: 5%;
+    height: 100vh;
+    background-image: url("../../images/homepage-background.png");
+    background-size: cover;   
 }
 
 .register-form {
-    padding: 10%;
-    background: #CACACA;
+    /* margin-bottom: 10%; */
+    margin-left: 15%;
+    margin-right: 15%;
+    padding: 5%;
+    background: rgba(55,55,55, .4);
 }
 
 #register-form-submit {
@@ -14,7 +21,8 @@
 }
 
 .register-form-container {
-    margin: 15%;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 
 #register-form-submit:hover {

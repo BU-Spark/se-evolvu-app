@@ -12,12 +12,31 @@
 
 #dropdown-basic {
     width: 20rem;
+    background-color: #373737;
+    color: #F6F6F6;
+    font-weight: bold;
 }
 
-#zip-code-error-alert {
+#dropdown-items {
+    background-color: #373737;
+    color: #F6F6F6;
+}
+
+#location-input {
+    background-color: #373737;
+    color: #F6F6F6;
+}
+
+#location-error-alert {
     width: 75%;
     text-align: center;
     margin: auto;
+}
+
+#search-submit {
+    margin-left: 5%;
+    background-color: #373737;
+
 }
 
 /* Mobile Media Queries */

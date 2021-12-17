@@ -26,7 +26,7 @@ SECRET_KEY = os.environ['DJANGO_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '*']
 
 
 # Application definition
@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'users',
     'accounts',
     'reviews',
+    'calendars',
+    'appointments',
     'corsheaders',
 ]
 
@@ -92,10 +94,13 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:81',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'https://bu-spark.github.io'
 )
 
 AUTH_USER_MODEL = 'accounts.Account'
+COACH_MODEL = 'coaches.Coach'
+USER_PROFILE_MODEL = 'users.UserProfile'
 
 WSGI_APPLICATION = 'evolvu.wsgi.application'
 
@@ -114,7 +119,7 @@ DATABASES = {
     }
 }
 
-# If you are running the backend without Docker, use the following for a database:
+# # If you are running the backend without Docker, use the following for a database:
 
 # DATABASES = {
 #     'default': {
@@ -122,6 +127,32 @@ DATABASES = {
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+# If you are running the backend without Docker, use the following for logging:
+# This will allow you to import logging and initialize logger with logging.getLogger(<logger_name>) 
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'filters': ['require_debug_true'],
+        },
+    },
+    'loggers': {
+        'mylogger': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': True,
+        },
+    },
+}
 
 
 # Password validation

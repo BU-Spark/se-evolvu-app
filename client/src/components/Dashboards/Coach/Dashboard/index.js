@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,47 +7,59 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import DashCarousel from './Carousel/index.js';
 import { useSelector } from 'react-redux';
-
-import SidebarWrapper from '../../Sidebar/SidebarWrapper/index.js';
+import coachServices from '../../../../services/coachServices.js';
+import BaseCalendar from '../../../BaseCalendar/index.js';
+import SidebarWrapper from '../../Sidebar/CoachSidebar/SidebarWrapper/index';
 
 const CoachDash = () => {
 
-    let times = [("12:00 PM", 1), ("3:00 PM", 2), ("5:00 PM",3), ("6:00 PM",4)]
-    const name = useSelector(state => state.userReducer.first_name)
+    const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
+    const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString('en-US', { hour12: true, hour: "numeric", minute: "numeric"}));
+    const [appointments, setAppointments] = useState([]);
+    const name = useSelector(state => state.userReducer.first_name);
+    const coachSlug = useSelector(state => state.authReducer.slug);
 
-    useEffect( () => {
+    const getCoachAppointments = async (date) => {
+        try {
+            const appointments = await coachServices.fetchAppointmentsOnDate(date, coachSlug);
+            setAppointments(appointments);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
-    })
+    const handleCalendarNavigate = (date) => {
+        getCoachAppointments(date.toLocaleDateString());
+    }
 
-    return (
+    useEffect(() => {
+        getCoachAppointments(currentDate);
+    }, [])
+
+    return (    
         <SidebarWrapper>
-            <Alert style={{ marginTop: "30px"}} variant="danger">Note: Not much functionality has been added to the dashboards. Only the frontend has been worked on.</Alert>
             <div style={{ textAlign: "left", paddingTop: "1rem"}}>
                 <h2>Your Dashboard</h2>
             </div>
             <Row>
-                <Col sm={4}>
-                    <ListGroup>
-                        <ListGroup.Item style={{ background: "#373737", color: "white", textAlign: "left"}}>Today's Timetable</ListGroup.Item>
-                        {times.map( (val, idx) => (
-                            <ListGroup.Item key={idx} style={{ marginTop: "1rem", border: "none", background: "#F2F2F2", color: "#779ECC"}}>Session {val}</ListGroup.Item>
-                        ))}
-                    </ListGroup>
-                    <hr/>
-                    <div style={{ display: "flex", justifyContent: "space-between"}}>
-                        <Button variant="dark"> Edit Events </Button>
-                        <Button variant="dark"> Set Reminder </Button>
-                    </div>
-                    
+                <Col sm={6}>
+                    <p style={{ textAlign: "center", padding: "0.5rem", margin: "0", fontWeight: 'bold'}}>Today's Sessions</p>  
+                    <BaseCalendar 
+                        appointments={appointments} 
+                        handleNavigate={handleCalendarNavigate} 
+                        views={["day"]} 
+                        defaultView={"day"}
+                        height={"50vh"}
+                        showCoach={false}
+                        />
                 </Col>
                 <Col>
                     <Row>
                         <Col sm={3} >
                             <div style={{ background: "#F2F2F2"}}>
                                 <div style={{ padding: "1rem"}}>
-                                    <p>Time</p>
-                                    <p>Day</p>
-                                    <p>Year</p>
+                                    <p>{currentTime}</p>
+                                    <p>{currentDate}</p>
 
                                 </div>
                             </div>

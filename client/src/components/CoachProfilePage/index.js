@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import 'social-icon/dile-social-icon.js';
 import Button from 'react-bootstrap/Button';
 import Media from 'react-bootstrap/Media';
 import Col from 'react-bootstrap/Col';
@@ -46,6 +46,63 @@ const CoachProfilePage = (props) => {
         })
     }
 
+    const handleBookNow = (e) => {
+        e.preventDefault();
+        history.push({
+            pathname: '/book-appointment',
+            search: `?coach_slug=${profile.slug}&first_name=${profile.first_name}&last_name=${profile.last_name}&minPrice=${profile.minPrice}&maxPrice=${profile.maxPrice}`
+        })
+    }
+
+    const parseFocuses = () => {
+       let focusString = "";
+       if (profile.focus_behavioral_wellness) {
+            focusString += "Behavioral Wellness Coaching, ";
+       }
+       if (profile.focus_business) {
+            focusString += "Business Coaching, ";
+       }
+       if (profile.focus_health_wellness) {
+           focusString += "Health Wellness Coaching, ";
+       }
+       if (profile.focus_health_wellness) {
+        focusString += "Health & Wellness Coaching, ";
+       }
+       if (profile.focus_holistic) {
+         focusString += "Holistic Health & Wellness Coaching, ";
+      }
+      if (profile.focus_life) {
+        focusString += "Life Coaching, ";
+      }
+      return focusString.slice(0, -2);
+    }
+
+    const getSocialMedia = () => {
+        var socialMediaLinks = [
+            {"gmail": "mailto:" + profile['email'], "name": "gmail"}
+        ]
+        if (profile !== {}) {    
+            if (profile['facebook'] !== ""){
+                socialMediaLinks.push(
+                    {"facebook": profile['facebook'],
+                    "name": "facebook"}
+                )
+            }
+            if (profile['instagram'] !== ""){
+                socialMediaLinks.push(
+                    {"instagram": profile['instagram'],
+                    "name": "instagram"}
+                )
+            }
+            if (profile['twitter'] !== "") {
+                socialMediaLinks.push(
+                    {"twitter": profile['twitter'],
+                    "name": "twitter"}
+                )
+            }
+            return socialMediaLinks;
+        }
+    }
 
     if (props.location.state === undefined) {
         return <Redirect to="/error"/>
@@ -69,7 +126,7 @@ const CoachProfilePage = (props) => {
                                 width={128}
                                 height={128}
                                 className="mr-3 rounded-circle"
-                                src="https://via.placeholder.com/600/771796"
+                                src={profile.image ? profile.image : "https://via.placeholder.com/600/771796"}
                                 alt="Generic placeholder"
                             />
                             <Media.Body id="coach-profile-card-desc">
@@ -84,16 +141,31 @@ const CoachProfilePage = (props) => {
                                 {profile.no_of_reviews} ratings
                             </p>
                             <p>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
-                                ante sollicitudin commodo. 
+                                {"Bio: "} 
+                                {profile.description ? profile.description :
+                                "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo."} 
                             </p>
-                            Response Rate: {profile.id}
+                            Response Rate: {profile.id ? profile.id : "N/A"}
+                            <br/><br/>
+                            <p className="social-media-icons"> {
+                                getSocialMedia().map(item => (
+                                    <div>
+                                    <a href={item[item.name]}>
+                                        <dile-social-icon icon={item.name}></dile-social-icon>
+                                    </a>
+                                     &nbsp; </div>
+                                ))}
+                            </p> 
                             </Media.Body>
                         </Media>
                         <div style={{ background: '#F2F2F2', marginTop: '1rem'}}>
-                            <CoachProfileTabs />
+                            <CoachProfileTabs 
+                                careerExperience={profile.experienceDescription ? profile.experienceDescription : "N/A"} 
+                                credentials={profile.credentialDescription ? profile.credentialDescription : "N/A"}
+                                sessionDescription={profile.sessionDescription ? profile.sessionDescription : "N/A"}
+                                
+
+                            />
                         </div>
                     </Col>
                     <Col sm={4} style={{ display: 'inline-block'}}>
@@ -103,6 +175,7 @@ const CoachProfilePage = (props) => {
                                 <Button
                                     bsPrefix="coach-profile-book-btn"
                                     disable
+                                    onClick={handleBookNow}
                                 >
                                     Book Now
                                 </Button>
@@ -128,12 +201,12 @@ const CoachProfilePage = (props) => {
                                 <hr></hr>
                                 <p className="font-weight-bold">General Availability</p>
                                 <p>Days and Times: </p>
-                                <p>Focus: </p>
+                                <p>Focus: {parseFocuses()}</p>
                                 <hr></hr>
                                 <p className="font-weight-bold">Session Location</p>
                                 <p>In Person Session: </p>
                                 <ul>
-                                    <li>Medford</li>
+                                    <li>{profile.trainingAddress ? profile.trainingAddress : "No in person location specified"}</li>
                                 </ul>
                                 <hr></hr>
                                 <p className="font-weight-bold">Languages</p>

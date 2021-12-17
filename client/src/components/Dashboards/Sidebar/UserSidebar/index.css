@@ -1,0 +1,36 @@
+
+#dashboard-router-link {
+    color: white;
+    text-decoration: none;
+}
+
+#dashboard-router-link:hover {
+    color: orange;
+    text-decoration: none;
+}
+
+#dashboard-router-link:hover {
+    text-decoration: none;
+}
+
+#dashboard-nav-link {
+    border-radius: 5px;
+    padding: 1rem;
+    color: white;
+    background: #9FC0DE;
+}
+
+#dashboard-nav-item {
+    padding: 1rem;
+}
+
+
+#dashboard-coach-item {
+    margin: 1rem
+}
+
+.sidebar-container {
+    background: #E1ECF7;
+    margin: 30px 0px;
+}
+

@@ -7,9 +7,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Col from 'react-bootstrap/Col';
-
-import { register } from '../../redux/actions/authAction.js';
-import { clearMessage } from '../../redux/actions/messageAction.js';
+import authServices from '../../services/authServices.js';
+import { register, setRegisterError, setRegisterSuccess } from '../../redux/actions/authAction.js';
+import { clearMessage, setMessage } from '../../redux/actions/messageAction.js';
 import { Types } from '../../redux/actions/actionTypes.js';
 
 import './index.css';
@@ -28,9 +28,6 @@ const RegisterPage = () => {
     const [strongPasswordError, setStrongPasswordError] = useState(false);
     const [nameError, setNameError] = useState(false);
     const [emailError, setEmailError] = useState(false);
-    const [zipCodeError, setZipCodeError] = useState(false);
-    const [concentration, setConcentration] = useState(" ");
-    const [zipCode, setzipCode] = useState(" ");
 
     const [successfullyRegistered, setSuccessfullyRegistered] = useState(false);
 
@@ -57,14 +54,6 @@ const RegisterPage = () => {
             valid = false;
         } else { 
             setEmailError(false); 
-        }
-
-
-        if (zipCode === " " || zipCode === "" || !isNumeric(zipCode)) {
-            setZipCodeError(true);
-            valid = false;
-        } else {
-            setZipCodeError(false);
         }
 
         // Check if passwords match
@@ -98,35 +87,40 @@ const RegisterPage = () => {
         return valid; 
     }
 
-    const onRegister = (e) => {
-        e.preventDefault();
-        let valid = validate();
-        if (valid) {
-            const params = {
-                "first_name": firstName,
-                "last_name": lastName,
-                "username": firstName + lastName + Math.ceil(Math.random() * 10),
-                "email": email,
-                "password": password,
-                "password2": confirmPassword,
-                "is_coach": false,
-                "is_customer": true,
-                "is_active": true,
-                "concentration": concentration,
-                "zipCode": zipCode
-            };
-            dispatch(register(params))
-                .then( () => {
-                    setSuccessfullyRegistered(true);
-                })
-                .catch( () => {
-                    setSuccessfullyRegistered(false);
+    const onRegister = async (e) => {
+        try {
+            e.preventDefault();
+            let valid = validate();
+            if (valid) {
+                const params = {
+                    "first_name": firstName,
+                    "last_name": lastName,
+                    "username": firstName + lastName + Math.ceil(Math.random() * 10),
+                    "email": email,
+                    "password": password,
+                    "password2": confirmPassword,
+                    "is_coach": false,
+                    "is_customer": true,
+                    "is_active": true,
+                    "zip_code": '',
+                    'dob': '',
+                    'street': '',
+                    'city': '',
+                    'state': '',
+                    'country': ''
+                };
+                const data = await authServices.register(params);
+                dispatch(setRegisterSuccess(data));
+                setSuccessfullyRegistered(true);
+            } else {
+                dispatch({
+                    type: Types.SET_MESSAGE,
+                    payload: "One or more of the fields below are invalid.",
                 });
-        } else {
-            dispatch({
-                type: Types.SET_MESSAGE,
-                payload: "One or more of the fields below are invalid.",
-            });
+            }   
+        } catch (error) {
+            setSuccessfullyRegistered(false);
+            dispatch(setRegisterError(error.message ? error.message : "Unable to register for an account at this time"))
         }
     }
 
@@ -136,13 +130,13 @@ const RegisterPage = () => {
     }
 
     return (
-        <div className="container" id="register-container">
+        <div className="container-fluid" id="register-container">
             
             <div className="register-form-container">
-                <h2 style={{ paddingBottom: '10px', textAlign: 'center'}}>
+                <h1 style={{ paddingBottom: '10px', textAlign: 'center'}}>
                     Sign Up to Join the EvolvU Network and Find Your Coach
-                </h2>
-                <p style={{ paddingBottom: '10px', textAlign: 'center'}}> Already have an account? Sign in <Link to="/login"> here</Link>.</p>
+                </h1>
+                <p style={{ paddingBottom: '10px', textAlign: 'center', fontSize: '1.5rem'}}> Already have an account? Sign in <Link to="/login"> here</Link></p>
                 <div className="register-form">
                 
                     <Form >
@@ -159,11 +153,6 @@ const RegisterPage = () => {
                         { emailError && (
                                 <Alert variant="danger">
                                     Please enter a valid email address.
-                                </Alert>
-                        )}
-                        { zipCodeError && (
-                                <Alert variant="danger">
-                                    Please enter a valid 5-digit zip code.
                                 </Alert>
                         )}
                         { strongPasswordError && (
@@ -189,7 +178,7 @@ const RegisterPage = () => {
                                 </Form.Group>
                                 {
                                     firstName ? null : <Alert variant="danger"> This is a required field </Alert> 
-                            }
+                                }
                             </Col>
                             <Col>
                                 <Form.Group controlId="registrationLastName" className="register-form-input" onChange={ (e) => setLastName(e.target.value)}>
@@ -212,26 +201,7 @@ const RegisterPage = () => {
                                     email ? null : <Alert variant="danger"> {!isEmail(email) ? "Not a valid email" : "This is a required field."} </Alert> 
                                 }
                             </Col>
-                            <Col>
-                                <Form.Group controlId="registrationzipCode" className="register-form-input" onChange={ (e) => setzipCode(e.target.value)}>
-                                    <Form.Label>Zip Code <span style={{ color: 'red'}}>*</span></Form.Label>
-                                    <Form.Control type="" placeholder="Zip Code" />
-                                </Form.Group>
-                                {
-                                    zipCode ? null : <Alert variant="danger"> This is a required field. </Alert>
-                                }
-                            </Col>
                         </Form.Row>
-                        <Form.Group controlId="registrationConcentration" className="register-form-input" onChange={ (e) => setConcentration(e.target.value)}>
-                            <Form.Label>Concentration <span style={{ color: 'red'}}>*</span></Form.Label>
-                            <Form.Control as="select">
-                                <option>Life Coaching</option>
-                                <option>Nutrition & Fitness</option>
-                                <option>Health and Wellness Coaching</option>
-                                <option>Holistic Health & Wellness Coaching</option>
-                                <option>Spiritual Wellness Coaching</option>
-                            </Form.Control>
-                        </Form.Group>
                         <Form.Row>
                             <Col>
                                 <Form.Group controlId="registrationPassword" className="register-form-input" onChange={ (e) => setPassword(e.target.value)}>
@@ -244,7 +214,7 @@ const RegisterPage = () => {
                             </Col>
                             <Col>
                                 <Form.Group controlId="registrationPasswordConfirm" className="register-form-input" onChange={ (e) => setConfirmPassword(e.target.value)}>
-                                    <Form.Label>Password Confirmation <span style={{ color: 'red'}}>*</span></Form.Label>
+                                    <Form.Label>Confirm Password<span style={{ color: 'red'}}>*</span></Form.Label>
                                     <Form.Control type="password" placeholder="Password" />
                                 </Form.Group>
                             </Col>
@@ -254,6 +224,10 @@ const RegisterPage = () => {
                             Submit
                         </Button>
                     </Form>
+                    <hr></hr>
+                    <p> You can also sign up with: </p>
+                    <Button id="login-social-media">Google</Button>
+                    <Button id="login-social-media">Facebook</Button>
                 </div>
             </div>
             

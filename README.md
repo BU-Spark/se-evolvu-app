@@ -22,43 +22,41 @@ As for the coaches, they have difficulty growing clientele, handling the logisti
 
 Create a reliable platform for clients to find coaches more easily and schedule coaching sessions without having to manually search or contact coaches for additional information. This platform also allows coaches to easily track their clients and grow their clientele. Easing the process on both the clients and coaches ends. 
 
+## Technical Architecture
+
+Application stack is built using React.js for frontend, Django REST Framework for backend, and also NGINX to proxy our requests between frontend and backend. We also use Redux to manage global state in our React app and then PostgreSQL for our database. Our app also containerizes the frontend and backend using Docker. Commands for installation are below. 
+
 ## Current Status
 ### Frontend:
 To see the pages that are mostly finished for the frontend, please visit `client/src/routes/index.js` to see the different routes and their respective components. 
 
-Redux has been implmented, and to see the current minimal configuration of the store please visit `client/src/redux/store.js`. Note that functional components are recommended for future development, accessing the Redux store is much easier and requires much less code. 
+All the main coach and client flows have been created, including Coach Registration, Client Signup/Registration, Client Dashboard and Coach Dasboard. But most of these screens still needed styled in accordance to the wireframes. 
 
 ### Backend:
 The server-side backend is created using the Django REST framework to establish an API in which the frontend can send requests to.
 
-Several API endpoints have been created for each feature that has been currently implemented. The frontend can utilize these endpoints to make specific types of requests as needed to either get, put, or delete data corresponding depending on the purpose of the feature. To view the specific endpoints of a feature, these can be found by navigating to `server\src\<feature-label>\api\urls.py`, where `<feature-label>` can be any of the following components implemented thus far: accounts, coaches, reviews, users
+Several API endpoints have been created for each feature that has been currently implemented. The frontend can utilize these endpoints to make specific types of requests as needed to either get, put, or delete data corresponding depending on the purpose of the feature. To view the specific endpoints of a feature, these can be found by navigating to `server\src\<feature-label>\api\urls.py`, where `<feature-label>` can be any of the following components implemented thus far: accounts, coaches, reviews, users, calendars, appointments. 
 
 ## Future Tasks
 The future tasks should also be considered unimplemented features so far. Note that some buttons may appear on the frontend, but they may be static and non-functional. 
 ### Frontend:
 - Logging in using any of the social media buttons is not working
-- Finishing the coach application (i.e. validation, implementing a schedule page, and connecting to backend)
-- Choosing an appropriate way to present a calendar on the application (either by using an NPM package or building from scratch)
 - Refine pages for smoother transitions and views (mainly styling of the overall application)
-- Adding functionality to different parts of the Coach Dashboard
-- Implementing the User Dashboard
+- Allowing coaches to create different packages that the client can signup for. 
 - User session persistence (many ways to do so)
 
 ### Backend:
-- Currently, there is no working location feature to match users with coaches who are near them in terms of location. This needs to be added to both user and coach models
-- Implementation for processing a coach's application and creating a corresponding coach account using this information
-- Put a calendar system in place for coaches and users to book and manage appointments
-- Implement/add a payment system in place for users to pay for lessons and for coaches to receive their payments
+- Implement/add a payment system in place for users to pay for lessons and for coaches to receive their payments. [Link](https://github.com/BU-Spark/se-evolvu-app/issues/18) to issue
 - Connect the API endpoint for a user to make a review and rating of a coach
-
-### Overall: 
-- Create production ready `Dockerfile`s and `docker-compose.yml` file using the build version of the client application and a production ready server for Django. 
+- Set up continous deployment on EC2 instance, so that a commit to origin doesn't require manually pulling changes in production server. [Link](https://github.com/BU-Spark/se-evolvu-app/issues/23) to issue
+- Create production database using AWS RDS, as EC2 instance right now uses local server and will not persist changes on restart. [Link](https://github.com/BU-Spark/se-evolvu-app/issues/52) to issue
 
 ## Bugs
 ### Frontend:
 - BrowserRouter from 'react-router-dom' does not clear messages set by messageReducer (i.e. alerts that appear on registration will not go away on the login page)
 - Conditional rendering of dashboards for coaches goes to user dashboard then coach dashboard
 - Submitting a review requires clicking twice (state is not updating correctly)
+- Refresh on the coach profile throws an undefined error because the profile relies on values sent by the react router that navigated to that page
 
 ### Backend:
 - CSRF token generation works, but causes errors when trying to be passed in with requests to the API endpoints.
@@ -84,6 +82,8 @@ Before running the containers, you will need to generate a `DJANGO_KEY` and plac
 1. Visit https://djecrety.ir/ to generate a key and copy it. 
 2. Go to the `Dockerfile` in the server folder and paste the key where it says `"Enter DJANGO_KEY here"` (i.e. line 11)
 
+You will also have to obtain a MapQuest API Key which will be given by Kai or BU Spark! and also place that in the server directory.
+
 After obtaining a key and placing it in the `Dockerfile` in the server directory, return to this directory and run the following command:
 
 ```bash 
@@ -105,6 +105,155 @@ After the containers have been built and are running (which could take a few min
 
 If you try to restart the containers after stopping them, the Django server will fail. This is because we ran multiple commands for start-up and so you will need to remove all of the associated Docker containers with this application (we did this by pruning our system, i.e. using `docker system prune -a`) and run the above command again. In other words, you will need to build the containers again from scratch without a cache.
 
+
+### Run without Docker
+
+If you want to run the client and server without docker, follow the steps bellow
+
+Note you will need to install nvm to manage a different version of node [nvm](https://github.com/nvm-sh/nvm)
+
+```bash
+cd client 
+
+nvm install 13.12.0  | Installs node version 13.12.0
+
+nvm use 13.12.0      | Sets 13.12.0 as the current node version
+
+npm install 
+
+npm start
+```
+
+Now open another terminal instance to configure our server
+
+
+Get your [Django Key](https://djecrety.ir/)
+
+```bash
+cd server 
+
+if mac: 
+
+    python3 -m venv env
+
+    source env/bin/activate
+
+    pip3 install -r requirements.txt 
+
+elif windows: 
+
+    py -m venv env
+
+    .\env\Scripts\activate
+
+    pip install -r requirements.txt
+
+export DJANGO_KEY="<Enter-Your-Django-Key>" | Can retrieve django key from link above
+
+export MAPQUEST_API_KEY="<Enter-MapQuest-API-Key>"
+
+```
+
+Now you must navigate to `src/evolvu/settings.py` and change the following lines 
+
+```python
+UNCOMMENT THE CURRENT DATABASE OBJECT AND USE THE SQLITE ONE  INSTEAD
+
+SO IT SHOULD LOOK LIKE 
+
+/* # DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'HOST': 'postgres_db',
+#         'NAME': 'evolvu_dev',
+#         'USER': 'admin',
+#         'PASSWORD': 'rpDEvGQxZtC5@',
+#         'PORT': 5432
+#     }
+# } */
+
+# If you are running the backend without Docker, use the following for a database:
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+
+Finally, to run the application, use the following command
+
+```python
+bash -c "rm -rf ./src/db.sqlite3 && python3 ./src/manage.py makemigrations && python3 ./src/manage.py migrate && python3 ./src/manage.py loaddata initial_data && python3 ./src/manage.py hashpasswords && python3 ./src/manage.py runserver 0.0.0.0:8000"
+```
+
+In order to use logging in a file, do the following 
+
+```python
+import logging 
+logging.getLogger("myLogger")
+
+# Now you can print with 
+
+logger.info('Print to console')
+
+```
+
+
+## Deployment
+### Frontend
+Our frontend is deployed on GitHub Pages
+
+In `src/index.js`, change the following: 
+
+```javascript
+axios.defaults.baseURL = '';
+axios.defaults.headers.common['Credentials'] = 'same-origin';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+To 
+
+axios.defaults.baseURL = 'https://se-evolvu.buspark.io/';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+```
+
+Then run,
+
+```javascript
+npm run predeploy
+npm run deploy
+
+```
+### Backend
+
+We are running an Ubuntu EC2 instance
+
+In order to access the instance, go to your terminal and run the following command: 
+
+```bash
+ssh -i /path/to/publickey ubuntu@34.239.246.111
+```
+
+NOTE: If you get a permission denied error, contact BU Spark! or current administrators of the projec to add your public key to ~/.ssh/authorized_keys file in the instance
+
+Click [here](https://kb.iu.edu/d/aews) to learn about generating a public/private key pair on your laptop
+
+After entering the server, you must pull the latest changes and then you can restart the docker container with the following commands
+
+```bash
+sudo docker-compose down
+sudo docker system prune -a 
+sudo docker-compose -f docker-compose-prod.yml build
+sudo docker-compose -f docker-compose-prod.yml up -d
+```
+These above commands will kill the current container and then rebuild and rerun them in the background. 
+
+If you navigate to the IP address or the link [here](https://se-evolvu.buspark.io/), you will see the deployed backend running
+
+
+
 ### User Types and Example Credentials
 
 If you would like to view the coach profile then use the following credentials:
@@ -124,3 +273,5 @@ Password: badpassword
 Creating an admin profile is similar to the above, with the exception that the `is_admin` field must be set to `True`. 
 
 If you would like to view a client profile then register a new account on the registration page of the application. 
+
+

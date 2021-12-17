@@ -3,7 +3,7 @@
 }
 
 #navbar {
-    background: #707070;
+    background: #373737;
     list-style: None;
     justify-content: space-between;
     padding: 1rem;
@@ -12,7 +12,7 @@
 }
 
 #coach-navbar {
-    background: #707070;
+    background: #373737;
     list-style: None;
     display: flex;
     padding: 1rem;
@@ -43,18 +43,19 @@
 
 .navitem {
     text-decoration: None;
-    color: #99CCFF;
+    color: #9fc0de;
+    font-weight: bold;
     transition: 0.3s;
 }
 
 .greeting-navitem {
     text-decoration: None;
-    color: #99CCFF;
+    color: #9fc0de;
 }
 
 .greeting-navitem:hover {
     text-decoration: None;
-    color: #99CCFF;
+    color: #9fc0de;
 }
 
 .navitem:hover {
@@ -64,6 +65,9 @@
 
 .nav-brand {
     margin: 0;
-    padding: 0 3rem 0;
-    color: #99CCFF;
+    color: #9fc0de;
+}
+
+#navbar-logo {
+    cursor: pointer;
 }

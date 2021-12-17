@@ -1,41 +1,31 @@
-.container{
-    padding: 50px;
+
+#coach-page {
+    display: flex;
 }
 
-#buffer{
-    background-color: #f2f2f2;
-    padding: 0px;
-    height: 3rem;
-    margin: 0px;
-}
-#centerBlock{
-    margin-top: 50px;
-    padding: 50px;
-    padding-right:150px;
-    background-color: #9FC0DE;
-    width: 60%;
+#try-coaching-container {
+    background-color: #a7cef6;
+    padding: 6%;
     text-align: left;
 }
 
-#heading{
-     color: #646464;
+#img-header {
+    height: 33%;
+    background-image: url('../../../images/CoachAppHands.png');
+    background-repeat: no-repeat;
+    background-position: center; 
+    position: relative;
+    padding-top: 10%;
 }
 
-#bodyText{
-    color: white;
+#img-header-title { 
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 50px;
 }
 
-#coachServices{
-    padding: 0rem;
-    list-style: none;
-}
-.coachService::before {
-    content: "\25B8";
-    color: #FFB347; 
-	
-    padding-right: 10px;
-}
-
-#coachRequirements{
-    padding: 1rem;
+#img-header-desc { 
+    color: #FFFFFF;
+    font-weight: bold;
+    padding-bottom: 10%;
 }

@@ -1,10 +1,12 @@
+from django.core.management.base import BaseCommand
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
-from django.db.models import Q
+from django.db.models import Q, F
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
+from utils import convertLocationToLatLon
 # from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.authentication import TokenAuthentication
@@ -12,8 +14,13 @@ from rest_framework.permissions import IsAuthenticated
 
 from coaches.models import Coach
 from accounts.models import Account
+from calendars.models import Calendar
 from coaches.api.serializers import CoachSerializer, CoachListSerializer#, CoachSearchSerializer
+from calendars.api.serializers import CalendarSerializer
 from rest_framework.filters import SearchFilter, OrderingFilter
+import logging
+logger = logging.getLogger("mylogger")
+
 
 # Create your views here
 @api_view(['GET', ])
@@ -22,10 +29,18 @@ def api_detail_coach_view(request, slug):
         coach_profile = Coach.objects.get(coach__slug=slug)
     except Coach.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-
+    
     if request.method == "GET":
         serializer = CoachSerializer(coach_profile)
-        return Response(serializer.data)
+
+    data = serializer.data
+    # Attempt to fetch calendar 
+    if Calendar.objects.filter(coach_id=coach_profile.id).exists():
+        calendar = Calendar.objects.get(coach_id=coach_profile.id)
+        serializer_calendar = CalendarSerializer(calendar)
+        data.update({"availability": serializer_calendar.data})
+    return Response(data)
+    
 
 @api_view(['PUT', ])
 def api_update_coach_view(request, slug):
@@ -131,146 +146,80 @@ class FocusWellnessView(ListAPIView):
 
 class SearchCoaches(ListAPIView):
     serializer_class = CoachSerializer
-    # pagination_class = PageNumberPagination
-
-    
-    #status = self.request.query_params.get('status', None)
-    # gender = self.request.query_params.get('gender', 'N')
-    # focus_life = self.request.query_params.get('focus_life', None)
-    # focus_behavioral = self.request.query_params.get('focus_behavioral', None)
-    # focus_health_wellness = self.request.query_params.get('focus_health_wellness', None)
-    # focus_holistic = self.request.query_params.get('focus_holistic', None)
-    # focus_nutrition_fitness = self.request.query_params.get('focus_nutrition_fitness', None)
-    # focus_business = self.request.query_params.get('focus_business', None)
-    # travel = self.request.query_params.get('travel', None)
-
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         queryset = Coach.objects.filter(approved=True)
-
+        price = self.request.query_params.get("price")
+        location = self.request.query_params.get("location")
+        remote = self.request.query_params.get("remote")
+        distance = self.request.query_params.get("distance")
         focus_life = self.request.query_params.get('focus_life')
-        focus_behavioral = self.request.query_params.get('focus_behavioral')
+        focus_behavioral_wellness = self.request.query_params.get('focus_behavioral_wellness')
         focus_health_wellness = self.request.query_params.get('focus_health_wellness')
         focus_holistic = self.request.query_params.get('focus_holistic')
-        focus_nutrition_fitness = self.request.query_params.get('focus_nutrition_fitness')
         focus_business = self.request.query_params.get('focus_business')
         travel = self.request.query_params.get('travel')
+        sortBy = self.request.query_params.get('sortBy')
+        [lat, lon] = convertLocationToLatLon(location)
         query = Q()
 
-        print(travel)
-        """
-        print(life)
-        print(behavioral)
-        print(health_wellness)
-        print(holistic)
-        print(nutrition_fitness)
-        print(business)
-        print(coach_travel)
-        """
 
         if focus_life == "true":
             q = Q(focus_life = True)
-            #print("here1")
             query |= q
 
-        if focus_behavioral == "true":
-            q = Q(focus_behavioral = True)
-            #print("here2")
+        if focus_behavioral_wellness == "true":
+            q = Q(focus_behavioral_wellness = True)
             query |= q
 
         if focus_health_wellness == "true":
-            q = Q(focus_life = True)
-            #print("here3")
+            q = Q(focus_health_wellness = True)
             query |= q
 
         if focus_holistic == "true":
             q = Q(focus_holistic = True)
-            #print("here4")
-            query |= q
-        
-        if focus_nutrition_fitness == "true":
-            q = Q(focus_nutrition_fitness = True)
-            #print("here5")
             query |= q
 
         if focus_business == "true":
             q = Q(focus_business = True)
-            #print("here6")
             query |= q
 
         if travel == "true":
             q = Q(travel = True)
-            #print("here7")
             query |= q
-
-        #print("here8")
-
+        
         queryset = queryset.filter(query)
+        remoteQuery = Q()
+        if remote == "true":
+            q = Q(remote = True)
+            remoteQuery = q
+        else:
+            q = Q(inPerson = True)
+            remoteQuery = q
+        queryset = queryset.filter(remoteQuery)
 
-        # if status is not None:
-        #     status = status.split('|')
-        #     query = Q()
-        #     for x in status:
-        #         q = Q(status=x)
-        #         query |= q
-        #     queryset = queryset.filter(query)
+        # Price queries 
+        priceQueries = Q()
+        price = int(price)
+        if price:
+            if price is not 100:
+                # Max that coach is requesting is less than what user is willing to offer
+                maxPriceLessThanPrice = Q(maxPrice__lte = price)
+                priceQueries |= maxPriceLessThanPrice
+                # Or price user is willing to pay is greater than minPrice
+                priceGreaterThanMin = Q(minPrice__lte = price)
+                priceQueries |= priceGreaterThanMin
+                queryset = queryset.filter(priceQueries)
+        
+        # remove values that are not within distance
+        for coach in queryset: 
+            distFromZipcode = coach.distanceFromLatLong(lat, lon)
+            # Case when the coach is further away from zip than specified 
+            if distFromZipcode > int(distance):
+                queryset = queryset.filter(~Q(coach_id=coach.coach_id))
+        
+        # Sort queryset if applicable
+        if sortBy == "avg_rating":
+            queryset = sorted(queryset, key= lambda coach: coach.avg_rating())
+        if sortBy == "distance":
+            queryset = sorted(queryset, key= lambda coach: coach.distanceFromLatLong(lat, lon))
         return queryset
-
-    
-
-    """
-    gender 
-    focus_life 
-    focus_behavioral 
-    focus_health_wellness 
-    focus_holistic 
-    focus_nutrition_fitness 
-    focus_business 
-    travel 
-
-    if holistic ===true:
-        add to filter
-    """
-
-# class FocusLifeView(ListAPIView):
-#     serializer_class = CoachSerializer
-#     pagination_class = PageNumberPagination
-
-#     def get_queryset(self):
-#         return Coach.objects.filter(focus_life=True)
-
-# class FocusBehavioralView(ListAPIView):
-#     serializer_class = CoachSerializer
-#     pagination_class = PageNumberPagination
-
-#     def get_queryset(self):
-#         return Coach.objects.filter(focus_behavioral=True)
-
-# class FocusHWView(ListAPIView):
-#     serializer_class = CoachSerializer
-#     pagination_class = PageNumberPagination
-
-#     def get_queryset(self):
-#         return Coach.objects.filter(focus_health_wellness=True)
-
-# class FocusHolisticView(ListAPIView):
-#     serializer_class = CoachSerializer
-#     pagination_class = PageNumberPagination
-
-#     def get_queryset(self):
-#         return Coach.objects.filter(focus_holistic=True)
-
-#
-# class FocusNFView(ListAPIView):
-#     serializer_class = CoachSerializer
-#     pagination_class = PageNumberPagination
-
-#     def get_queryset(self):
-#         return Coach.objects.filter(focus_nutrition_fitness=True)
-#
-
-# class FocusBusinessView(ListAPIView):
-#     serializer_class = CoachSerializer
-#     pagination_class = PageNumberPagination
-
-#     def get_queryset(self):
-#         return Coach.objects.filter(focus_business=True)
