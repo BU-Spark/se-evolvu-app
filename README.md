@@ -42,15 +42,14 @@ The future tasks should also be considered unimplemented features so far. Note t
 ### Frontend:
 - Logging in using any of the social media buttons is not working
 - Refine pages for smoother transitions and views (mainly styling of the overall application)
-- Allowing coaches to create different packages that the client can signup for
+- Allowing coaches to create different packages that the client can signup for. 
 - User session persistence (many ways to do so)
 
 ### Backend:
-- 
-- Implement/add a payment system in place for users to pay for lessons and for coaches to receive their payments
+- Implement/add a payment system in place for users to pay for lessons and for coaches to receive their payments. [Link](https://github.com/BU-Spark/se-evolvu-app/issues/18) to issue
 - Connect the API endpoint for a user to make a review and rating of a coach
-- Set up continous deployment on EC2 instance, so that a commit to origin doesn't require manually pulling changes in production server
-- Create production database using AWS RDS, as EC2 instance right now uses local server and will not persist changes on restart
+- Set up continous deployment on EC2 instance, so that a commit to origin doesn't require manually pulling changes in production server. [Link](https://github.com/BU-Spark/se-evolvu-app/issues/23) to issue
+- Create production database using AWS RDS, as EC2 instance right now uses local server and will not persist changes on restart. [Link](https://github.com/BU-Spark/se-evolvu-app/issues/52) to issue
 
 ## Bugs
 ### Frontend:
