@@ -26,39 +26,34 @@ Create a reliable platform for clients to find coaches more easily and schedule 
 ### Frontend:
 To see the pages that are mostly finished for the frontend, please visit `client/src/routes/index.js` to see the different routes and their respective components. 
 
-Redux has been implmented, and to see the current minimal configuration of the store please visit `client/src/redux/store.js`. Note that functional components are recommended for future development, accessing the Redux store is much easier and requires much less code. 
+All the main coach and client flows have been created, including Coach Registration, Client Signup/Registration, Client Dashboard and Coach Dasboard. But most of these screens still needed styled in accordance to the wireframes. 
 
 ### Backend:
 The server-side backend is created using the Django REST framework to establish an API in which the frontend can send requests to.
 
-Several API endpoints have been created for each feature that has been currently implemented. The frontend can utilize these endpoints to make specific types of requests as needed to either get, put, or delete data corresponding depending on the purpose of the feature. To view the specific endpoints of a feature, these can be found by navigating to `server\src\<feature-label>\api\urls.py`, where `<feature-label>` can be any of the following components implemented thus far: accounts, coaches, reviews, users
+Several API endpoints have been created for each feature that has been currently implemented. The frontend can utilize these endpoints to make specific types of requests as needed to either get, put, or delete data corresponding depending on the purpose of the feature. To view the specific endpoints of a feature, these can be found by navigating to `server\src\<feature-label>\api\urls.py`, where `<feature-label>` can be any of the following components implemented thus far: accounts, coaches, reviews, users, calendars, appointments. 
 
 ## Future Tasks
 The future tasks should also be considered unimplemented features so far. Note that some buttons may appear on the frontend, but they may be static and non-functional. 
 ### Frontend:
 - Logging in using any of the social media buttons is not working
-- Finishing the coach application (i.e. validation, implementing a schedule page, and connecting to backend)
-- Choosing an appropriate way to present a calendar on the application (either by using an NPM package or building from scratch)
 - Refine pages for smoother transitions and views (mainly styling of the overall application)
-- Adding functionality to different parts of the Coach Dashboard
-- Implementing the User Dashboard
+- Allowing coaches to create different packages that the client can signup for
 - User session persistence (many ways to do so)
 
 ### Backend:
-- Currently, there is no working location feature to match users with coaches who are near them in terms of location. This needs to be added to both user and coach models
-- Implementation for processing a coach's application and creating a corresponding coach account using this information
-- Put a calendar system in place for coaches and users to book and manage appointments
+- 
 - Implement/add a payment system in place for users to pay for lessons and for coaches to receive their payments
 - Connect the API endpoint for a user to make a review and rating of a coach
-
-### Overall: 
-- Create production ready `Dockerfile`s and `docker-compose.yml` file using the build version of the client application and a production ready server for Django. 
+- Set up continous deployment on EC2 instance, so that a commit to origin doesn't require manually pulling changes in production server
+- Create production database using AWS RDS, as EC2 instance right now uses local server and will not persist changes on restart
 
 ## Bugs
 ### Frontend:
 - BrowserRouter from 'react-router-dom' does not clear messages set by messageReducer (i.e. alerts that appear on registration will not go away on the login page)
 - Conditional rendering of dashboards for coaches goes to user dashboard then coach dashboard
 - Submitting a review requires clicking twice (state is not updating correctly)
+- Refresh on the coach profile throws an undefined error because the profile relies on values sent by the react router that navigated to that page
 
 ### Backend:
 - CSRF token generation works, but causes errors when trying to be passed in with requests to the API endpoints.
@@ -251,8 +246,6 @@ sudo docker-compose -f docker-compose-prod.yml up -d
 These above commands will kill the current container and then rebuild and rerun them in the background. 
 
 If you navigate to the IP address or the link [here](https://se-evolvu.buspark.io/), you will see the deployed backend running
-
-
 
 
 
