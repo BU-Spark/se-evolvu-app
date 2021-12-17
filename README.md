@@ -22,6 +22,10 @@ As for the coaches, they have difficulty growing clientele, handling the logisti
 
 Create a reliable platform for clients to find coaches more easily and schedule coaching sessions without having to manually search or contact coaches for additional information. This platform also allows coaches to easily track their clients and grow their clientele. Easing the process on both the clients and coaches ends. 
 
+## Technical Architecture
+
+Application stack is built using React.js for frontend, Django REST Framework for backend, and also NGINX to proxy our requests between frontend and backend. We also use Redux to manage global state in our React app and then PostgreSQL for our database. Our app also containerizes the frontend and backend using Docker. Commands for installation are below. 
+
 ## Current Status
 ### Frontend:
 To see the pages that are mostly finished for the frontend, please visit `client/src/routes/index.js` to see the different routes and their respective components. 
